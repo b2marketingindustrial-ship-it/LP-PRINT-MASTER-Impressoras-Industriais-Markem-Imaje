@@ -7,6 +7,10 @@
  * plugin — a coluna do shortcode é só um espaço vazio com altura reservada, sem prévia desenhada.
  * Fora do WordPress o texto cru do shortcode é apagado.
  *
+ * Mockup do celular (27/10/2026): eyebrow, H1 e texto; selo e banner sangrando até as bordas;
+ * depois os pontos, o botão e o link. Por isso a coluna de texto é dividida em dois blocos
+ * (`hero-copy` e `hero-actions`), que no desktop voltam a ser a coluna 1, em duas linhas.
+ *
  * Grid desktop: texto (--text-col) · janela dos equipamentos (1fr) · shortcode do chat (300px).
  * O par de equipamentos está no centro do banner (50% da largura), e esse centro é ancorado no
  * centro da coluna 2, em qualquer largura de tela. No mobile o banner vira um quadro sob o texto.
@@ -28,9 +32,9 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
 <section class="hero relative isolate overflow-hidden bg-hero-deep" data-hero>
   {/* conteúdo — sem `relative` no contêiner: no desktop o banner se posiciona pelo hero */}
   <div class="mx-auto max-w-page px-6 pt-12 pb-14 lg:px-10 lg:py-14">
-    <div class="hero-grid grid items-center gap-y-10 lg:gap-x-8">
-      {/* Coluna 1 — textos */}
-      <div class="relative z-[3] max-w-xl lg:max-w-none">
+    <div class="hero-grid grid items-center gap-y-8 lg:gap-x-8 lg:gap-y-0">
+      {/* Coluna 1 (linha 1) — eyebrow, H1 e texto */}
+      <div class="hero-copy relative z-[3] max-w-xl lg:col-start-1 lg:row-start-1 lg:max-w-none">
         <span class="inline-flex items-center gap-3 font-sans text-[12px] font-medium tracking-[0.2em] text-brand-glow uppercase sm:text-[12.5px]">
           <span aria-hidden="true" class="h-[3px] w-9 rounded-full bg-brand-glow"></span>
           {hero.eyebrow}
@@ -45,10 +49,44 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
         <p class="mt-5 max-w-[31rem] font-sans text-[17px] leading-relaxed text-neutral-light/80 lg:text-lg xl:text-[19px]">
           {hero.text}
         </p>
+      </div>
 
+      {/* Coluna 2 — janela dos equipamentos (no mobile, selo e banner sangrando até as bordas) */}
+      <div class="hero-window lg:col-start-2 lg:row-span-2 lg:row-start-1">
+        <div class="hero-badge">
+          <Image
+            src={hero.badge.src}
+            alt={hero.badge.alt}
+            width={220}
+            height={50}
+            format="webp"
+            loading="eager"
+            decoding="async"
+            class="h-8 w-auto sm:h-10 xl:h-11"
+          />
+        </div>
+        <div class="hero-photo">
+          <Picture
+            src={hero.banner.src}
+            alt={hero.banner.alt}
+            widths={[640, 1024, 1536, 1752]}
+            sizes="(min-width: 1024px) 1720px, 220vw"
+            formats={['avif', 'webp']}
+            fallbackFormat="webp"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            class="hero-photo-img"
+            pictureAttributes={{ class: 'block h-full' }}
+          />
+        </div>
+      </div>
+
+      {/* Coluna 1 (linha 2) — pontos, botão e link; no mobile vêm depois do banner */}
+      <div class="hero-actions relative z-[3] max-w-xl lg:col-start-1 lg:row-start-2 lg:max-w-none">
         {/* 3 pontos — ícone menta solto e texto sempre em duas linhas */}
         <ul
-          class="mt-7 grid grid-cols-3 gap-x-3 sm:flex sm:flex-nowrap lg:grid xl:flex"
+          class="grid grid-cols-3 gap-x-3 sm:flex sm:flex-nowrap lg:mt-7 lg:grid xl:flex"
           aria-label="Destaques"
         >
           {hero.points.map((point) => (
@@ -82,39 +120,11 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
         </a>
       </div>
 
-      {/* Coluna 2 — janela dos equipamentos (no mobile, o quadro do banner) */}
-      <div class="hero-window">
-        <div class="hero-badge">
-          <Image
-            src={hero.badge.src}
-            alt={hero.badge.alt}
-            width={220}
-            height={50}
-            format="webp"
-            loading="eager"
-            decoding="async"
-            class="h-8 w-auto sm:h-10 xl:h-11"
-          />
-        </div>
-        <div class="hero-photo">
-          <Picture
-            src={hero.banner.src}
-            alt={hero.banner.alt}
-            widths={[640, 1024, 1536, 1752]}
-            sizes="(min-width: 1024px) 1720px, 220vw"
-            formats={['avif', 'webp']}
-            fallbackFormat="webp"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            class="hero-photo-img"
-            pictureAttributes={{ class: 'block h-full' }}
-          />
-        </div>
-      </div>
-
       {/* Coluna 3 — espaço vazio para o chat do plugin (shortcode, 300px) */}
-      <div class="hero-chat relative z-[3] min-h-[430px] w-full lg:w-[300px]" data-shortcode-slot>
+      <div
+        class="hero-chat relative z-[3] min-h-[430px] w-full lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:w-[300px]"
+        data-shortcode-slot
+      >
         <slot name="shortcode">
           {isDev && (
             <div
@@ -193,16 +203,18 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
     border-left: 1px solid rgb(255 255 255 / 0.16);
   }
 
-  /* Mobile: o selo e o banner formam um quadro sob o texto, centrado nos equipamentos. */
+  /* Mobile (mockup de 27/10/2026): selo à esquerda, alinhado ao texto, e banner sangrando até
+     as bordas da tela, com o par de equipamentos ocupando quase toda a largura. */
   .hero-window {
     position: relative;
+    margin-inline: -1.5rem;
   }
 
   .hero-badge {
     position: relative;
     z-index: 3;
     width: fit-content;
-    margin: 0 auto -2.5rem;
+    margin: 0 0 -3rem 1.5rem;
     padding: 0.6rem 1.1rem;
     border-radius: 0.75rem;
     background: var(--color-neutral-light);
@@ -212,19 +224,41 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
   .hero-photo {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 1 / 1;
-    max-width: 520px;
-    margin-inline: auto;
-    /* Elíptica: o quadro se dissolve no fundo pelos quatro lados, sem borda visível. */
-    mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, black 64%, transparent 100%);
+    /* Altura que mostra o par inteiro (ele vai de 31% a 95% da altura da imagem). */
+    aspect-ratio: 1 / 0.95;
+    /* Esmaece as laterais e o topo; embaixo o piso vai até a borda. */
+    mask-image:
+      linear-gradient(to right, transparent 0, black 10%, black 90%, transparent 100%),
+      linear-gradient(to bottom, transparent 0, black 14%);
+    mask-composite: intersect;
   }
 
+  /* O par (36,8% da imagem) fica com ~80% da largura da tela, centrado pelo seu centro (52,5%). */
   .hero-photo :global(.hero-photo-img) {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
     display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 52.5% 72%;
+    width: 220%;
+    max-width: none;
+    height: auto;
+    transform: translateX(-52.5%);
+  }
+
+  /* Tablet: o banner não sangra e fica com largura limitada, selo centrado como antes. */
+  @media (min-width: 640px) {
+    .hero-window {
+      margin-inline: 0;
+    }
+
+    .hero-badge {
+      margin: 0 auto -3rem;
+    }
+
+    .hero-photo {
+      max-width: 640px;
+      margin-inline: auto;
+    }
   }
 
   @media (min-width: 1024px) {
@@ -240,6 +274,7 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
     .hero-window {
       position: static;
       align-self: stretch;
+      margin: 0;
     }
 
     /* Banner pela base, na largura --photo-w; o par, a 52,5% da imagem, cai no centro da col. 2. */
@@ -254,6 +289,7 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
       margin: 0;
       aspect-ratio: auto;
       transform: translateX(-52.5%);
+      /* O img volta a ser estático: quem se posiciona no desktop é o quadro .hero-photo. */
       /* Esmaece as laterais e o topo: com o banner encolhido, a borda de cima não vira linha. */
       mask-image:
         linear-gradient(to right, transparent 0, black 10%, black 90%, transparent 100%),
@@ -262,9 +298,11 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
     }
 
     .hero-photo :global(.hero-photo-img) {
+      position: static;
       width: 100%;
       max-width: none;
       height: auto;
+      transform: none;
     }
 
     /* Selo a 19% da altura da imagem (1752×898), acima dos equipamentos, como no mockup. */
