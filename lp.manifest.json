@@ -115,24 +115,24 @@
       "assets": [
         {
           "dir": "processo",
+          "match": "banner-mobile",
+          "files": "banner-mobile.jpg",
+          "spec": "Arte vertical 941×1672 do banner, para o celular (variante local)",
+          "width": 941,
+          "height": 1672,
+          "alpha": false
+        },
+        {
+          "dir": "processo",
           "match": "banner",
           "files": "banner.jpg",
           "spec": "Banner 1870×841 com texto na arte, sem botão desenhado (variante local)",
           "width": 1870,
           "height": 841,
           "alpha": false
-        },
-        {
-          "dir": "processo",
-          "match": "recorte-mobile",
-          "files": "recorte-mobile.jpg",
-          "spec": "Recorte 800×600 do lado do texto do banner, para o celular",
-          "width": 800,
-          "height": 600,
-          "alpha": false
         }
       ],
-      "localVariant": "Print Master 27/10/2026 — pedido do usuário: o painel das etapas deu lugar ao banner clicável (processo-cta), com recorte próprio no celular (docs/BRIEFING.md)"
+      "localVariant": "Print Master 27/10/2026 — pedido do usuário: o painel das etapas deu lugar ao banner clicável (processo-cta), com arte vertical própria no celular (docs/BRIEFING.md)"
     },
     {
       "slug": "aplicacoes",

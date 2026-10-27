@@ -4,7 +4,7 @@
  *
  * VARIANTE LOCAL — Print Master, pedido de 27/10/2026 (docs/BRIEFING.md): o painel das etapas
  * deu lugar ao banner enviado pelo usuário. O banner inteiro é o CTA (`processo-cta`); no
- * celular entra o recorte do lado do texto. É o bloco escuro da primeira metade da página.
+ * celular entra a arte vertical enviada pelo usuário. É o bloco escuro da primeira metade da página.
  * `npm run compose` sobrescreve este arquivo com o da biblioteca: ao recompor, reaplique.
  */
 import { getImage } from 'astro:assets'
@@ -22,7 +22,7 @@ const desktop = await Promise.all(
   ),
 )
 const mobile = await Promise.all(
-  [400, 800].map((width) => getImage({ src: process.bannerMobile.src, width, format: 'webp' })),
+  [480, 941].map((width) => getImage({ src: process.bannerMobile.src, width, format: 'webp' })),
 )
 const srcset = (images: typeof desktop) =>
   images.map((img) => `${img.src} ${img.attributes.width}w`).join(', ')
@@ -57,9 +57,9 @@ const srcset = (images: typeof desktop) =>
 </Section>
 
 <style>
-  /* Proporção de cada recorte reservada antes da imagem chegar (sem deslocar a página). */
+  /* Proporção de cada arte reservada antes da imagem chegar (sem deslocar a página). */
   .process-banner {
-    aspect-ratio: 800 / 600;
+    aspect-ratio: 941 / 1672;
   }
 
   @media (min-width: 640px) {

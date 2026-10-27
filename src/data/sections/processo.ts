@@ -9,7 +9,7 @@
 import type { Photo } from '@data/types'
 
 import banner from '@assets/processo/banner.jpg'
-import recorteMobile from '@assets/processo/recorte-mobile.jpg'
+import bannerMobile from '@assets/processo/banner-mobile.jpg'
 
 const alt =
   'Print Master e Markem-Imaje: impressoras industriais para codificação e rastreabilidade com ' +
@@ -21,8 +21,8 @@ export const process = {
   title: 'Impressoras industriais para codificação e rastreabilidade com mais precisão.',
   /** Banner inteiro (desktop e tablet). */
   banner: { src: banner, alt },
-  /** Recorte do lado do texto, para o celular: o banner inteiro ficaria ilegível. */
-  bannerMobile: { src: recorteMobile, alt },
+  /** Arte vertical (941×1672) enviada pelo usuário em 27/10/2026 para o celular. */
+  bannerMobile: { src: bannerMobile, alt },
 } as const satisfies {
   title: string
   banner: Photo
