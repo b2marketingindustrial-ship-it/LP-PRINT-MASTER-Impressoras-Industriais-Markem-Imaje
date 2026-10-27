@@ -14,6 +14,7 @@
  */
 import { Image, Picture } from 'astro:assets'
 import Icon from './Icon.astro'
+import Button from './Button.astro'
 import { hero, cta } from '../data/content'
 
 const isDev = import.meta.env.DEV
@@ -61,15 +62,12 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
           ))}
         </ul>
 
-        <button
-          type="button"
-          data-cta="hero-primary"
-          class="btn-slave-whats mt-8 inline-flex items-center justify-center gap-3 rounded-full bg-brand-emerald bg-[linear-gradient(180deg,#0a8f61_0%,#06784f_100%)] px-8 py-4 font-sans text-[17px] font-bold xl:px-10 xl:py-[1.15rem] xl:text-[19px] text-neutral-light shadow-[0_18px_44px_-16px_rgba(26,165,122,0.85)] ring-1 ring-brand-glow/30 transition-[filter] duration-200 ring-inset hover:brightness-110"
-        >
-          {cta.primary}
-          <Icon name="whatsapp" class="size-6 shrink-0 xl:size-7" />
-          <Icon name="arrow-right" class="size-5 shrink-0" />
-        </button>
+        <Button cta="hero-primary" variant="emerald" size="lg" class="mt-8">
+          <span class="inline-flex items-center gap-3">
+            {cta.primary}
+            <Icon name="whatsapp" class="size-6 shrink-0 xl:size-7" />
+          </span>
+        </Button>
 
         <a
           href="#vitrine"

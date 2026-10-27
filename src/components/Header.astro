@@ -1,51 +1,43 @@
 ---
 /**
- * ESTRUTURA FIXA (PROMPT-PADRAO-LP 4.1.1), com o desvio visual do mockup de abertura da
- * Print Master (26/10/2026 — docs/BRIEFING.md): barra verde-escura com fio menta, logo numa
- * caixa branca dentro da barra e CTA verde com cantos arredondados e seta. A ordem continua a
- * do padrão — logo · tagline · CTA —, sem menu nem âncoras.
+ * ESTRUTURA FIXA (PROMPT-PADRAO-LP 4.1.1), com o desvio visual aprovado para a Print Master
+ * (mockup de abertura, 26/10/2026 — docs/BRIEFING.md): barra branca, logo sem placa e CTA em
+ * pílula verde. A ordem continua a do padrão — logo · tagline · CTA —, sem menu nem âncoras.
  */
 import { Image } from 'astro:assets'
-import Icon from './Icon.astro'
+import Button from './Button.astro'
 import logo from '../assets/LOGO.png'
 import { site } from '../data/site'
 import { header, cta } from '../data/content'
 ---
 
-<header class="sticky top-0 z-50 border-b border-brand-glow/25 bg-hero-deep">
+<header class="sticky top-0 z-50 border-b border-primary-dark/10 bg-neutral-light/90 backdrop-blur-md">
   <div class="mx-auto flex max-w-page items-center justify-between gap-3 px-4 py-3 sm:gap-6 sm:px-6 lg:px-10">
-    {/* 1. Logo numa caixa branca */}
-    <a
-      href="/"
-      class="flex shrink-0 items-center rounded-lg bg-neutral-light px-3 py-1.5 shadow-[0_10px_24px_-14px_rgba(0,0,0,0.7)] sm:px-4 sm:py-2"
-    >
+    {/* 1. Logo */}
+    <a href="/" class="flex shrink-0 items-center">
       <Image
         src={logo}
         alt={site.brand}
-        width={260}
+        width={262}
         height={60}
         format="webp"
         loading="eager"
         fetchpriority="low"
         decoding="async"
-        class="h-7 w-auto sm:h-9 lg:h-10"
+        class="h-9 w-auto sm:h-11 lg:h-[52px]"
       />
     </a>
 
     {/* 2. Tagline central (some no mobile) */}
-    <span class="hidden flex-1 text-center font-display text-[15px] font-medium tracking-[0.14em] text-neutral-light/90 md:block lg:text-[18px]">
+    <span class="hidden flex-1 items-center justify-center gap-2.5 font-display text-[13px] font-bold tracking-[0.18em] text-ink/75 uppercase md:flex lg:text-[14px]">
+      <span aria-hidden="true" class="size-1.5 rounded-full bg-brand-mint"></span>
       {header.tagline}
     </span>
 
-    {/* 3. CTA verde com seta, rótulo curto no mobile */}
-    <button
-      type="button"
-      data-cta="header-cta"
-      class="btn-slave-whats inline-flex shrink-0 items-center gap-2 rounded-lg bg-brand-emerald px-4 py-2.5 font-sans text-[13px] font-semibold text-neutral-light shadow-[0_12px_28px_-14px_rgba(7,134,90,0.9)] transition-colors duration-200 hover:bg-accent-orange sm:px-6 sm:py-3 sm:text-[15px]"
-    >
+    {/* 3. CTA em pílula verde, rótulo curto no mobile */}
+    <Button cta="header-cta" size="sm">
       <span class="sm:hidden">{cta.primaryShort}</span>
       <span class="hidden sm:inline">{cta.primary}</span>
-      <Icon name="arrow-right" class="size-4 shrink-0" />
-    </button>
+    </Button>
   </div>
 </header>

@@ -14,6 +14,7 @@
 import { Picture } from 'astro:assets'
 import Section from '@components/Section.astro'
 import Icon from '@components/Icon.astro'
+import Button from '@components/Button.astro'
 import type { SectionProps } from '@lib/layout'
 import { cta } from '@data/content'
 import { why } from '@data/sections/diferenciais'
@@ -62,14 +63,9 @@ const { tone, rhythm } = Astro.props
           {why.text}
         </p>
 
-        <button
-          type="button"
-          data-cta="diferenciais-cta"
-          class="btn-slave-whats mt-8 inline-flex w-full items-center justify-center gap-3 rounded-lg bg-brand-emerald px-8 py-4 font-sans text-[17px] font-bold text-neutral-light shadow-[0_18px_40px_-18px_rgba(26,165,122,0.9)] transition-colors duration-200 hover:bg-accent-orange sm:w-auto"
-        >
+        <Button cta="diferenciais-cta" variant="emerald" size="lg" class="mt-8 w-full sm:w-auto">
           {cta.primary}
-          <Icon name="arrow-right" class="size-5 shrink-0" />
-        </button>
+        </Button>
       </div>
     </div>
   </div>

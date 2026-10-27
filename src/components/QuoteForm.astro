@@ -3,18 +3,19 @@
  * ESTRUTURA FIXA (PROMPT-PADRAO-LP 4.1.4). Grid 1.05fr · 1fr: formulário (shortcode) à esquerda, texto à direita.
  * Mobile: texto antes do formulário. O formulário é sempre o shortcode, nunca um <form> próprio.
  *
- * Desvio visual do mockup da cotação da Print Master (27/10/2026 — docs/BRIEFING.md): seção
- * verde-escura; à direita, H2 com o fim em menta, convite e 3 selos em duas linhas.
+ * Visual igual ao da LP de locação (pedido do usuário, 27/10/2026): fundo menta suave com
+ * textura, H2 escuro com o fim em verde, convite e 3 selos em duas linhas com divisórias.
  * Pedido do usuário (27/10/2026): o formulário e o botão de WhatsApp vêm do plugin — a coluna
  * do formulário é só o shortcode, num espaço vazio com altura reservada, e o botão é um espaço
  * vazio (#cotacao-whatsapp). Fora do WordPress o texto cru do shortcode é apagado.
  */
 import Icon from './Icon.astro'
+import Eyebrow from './Eyebrow.astro'
 import { quote } from '../data/content'
 
 const isDev = import.meta.env.DEV
 
-// O fim do H2 vai em menta (mockup); o texto continua sendo `quote.title`.
+// O fim do H2 vai em verde; o texto continua sendo `quote.title`.
 const at = quote.title.lastIndexOf(quote.highlight)
 const titleBefore = at >= 0 ? quote.title.slice(0, at) : quote.title
 const titleAfter = at >= 0 ? quote.title.slice(at + quote.highlight.length) : ''
@@ -34,7 +35,15 @@ const twoLines = (label: string) => {
 }
 ---
 
-<section id="cotacao" class="quote-section relative overflow-hidden pt-16 pb-20 lg:pt-20 lg:pb-24">
+<section
+  id="cotacao"
+  class="quote-section tex tex-grid tex-graph overflow-hidden pt-16 pb-20 lg:pt-20 lg:pb-24"
+>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-40 -left-32 -z-10 size-[520px] rounded-full bg-brand-mint/30 blur-3xl"
+  ></span>
+
   <div class="relative mx-auto max-w-page px-6 lg:px-10">
     <div class="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
       {/* Coluna do formulário: espaço vazio para o formulário do plugin (shortcode) */}
@@ -43,7 +52,7 @@ const twoLines = (label: string) => {
           <slot name="shortcode">
             {isDev && (
               <div
-                class="flex min-h-[560px] w-full items-center justify-center rounded-2xl border border-dashed border-neutral-light/30 font-sans text-[11px] font-semibold tracking-[0.18em] text-brand-glow uppercase"
+                class="flex min-h-[560px] w-full items-center justify-center rounded-2xl border border-dashed border-primary-dark/30 font-sans text-[11px] font-semibold tracking-[0.18em] text-accent-orange uppercase"
                 aria-label="Espaço do formulário (só em desenvolvimento)"
               >
                 Espaço · formulário do plugin
@@ -68,34 +77,31 @@ const twoLines = (label: string) => {
 
       {/* Coluna de texto */}
       <div class="order-1 lg:order-2">
-        <span class="inline-flex items-center gap-4 font-sans text-[12px] font-medium tracking-[0.3em] text-neutral-light/85 uppercase">
-          <span aria-hidden="true" class="h-1 w-11 rounded-full bg-brand-glow"></span>
-          {quote.eyebrow}
-        </span>
+        <Eyebrow>{quote.eyebrow}</Eyebrow>
 
-        <h2 class="mt-5 font-display text-[2.3rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-neutral-light sm:text-5xl xl:text-[3rem]">
+        <h2 class="mt-5 font-display text-[2.3rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-primary-dark text-balance sm:text-5xl xl:text-[3rem]">
           {titleBefore}
-          {at >= 0 && <span class="text-brand-glow">{quote.highlight}</span>}
+          {at >= 0 && <span class="text-accent-orange">{quote.highlight}</span>}
           {titleAfter}
         </h2>
 
-        <p class="mt-6 max-w-[38rem] font-sans text-base leading-relaxed text-neutral-light/85 sm:text-lg">
+        <p class="mt-6 max-w-[38rem] font-sans text-base leading-relaxed text-ink-soft sm:text-lg">
           {quote.text}
         </p>
 
-        <p class="mt-8 font-sans text-[17px] font-semibold text-neutral-light">
+        <p class="mt-8 font-sans text-[17px] font-semibold text-primary-dark">
           {quote.whatsappPrompt}
         </p>
         {/* Espaço vazio para o botão de WhatsApp do plugin */}
         <div id="cotacao-whatsapp" class="mt-4 min-h-[62px]"></div>
 
-        <ul class="mt-9 grid grid-cols-3 border-t border-neutral-light/15 pt-7 sm:flex sm:justify-between">
+        <ul class="mt-9 grid grid-cols-3 border-t border-primary-dark/15 pt-7 sm:flex sm:justify-between">
           {quote.trust.map((item) => {
             const [line1, line2] = twoLines(item.label)
             return (
               <li class="quote-trust flex flex-col items-start gap-2.5 sm:flex-row sm:items-center sm:gap-3.5">
-                <Icon name={item.icon} class="size-8 shrink-0 text-brand-glow sm:size-9" />
-                <span class="font-sans text-[14px] leading-snug text-neutral-light sm:text-[15px]">
+                <Icon name={item.icon} class="size-8 shrink-0 text-accent-orange sm:size-9" />
+                <span class="font-sans text-[14px] leading-snug font-medium text-primary-dark sm:text-[15px]">
                   <span class="block">{line1}</span>
                   <span class="block">{line2}</span>
                 </span>
@@ -109,22 +115,14 @@ const twoLines = (label: string) => {
 </section>
 
 <style>
-  /* Seção verde-escura, mais clara no alto à esquerda, como no mockup. */
   .quote-section {
-    background:
-      radial-gradient(60% 70% at 15% 0%, rgb(255 255 255 / 0.07) 0%, transparent 70%),
-      linear-gradient(
-        160deg,
-        var(--color-primary-dark-800) 0%,
-        var(--color-primary-dark) 45%,
-        var(--color-primary-dark-900) 100%
-      );
+    background: var(--color-brand-mint-soft);
   }
 
   /* Divisórias entre os selos. */
   .quote-trust + .quote-trust {
     padding-left: 1rem;
-    border-left: 1px solid rgb(255 255 255 / 0.15);
+    border-left: 1px solid rgb(6 67 55 / 0.15);
   }
 
   @media (min-width: 640px) {

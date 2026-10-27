@@ -190,11 +190,11 @@ for (const f of astroFiles) {
 /* A8. Estrutura fixa: assinaturas do Header, Hero, Cotação e Footer ---------- */
 {
   const expect = {
-    // Repinada em 26/10/2026 (mockup de abertura da Print Master, docs/BRIEFING.md): logo em
+    // Repinada em 27/10/2026 (header igual ao da LP de locação) e em 26/10/2026 (mockup de abertura, docs/BRIEFING.md): logo em
     // caixa branca dentro da barra e hero com o equipamento ancorado pelo centro da coluna 2.
     // A ordem logo · tagline · CTA, o grid de três colunas e a coluna de 300px do shortcode
     // continuam os do padrão.
-    'Header.astro': ['sticky top-0 z-50', 'header.tagline', 'data-cta="header-cta"'],
+    'Header.astro': ['sticky top-0 z-50', 'header.tagline', 'cta="header-cta"'],
     'Hero.astro': [
       'grid-template-columns: minmax(0, var(--text-col)) minmax(0, 1fr) var(--chat-col)',
       'left: calc(var(--window-center)',
