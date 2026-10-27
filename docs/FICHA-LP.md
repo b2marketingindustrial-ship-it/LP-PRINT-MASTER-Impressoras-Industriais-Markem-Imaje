@@ -79,9 +79,11 @@ conteudo:
   description: 'Impressoras industriais Markem-Imaje para codificação e rastreabilidade: jato de tinta, transferência térmica e Print & Apply, com suporte especializado.'
   hero:
     eyebrow: 'Print Master | Distribuidor autorizado'
-    title: Impressoras industriais Markem-Imaje
-    # texto e pontos do mockup de abertura aprovado em 26/10/2026
-    text: Codificação e rastreabilidade com precisão para sua linha de produção, com o suporte especializado da Print Master.
+    # pedido do usuário (27/10/2026): "codificadoras" no H1 e na tagline do header; o title e a
+    # description seguem com "impressoras", a palavra-chave da campanha
+    title: Codificadoras industriais Markem-Imaje
+    # texto enviado pelo usuário em 27/10/2026; pontos do mockup de abertura aprovado em 26/10/2026
+    text: Grava data de validade, lote, fabricação e outros códigos, em diversas posições e materiais com marcações nítidas e de alta definição.
     points:
       - icon: barcode
         line1: Precisão na

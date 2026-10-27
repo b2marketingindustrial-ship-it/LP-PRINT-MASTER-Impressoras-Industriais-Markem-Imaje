@@ -10,7 +10,6 @@
  */
 import type { IconName } from './icons'
 import type { Photo } from './types'
-import { site } from './site'
 
 import heroBg from '@assets/heroBg.png'
 import heroMarca from '@assets/heroMarca.png'
@@ -43,7 +42,8 @@ export const cta = {
 
 export const header = {
   /** Mockup de abertura (26/10/2026): a tagline é só a categoria; a marca está no H1. */
-  tagline: 'Impressoras industriais',
+  /** Pedido do usuário (27/10/2026): "codificadoras" no lugar de "impressoras", aqui e no H1. */
+  tagline: 'Codificadoras industriais',
 } as const
 
 /* -------------------------------------------------------------------- hero */
@@ -51,10 +51,15 @@ export const header = {
 export const hero = {
   /** Selo de distribuidor: decisão do usuário no mockup de abertura (26/10/2026). */
   eyebrow: 'Print Master | Distribuidor autorizado',
-  title: site.product,
+  /**
+   * Pedido do usuário (27/10/2026): o H1 diz "Codificadoras", e não "Impressoras" como em
+   * `site.product` (que segue no title, na description e no JSON-LD).
+   */
+  title: 'Codificadoras industriais Markem-Imaje',
   /** Trecho do H1 que vai para a última linha, em menta (mockup de 26/10/2026). */
   highlight: 'Markem-Imaje',
-  text: 'Codificação e rastreabilidade com precisão para sua linha de produção, com o suporte especializado da Print Master.',
+  /** Texto enviado pelo usuário em 27/10/2026, no lugar do de codificação e rastreabilidade. */
+  text: 'Grava data de validade, lote, fabricação e outros códigos, em diversas posições e materiais com marcações nítidas e de alta definição.',
   banner: {
     src: heroBg,
     alt: 'Impressoras jato de tinta Markem-Imaje 9410 e 9750 lado a lado sobre fundo verde-escuro',
@@ -77,34 +82,6 @@ export const hero = {
   badge: Photo
   link: string
   points: readonly [HeroPoint, HeroPoint, HeroPoint]
-}
-
-/**
- * Prévia do chat do hero, só fora do WordPress: no lugar do texto cru do shortcode, a página
- * mostra como o widget de atendimento aparece (mockup de 26/10/2026). No WordPress o plugin
- * troca o shortcode pelo chat de verdade e esta prévia não é usada.
- */
-export const chatPreview = {
-  title: 'Atendimento Print Master',
-  subtitle: 'Vamos encontrar a solução ideal',
-  greeting: 'Olá! Como podemos ajudar sua empresa?',
-  prompt: 'Selecione o que você precisa:',
-  options: [
-    { id: 'codificadoras', icon: 'barcode', label: 'Codificadoras' },
-    { id: 'consumiveis', icon: 'box', label: 'Consumíveis' },
-    { id: 'pecas', icon: 'gear', label: 'Peças' },
-    { id: 'manutencao', icon: 'wrench', label: 'Manutenção' },
-  ],
-  hint: 'Escolha uma opção para continuar.',
-  privacy: 'Ao continuar, você aceita nossa política de privacidade.',
-} as const satisfies {
-  title: string
-  subtitle: string
-  greeting: string
-  prompt: string
-  options: readonly { id: string; icon: IconName; label: string }[]
-  hint: string
-  privacy: string
 }
 
 /* ----------------------------------------------------------------- cotação */
