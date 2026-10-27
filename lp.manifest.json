@@ -124,8 +124,8 @@
         },
         {
           "dir": "processo",
-          "match": "banner",
-          "files": "banner.jpg",
+          "match": "banner-desktop",
+          "files": "banner-desktop.jpg",
           "spec": "Banner 1870×841 com texto na arte, sem botão desenhado (variante local)",
           "width": 1870,
           "height": 841,

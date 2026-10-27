@@ -8,7 +8,7 @@
  */
 import type { Photo } from '@data/types'
 
-import banner from '@assets/processo/banner.jpg'
+import banner from '@assets/processo/banner-desktop.jpg'
 import bannerMobile from '@assets/processo/banner-mobile.jpg'
 
 const alt =
