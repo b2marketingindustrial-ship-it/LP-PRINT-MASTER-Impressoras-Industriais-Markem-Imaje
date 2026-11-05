@@ -29,7 +29,7 @@ export const why = {
   /** Cena do bloco inteiro (mockup de 27/10/2026): os equipamentos já estão na foto. */
   scene: {
     src: cenario,
-    alt: 'Impressoras Markem-Imaje 9410, Cimpak e SmartDate X45 diante de uma linha de envase',
+    alt: 'Equipamentos Markem-Imaje 9410, Cimpak e SmartDate X45 diante de uma linha de envase',
   },
   reasons: [
     {

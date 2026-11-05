@@ -6,7 +6,7 @@
  * com o H2 numa linha só (05/11/2026), cards com foto 6:5 em cima e corpo verde-escuro (título, frase e
  * seta), sem faixa de ajuda no fim (removida em 05/11/2026). O card inteiro é o CTA.
  * Pedido do usuário (05/11/2026): as 11 aplicações rodam numa esteira infinita, que para no
- * hover e no foco (sem botão de pausa, removido em 05/11/2026); com movimento reduzido vira um trilho com rolagem.
+ * hover e no foco (sem botão de pausa), com setas de navegação nas laterais (05/11/2026); com movimento reduzido vira um trilho com rolagem.
  * Item sem foto mostra o ícone num palco verde.
  * `npm run compose` sobrescreve este arquivo com o da biblioteca: ao recompor, reaplique a variante.
  */
@@ -34,8 +34,8 @@ const { tone, rhythm } = Astro.props
   </div>
 
   {/* Esteira infinita: a lista roda duas vezes; a cópia fica fora da leitura e do teclado. */}
-  <div class="mt-10 -mb-12" data-marquee>
-    <div class="app-marquee ml-[calc(50%-50vw)] w-screen">
+  <div class="relative mt-10 -mb-12" data-marquee>
+    <div class="app-marquee relative ml-[calc(50%-50vw)] w-screen">
       <div class="app-track flex w-max">
         {[0, 1].map((copy) => (
           <ul
@@ -101,6 +101,29 @@ const { tone, rhythm } = Astro.props
         ))}
       </div>
     </div>
+
+    {/* Navegação nas laterais: cada seta avança ou volta um card (05/11/2026) */}
+    {[
+      {
+        dir: -1,
+        label: 'Aplicação anterior',
+        side: '-left-2 sm:left-0',
+        rot: 'rotate-180',
+      },
+      { dir: 1, label: 'Próxima aplicação', side: '-right-2 sm:right-0', rot: '' },
+    ].map((b) => (
+      <button
+        type="button"
+        data-marquee-step={b.dir}
+        aria-label={b.label}
+        class:list={[
+          'app-nav absolute top-[calc(50%-1.25rem)] z-10 hidden size-12 -translate-y-1/2 items-center justify-center rounded-full bg-neutral-light text-primary-dark shadow-[0_14px_30px_-12px_rgba(1,36,34,0.55)] ring-1 ring-primary-dark/10 transition-[background-color,color,transform] duration-200 hover:scale-105 hover:bg-accent-orange hover:text-neutral-light',
+          b.side,
+        ]}
+      >
+        <Icon name="chevron-right" class:list={['size-5', b.rot]} />
+      </button>
+    ))}
   </div>
 </Section>
 
@@ -145,6 +168,17 @@ const { tone, rhythm } = Astro.props
     animation-play-state: paused;
   }
 
+  /* Com JS a esteira é movida pelo script (para as setas poderem empurrar); sem JS, a animação
+     CSS acima continua valendo e as setas ficam escondidas. */
+  [data-marquee].is-js .app-track {
+    animation: none;
+    will-change: transform;
+  }
+
+  [data-marquee].is-js .app-nav {
+    display: flex;
+  }
+
   @keyframes app-marquee {
     to {
       transform: translateX(-50%);
@@ -160,6 +194,10 @@ const { tone, rhythm } = Astro.props
 
     .app-track {
       animation: none;
+    }
+
+    .app-nav {
+      display: none !important;
     }
 
     .app-track [data-copy='1'] {
@@ -180,3 +218,63 @@ const { tone, rhythm } = Astro.props
     }
   }
 </style>
+
+<script>
+  // Esteira infinita movida por JS: anda sozinha, para no hover e no foco, e as setas empurram
+  // um card por vez com transição suave. A trilha tem a lista duas vezes; o deslocamento dá a
+  // volta na metade da largura, sem emenda.
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  document.querySelectorAll<HTMLElement>('[data-marquee]').forEach((root) => {
+    const belt = root.querySelector<HTMLElement>('.app-marquee')
+    const track = root.querySelector<HTMLElement>('.app-track')
+    if (!belt || !track || reduce) return
+    root.classList.add('is-js')
+
+    const SPEED = 40 // px por segundo
+    let offset = 0
+    let paused = false
+    let jump: { from: number; to: number; start: number } | null = null
+    let last = performance.now()
+
+    const half = () => track.scrollWidth / 2
+    const step = () => {
+      const li = track.querySelector<HTMLElement>('li')
+      const gap = parseFloat(getComputedStyle(li?.parentElement ?? track).columnGap) || 20
+      return (li?.offsetWidth ?? 300) + gap
+    }
+    const wrap = (x: number) => {
+      const h = half()
+      return ((x % h) + h) % h
+    }
+
+    const frame = (now: number) => {
+      const dt = Math.min(now - last, 64) / 1000
+      last = now
+      if (jump) {
+        const t = Math.min((now - jump.start) / 520, 1)
+        const ease = 1 - Math.pow(1 - t, 3)
+        offset = jump.from + (jump.to - jump.from) * ease
+        if (t === 1) jump = null
+      } else if (!paused) {
+        offset += SPEED * dt
+      }
+      track.style.transform = `translate3d(${-wrap(offset)}px,0,0)`
+      requestAnimationFrame(frame)
+    }
+    requestAnimationFrame(frame)
+
+    belt.addEventListener('mouseenter', () => (paused = true))
+    belt.addEventListener('mouseleave', () => (paused = false))
+    belt.addEventListener('focusin', () => (paused = true))
+    belt.addEventListener('focusout', () => (paused = false))
+
+    root.querySelectorAll<HTMLButtonElement>('[data-marquee-step]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const dir = Number(btn.dataset.marqueeStep)
+        const from = jump ? jump.to : offset
+        jump = { from: offset, to: from + dir * step(), start: performance.now() }
+      })
+    })
+  })
+</script>

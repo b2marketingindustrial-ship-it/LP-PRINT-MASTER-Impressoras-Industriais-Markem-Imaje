@@ -62,7 +62,7 @@ export const hero = {
   text: 'Grava data de validade, lote, fabricação e outros códigos, em diversas posições e materiais com marcações nítidas e de alta definição.',
   banner: {
     src: heroBg,
-    alt: 'Impressoras jato de tinta Markem-Imaje 9410 e 9750 lado a lado sobre fundo verde-escuro',
+    alt: 'Codificadores jato de tinta Markem-Imaje 9410 e 9750 lado a lado sobre fundo verde-escuro',
   },
   /** Selo branco com o logo da marca, acima dos equipamentos. */
   badge: { src: heroMarca, alt: 'Markem-Imaje' },

@@ -33,14 +33,14 @@ export const solutions = {
     {
       id: 'jato-de-tinta',
       icon: 'droplet',
-      title: 'Impressoras a jato de tinta',
+      title: 'Jato de tinta',
       description: 'Precisão inigualável em altas velocidades para uma ampla gama de materiais.',
-      photo: { src: fotoJato, alt: 'Impressora jato de tinta Markem-Imaje 9410' },
+      photo: { src: fotoJato, alt: 'Codificador jato de tinta Markem-Imaje 9410' },
     },
     {
       id: 'laser',
       icon: 'crosshair',
-      title: 'Impressoras a laser',
+      title: 'Marcação a laser',
       description: 'Solução de marcação permanente e de alta resolução para garantir durabilidade.',
       photo: null,
     },
