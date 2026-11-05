@@ -11,6 +11,7 @@
  * (05/11/2026): o CTA desce até a base dos cards e as linhas de cards dividem a altura por igual.
  * No celular tudo empilha.
  */
+import { Image } from 'astro:assets'
 import Section from '@components/Section.astro'
 import Icon from '@components/Icon.astro'
 import Eyebrow from '@components/Eyebrow.astro'
@@ -60,11 +61,26 @@ const titleAfter = solutions.title.slice(at + solutions.highlight.length)
   <ul class="mt-6 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
     {solutions.items.map((item) => (
       <li class="solution-card group flex flex-col rounded-[22px] border border-primary-dark/10 bg-neutral-light p-3 shadow-[0_22px_44px_-30px_rgba(6,67,55,0.45)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_30px_56px_-30px_rgba(6,67,55,0.55)]">
-        <div class="solution-stage relative flex h-32 items-center ring-1 ring-brand-mint/30 ring-inset justify-center overflow-hidden rounded-2xl">
-          <span aria-hidden="true" class="solution-stage__rings absolute size-48"></span>
-          <span class="relative flex size-16 items-center justify-center rounded-2xl bg-primary-dark text-brand-mint shadow-[0_16px_30px_-14px_rgba(6,67,55,0.9)] transition-transform duration-300 group-hover:scale-105">
-            <Icon name={item.icon} class="size-7" />
-          </span>
+        <div class="solution-stage relative flex h-44 items-center justify-center overflow-hidden rounded-2xl ring-1 ring-brand-mint/30 ring-inset">
+          {item.photo ? (
+            <Image
+              src={item.photo.src}
+              alt={item.photo.alt}
+              format="webp"
+              widths={[240, 400]}
+              sizes="240px"
+              loading="lazy"
+              decoding="async"
+              class="relative z-[1] h-[88%] w-auto max-w-[80%] object-contain drop-shadow-[0_14px_14px_rgba(6,67,55,0.18)] transition-transform duration-500 ease-out group-hover:scale-[1.05]"
+            />
+          ) : (
+            <>
+              <span aria-hidden="true" class="solution-stage__rings absolute size-48"></span>
+              <span class="relative flex size-16 items-center justify-center rounded-2xl bg-primary-dark text-brand-mint shadow-[0_16px_30px_-14px_rgba(6,67,55,0.9)] transition-transform duration-300 group-hover:scale-105">
+                <Icon name={item.icon} class="size-7" />
+              </span>
+            </>
+          )}
         </div>
         <div class="flex flex-1 flex-col px-3 pt-5 pb-3">
           <h4 class="font-display text-[1.15rem] leading-snug font-extrabold text-ink">

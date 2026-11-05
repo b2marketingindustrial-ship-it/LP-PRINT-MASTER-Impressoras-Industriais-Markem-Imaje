@@ -5,8 +5,9 @@
  * cards com foto 6:5 e corpo verde-escuro, sem faixa de ajuda (removida em 05/11/2026). O card inteiro é o CTA.
  *
  * Pedido do usuário (05/11/2026): as 11 aplicações, com os textos enviados por ele, num
- * carrossel infinito. Só 4 têm foto (recortadas do mockup); as outras levam `photo: null` e
- * mostram o ícone num palco verde até a foto chegar — a pendência está no BRIEFING.
+ * carrossel infinito. 10 têm foto (4 do mockup e 6 da galeria da página atual do cliente);
+ * garrafas de plástico segue com `photo: null` e o ícone num palco verde — a galeria não tem foto
+ * dela (a de garrafa é de vidro).
  */
 import type { IconName } from '@data/icons'
 import type { Photo } from '@data/types'
@@ -15,6 +16,13 @@ import app1 from '@assets/aplicacoes/aplicacao-1.jpg'
 import app2 from '@assets/aplicacoes/aplicacao-2.jpg'
 import app3 from '@assets/aplicacoes/aplicacao-3.jpg'
 import app4 from '@assets/aplicacoes/aplicacao-4.jpg'
+// Fotos da galeria da página atual do cliente (05/11/2026), recortadas em 6:5.
+import appVidro from '@assets/aplicacoes/aplicacao-vidro.jpg'
+import appFilmes from '@assets/aplicacoes/aplicacao-filmes-flexiveis.jpg'
+import appLatas from '@assets/aplicacoes/aplicacao-latas-metal.jpg'
+import appPecas from '@assets/aplicacoes/aplicacao-pecas-industriais.jpg'
+import appExtrudados from '@assets/aplicacoes/aplicacao-plasticos-extrudados.jpg'
+import appTampas from '@assets/aplicacoes/aplicacao-tampas.jpg'
 
 export interface Application {
   id: string
@@ -45,7 +53,7 @@ export const applications = {
       description:
         'Códigos 100% legíveis que garantem a rastreabilidade do produto, com tintas especiais.',
       icon: 'glass',
-      photo: null,
+      photo: { src: appVidro, alt: 'Código impresso em garrafa de vidro com bebida' },
     },
     {
       id: 'papelao',
@@ -59,7 +67,7 @@ export const applications = {
       label: 'Filmes flexíveis',
       description: 'Diferentes tecnologias de impressão para melhor atender às suas necessidades.',
       icon: 'layers',
-      photo: null,
+      photo: { src: appFilmes, alt: 'Código impresso em sachês de filme flexível' },
     },
     {
       id: 'cabos-fios',
@@ -91,7 +99,10 @@ export const applications = {
       description:
         'Códigos permanentes que garantem a segurança e rastreio para as indústrias de alimentos e bebidas.',
       icon: 'cylinder',
-      photo: null,
+      photo: {
+        src: appLatas,
+        alt: 'Texto de esterilização impresso na tampa de uma lata de metal',
+      },
     },
     {
       id: 'pecas-industriais',
@@ -99,7 +110,7 @@ export const applications = {
       description:
         'Garanta rastreabilidade e conformidade regulatória ao codificar suas peças industriais de metal e plástico.',
       icon: 'gear',
-      photo: null,
+      photo: { src: appPecas, alt: 'Símbolos e QR code marcados no cabo de uma peça industrial' },
     },
     {
       id: 'plasticos-extrudados',
@@ -107,7 +118,7 @@ export const applications = {
       description:
         'Códigos 100% permanentes e legíveis de alto contraste, mesmo nos substratos de plásticos mais difíceis.',
       icon: 'ruler',
-      photo: null,
+      photo: { src: appExtrudados, alt: 'Texto impresso em tubos de plástico extrudado' },
     },
     {
       id: 'tampas',
@@ -115,7 +126,7 @@ export const applications = {
       description:
         'Impressão em alta resolução e alta velocidade em grandes áreas de superfície e vários campos de impressão.',
       icon: 'disc',
-      photo: null,
+      photo: { src: appTampas, alt: 'Códigos impressos no interior de tampas plásticas' },
     },
   ],
 } as const satisfies {

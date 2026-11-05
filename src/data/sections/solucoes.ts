@@ -6,12 +6,19 @@
  * "Impressoras a laser" aparece só aqui: a vitrine ainda não tem modelo laser.
  */
 import type { IconName } from '@data/icons'
+import type { Photo } from '@data/types'
+
+// Fotos de produto da própria LP (05/11/2026); laser não tem modelo no material e fica com ícone.
+import fotoJato from '@assets/vitrine/produto-4.png'
+import fotoEtiqueta from '@assets/vitrine/produto-10.png'
+import fotoTermica from '@assets/vitrine/produto-8.png'
 
 export interface Solution {
   id: string
   icon: IconName
   title: string
   description: string
+  photo: Photo | null
 }
 
 export const solutions = {
@@ -28,12 +35,14 @@ export const solutions = {
       icon: 'droplet',
       title: 'Impressoras a jato de tinta',
       description: 'Precisão inigualável em altas velocidades para uma ampla gama de materiais.',
+      photo: { src: fotoJato, alt: 'Impressora jato de tinta Markem-Imaje 9410' },
     },
     {
       id: 'laser',
       icon: 'crosshair',
       title: 'Impressoras a laser',
       description: 'Solução de marcação permanente e de alta resolução para garantir durabilidade.',
+      photo: null,
     },
     {
       id: 'etiquetagem',
@@ -41,12 +50,14 @@ export const solutions = {
       title: 'Etiquetagem automática',
       description:
         'Perfeição no posicionamento e aplicação de etiquetas em caixas e produtos de todos os tamanhos.',
+      photo: { src: fotoEtiqueta, alt: 'Aplicador de etiquetas Markem-Imaje 2200' },
     },
     {
       id: 'termica',
       icon: 'flame',
       title: 'Codificação térmica',
       description: 'Ideal para filmes flexíveis, garantindo qualidade superior em codificação.',
+      photo: { src: fotoTermica, alt: 'Codificador térmico SmartDate X45' },
     },
   ],
 } as const satisfies {

@@ -197,9 +197,9 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
   /* Medidas que amarram as colunas e o banner ao mesmo eixo. */
   .hero {
     --text-col: 400px;
-    /* Largura de referência do banner: fixa quando a coluna de texto alarga (H1 em 2 linhas). */
-    /* Assim os equipamentos não encolhem — só andam para a direita (05/11/2026). */
-    --photo-base: 400px;
+    /* O banner usa a mesma coluna de texto: o par de equipamentos cabe entre o título e o chat,
+             sem invadir o H1 em tela larga (05/11/2026). */
+    --photo-base: var(--text-col);
     --chat-col: 300px;
     --col-gap: 2rem;
     --page-half: calc(var(--container-page) / 2);
@@ -281,8 +281,16 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
       grid-template-columns: minmax(0, var(--text-col)) minmax(0, 1fr) var(--chat-col);
     }
 
+    /* O conteúdo fica centrado na altura do hero: respiro igual em cima e embaixo. */
     .hero {
       min-height: 680px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero > div {
+      width: 100%;
     }
 
     .hero-window {
@@ -340,7 +348,6 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
   @media (min-width: 1280px) {
     .hero {
       --text-col: 600px;
-      --photo-base: 440px;
       min-height: 700px;
     }
   }
