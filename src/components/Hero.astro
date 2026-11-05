@@ -205,9 +205,12 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
     --page-edge: max(0px, calc(50% - var(--page-half)));
     /* Largura útil do contêiner (sem o px-10) e centro da coluna 2, a partir da borda da tela. */
     --inner: calc(min(100%, var(--container-page)) - 80px);
+    /* Equipamentos e selo 30px mais perto do texto (05/11/2026); só o desktop usa --window-center. */
+    --equip-shift: 30px;
     --window-center: calc(
       var(--page-edge) + 40px + var(--text-col) + var(--col-gap) +
-        (var(--inner) - var(--text-col) - var(--chat-col) - 2 * var(--col-gap)) / 2
+        (var(--inner) - var(--text-col) - var(--chat-col) - 2 * var(--col-gap)) / 2 -
+        var(--equip-shift)
     );
     /* Largura do banner: o par (36,8% da imagem) ocupa o espaço entre o texto e o chat. */
     /* Em vw (não %) para a mesma conta servir também ao `top` do selo. */
