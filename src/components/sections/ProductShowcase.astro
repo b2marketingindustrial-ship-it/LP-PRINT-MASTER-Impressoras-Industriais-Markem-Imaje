@@ -3,9 +3,11 @@
  * Vitrine de produtos — fase "oferta" da biblioteca B2.
  *
  * VARIANTE LOCAL — Print Master, mockup de 26/10/2026 (docs/BRIEFING.md): os grupos viram
- * abas acessíveis, com a contagem de modelos ao lado; cada card tem a foto grande em cima e um
+ * abas acessíveis, com a contagem de modelos; cada card tem a foto grande em cima e um
  * painel verde-escuro com a marca, o modelo em destaque e "Ver equipamento"; uma faixa de ajuda
- * fecha a seção. `npm run compose` sobrescreve este arquivo com o da biblioteca: ao recompor,
+ * fecha a seção. Refino de 05/11/2026: abas num controle segmentado com ícone e contagem, fim do
+ * H2 em verde, palco da foto com luz e sombra de piso, e a ajuda num cartão com botão.
+ * `npm run compose` sobrescreve este arquivo com o da biblioteca: ao recompor,
  * reaplique a variante.
  *
  * Sem grupos, a vitrine continua uma grade só, sem abas.
@@ -17,6 +19,7 @@
 import { Image } from 'astro:assets'
 import Section from '@components/Section.astro'
 import Icon from '@components/Icon.astro'
+import Button from '@components/Button.astro'
 import type { SectionProps } from '@lib/layout'
 import { showcase, type ShowcaseGroup, type ShowcaseItem } from '@data/sections/vitrine'
 
@@ -55,9 +58,10 @@ const shelves = tabbed
   ? groups.map((group) => ({
       id: group.id,
       label: group.label,
+      icon: group.icon,
       items: items.filter((item) => item.group === group.id),
     }))
-  : [{ id: 'todos', label: showcase.title, items: [...items] }]
+  : [{ id: 'todos', label: showcase.title, icon: null, items: [...items] }]
 
 for (const shelf of shelves) {
   if (!shelf.items.length) {
@@ -65,6 +69,13 @@ for (const shelf of shelves) {
       `vitrine: o grupo "${shelf.id}" está sem itens. Remova o grupo ou aponte itens para ele.`,
     )
   }
+}
+
+const titleLead = showcase.title.endsWith(showcase.titleHighlight)
+  ? showcase.title.slice(0, -showcase.titleHighlight.length).trim()
+  : showcase.title
+if (titleLead === showcase.title) {
+  throw new Error('vitrine: titleHighlight precisa ser o final exato de title.')
 }
 
 const countLabel = (n: number) => `${n} ${n === 1 ? 'modelo' : 'modelos'}`
@@ -89,19 +100,19 @@ const modelSize = (model: string) =>
       {showcase.eyebrow}
     </span>
     <h2 class="mt-3 font-display text-3xl leading-[1.08] font-extrabold tracking-[-0.025em] text-ink sm:text-4xl lg:text-[2.9rem]">
-      {showcase.title}
+      {titleLead} <span class="text-accent-orange">{showcase.titleHighlight}</span>
     </h2>
     <p class="mt-3 font-sans text-[15px] leading-relaxed text-ink-soft sm:text-[17px]">
       {showcase.text}
     </p>
   </div>
 
-  <div class="mt-8 flex flex-wrap items-center gap-x-4 gap-y-4">
-    {tabbed && (
+  {tabbed && (
+    <div class="scroll-track -mx-6 mt-9 overflow-x-auto px-6 pb-1 sm:mx-0 sm:px-0">
       <div
         role="tablist"
         aria-label="Tecnologias"
-        class="scroll-track -mx-6 flex max-w-[calc(100%+3rem)] gap-3 overflow-x-auto px-6 pb-1 sm:mx-0 sm:max-w-full sm:px-0"
+        class="inline-flex gap-1 rounded-2xl bg-neutral-light p-1.5 shadow-[0_14px_34px_-24px_rgba(6,67,55,0.5)] ring-1 ring-primary-dark/10"
       >
         {shelves.map((shelf, i) => (
           <button
@@ -112,22 +123,27 @@ const modelSize = (model: string) =>
             aria-selected={i === 0 ? 'true' : 'false'}
             tabindex={i === 0 ? 0 : -1}
             data-showcase-tab
-            data-count={countLabel(shelf.items.length)}
-            class="shrink-0 rounded-lg border border-neutral-gray-200/80 bg-neutral-light px-5 py-3 font-sans text-[15px] font-medium whitespace-nowrap text-ink transition-colors duration-200 hover:border-primary-dark/40 aria-selected:border-primary-dark aria-selected:bg-primary-dark aria-selected:font-semibold aria-selected:text-neutral-light sm:px-8 sm:text-base"
+            class="showcase-tab group/tab inline-flex shrink-0 items-center gap-2.5 rounded-xl px-4 py-2.5 font-sans text-[14.5px] font-semibold whitespace-nowrap text-ink-soft transition-[background-color,color,box-shadow] duration-200 hover:bg-brand-mint-soft hover:text-primary-dark aria-selected:bg-primary-dark aria-selected:text-neutral-light aria-selected:shadow-[0_10px_22px_-12px_rgba(6,67,55,0.9)] sm:px-5 sm:text-[15px]"
           >
+            {shelf.icon && (
+              <Icon
+                name={shelf.icon}
+                class="size-[18px] text-accent-orange transition-colors group-aria-selected/tab:text-brand-glow"
+              />
+            )}
             {shelf.label}
+            <span
+              aria-hidden="true"
+              class="rounded-full bg-primary-dark/8 px-2 py-0.5 text-[11.5px] font-bold text-primary-dark/70 tabular-nums group-aria-selected/tab:bg-white/15 group-aria-selected/tab:text-neutral-light"
+            >
+              {shelf.items.length}
+            </span>
+            <span class="sr-only">({countLabel(shelf.items.length)})</span>
           </button>
         ))}
       </div>
-    )}
-    <span
-      class="ml-auto shrink-0 font-sans text-[12px] font-semibold tracking-[0.22em] text-ink-soft uppercase"
-      aria-live="polite"
-      data-showcase-count
-    >
-      {countLabel(shelves[0].items.length)}
-    </span>
-  </div>
+    </div>
+  )}
 
   {shelves.map((shelf, i) => (
     <div
@@ -136,7 +152,7 @@ const modelSize = (model: string) =>
       aria-labelledby={tabbed ? `vitrine-aba-${shelf.id}` : undefined}
       hidden={i !== 0}
       data-showcase-panel
-      class="showcase-panel mt-6"
+      class:list={['showcase-panel', tabbed ? 'mt-7' : 'mt-9']}
     >
       <ul
         data-showcase-rail
@@ -150,9 +166,13 @@ const modelSize = (model: string) =>
               <button
                 type="button"
                 data-cta={`vitrine-${item.id}`}
-                class="btn-slave-whats showcase-card group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-neutral-gray-200/70 bg-neutral-light text-left shadow-[0_18px_40px_-28px_rgba(6,67,55,0.45)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_32px_60px_-30px_rgba(6,67,55,0.6)]"
+                class="btn-slave-whats showcase-card group flex h-full w-full flex-col overflow-hidden rounded-[20px] bg-neutral-light text-left shadow-[0_1px_2px_rgba(6,67,55,0.06),0_18px_40px_-28px_rgba(6,67,55,0.45)] ring-1 ring-primary-dark/10 hover:ring-brand-leaf/40 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_32px_60px_-30px_rgba(6,67,55,0.6)]"
               >
-                <span class="showcase-card__stage flex aspect-[4/3] items-center justify-center overflow-hidden">
+                <span class="showcase-card__stage relative flex aspect-[4/3] items-center justify-center overflow-hidden">
+                  <span
+                    aria-hidden="true"
+                    class="showcase-card__floor absolute inset-x-[18%] bottom-[7%] h-[9%] rounded-[50%]"
+                  />
                   <Image
                     src={item.photo.src}
                     alt={item.photo.alt}
@@ -161,11 +181,11 @@ const modelSize = (model: string) =>
                     sizes="(min-width: 1024px) 240px, (min-width: 640px) 40vw, 66vw"
                     loading="lazy"
                     decoding="async"
-                    class="h-full w-full object-contain p-3 transition-transform duration-500 ease-out group-hover:scale-[1.05]"
+                    class="showcase-card__img relative h-full w-full object-contain px-4 pt-5 pb-4 transition-transform duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-[1.04]"
                   />
                 </span>
 
-                <span class="showcase-card__panel flex flex-1 flex-col px-4 pt-4 pb-4 sm:px-5">
+                <span class="showcase-card__panel relative flex flex-1 flex-col px-4 pt-4 pb-4 sm:px-5">
                   <span class="font-sans text-[10.5px] font-bold tracking-[0.18em] text-neutral-light/85 uppercase">
                     {showcase.brand}
                   </span>
@@ -187,7 +207,7 @@ const modelSize = (model: string) =>
                     <span class="font-sans text-[13.5px] text-neutral-light/90">
                       {showcase.itemCta}
                     </span>
-                    <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-leaf text-neutral-light transition-transform duration-300 group-hover:translate-x-0.5">
+                    <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-leaf text-neutral-light transition-[transform,background-color,color] duration-300 group-hover:translate-x-0.5 group-hover:bg-brand-glow group-hover:text-primary-dark-900">
                       <Icon name="arrow-right" class="size-4" />
                     </span>
                   </span>
@@ -221,28 +241,65 @@ const modelSize = (model: string) =>
     </div>
   ))}
 
-  <div class="mt-10 flex flex-col gap-3 border-t border-neutral-gray-200/80 pt-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-    <p class="font-display text-lg leading-snug font-bold text-ink sm:text-xl lg:text-[22px]">
-      {showcase.help.text}
-    </p>
-    <button
-      type="button"
-      data-cta="vitrine-ajuda"
-      class="btn-slave-whats group inline-flex shrink-0 items-center gap-2 self-start font-sans text-[15px] font-semibold text-primary-dark underline decoration-1 underline-offset-[5px] transition-colors duration-200 hover:text-accent-orange sm:self-auto"
+  <div class="showcase-help relative mt-12 flex flex-col gap-5 overflow-hidden rounded-[20px] p-6 ring-1 ring-brand-leaf/20 sm:flex-row sm:items-center sm:gap-6 sm:p-7 lg:px-9">
+    <span class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary-dark text-brand-glow shadow-[0_12px_24px_-14px_rgba(6,67,55,0.9)]">
+      <Icon name="chat" class="size-[22px]" />
+    </span>
+    <div class="flex-1">
+      <p class="font-display text-lg leading-snug font-bold text-ink sm:text-xl">
+        {showcase.help.text}
+      </p>
+      <p class="mt-1 font-sans text-[14.5px] leading-relaxed text-ink-soft">{showcase.help.note}</p>
+    </div>
+    <Button
+      cta="vitrine-ajuda"
+      variant="primary"
+      class="w-full shrink-0 whitespace-nowrap sm:w-auto"
     >
       {showcase.help.cta}
-      <Icon
-        name="arrow-right"
-        class="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
-      />
-    </button>
+    </Button>
   </div>
 </Section>
 
 <style>
-  /* Palco claro da foto: o recorte do produto pousa sobre um cinza que clareia para baixo. */
+  /* Palco claro da foto: luz no centro, menta suave nas bordas e sombra de piso sob o produto. */
   .showcase-card__stage {
-    background-image: linear-gradient(180deg, #f3f6f5 0%, #ffffff 100%);
+    background:
+      radial-gradient(65% 60% at 50% 42%, #ffffff 0%, transparent 100%),
+      linear-gradient(180deg, #eef5f2 0%, #f8fbfa 100%);
+  }
+
+  .showcase-card__floor {
+    background: radial-gradient(closest-side, rgb(6 67 55 / 0.22), transparent);
+    transition:
+      transform 500ms ease-out,
+      opacity 500ms ease-out;
+  }
+
+  .showcase-card:hover .showcase-card__floor {
+    transform: scaleX(0.9);
+    opacity: 0.7;
+  }
+
+  .showcase-card__img {
+    filter: drop-shadow(0 14px 14px rgb(6 67 55 / 0.14));
+  }
+
+  /* Fio menta no topo do painel, separando foto e texto. */
+  .showcase-card__panel::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-brand-glow), transparent);
+    opacity: 0.55;
+  }
+
+  /* Cartão de ajuda: menta claro com luz no canto. */
+  .showcase-help {
+    background:
+      radial-gradient(60% 140% at 100% 0%, rgb(124 239 192 / 0.35) 0%, transparent 60%),
+      linear-gradient(120deg, var(--color-brand-mint-soft) 0%, #f4fbf8 100%);
   }
 
   /* Painel verde-escuro do card, com um brilho sutil no topo. */
@@ -295,7 +352,6 @@ const modelSize = (model: string) =>
   document.querySelectorAll<HTMLElement>('[data-showcase]').forEach((root) => {
     const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-showcase-tab]')]
     const panels = [...root.querySelectorAll<HTMLElement>('[data-showcase-panel]')]
-    const count = root.querySelector<HTMLElement>('[data-showcase-count]')
 
     const select = (index: number, focus = false) => {
       tabs.forEach((tab, i) => {
@@ -306,7 +362,6 @@ const modelSize = (model: string) =>
       panels.forEach((panel, i) => {
         panel.hidden = i !== index
       })
-      if (count) count.textContent = tabs[index].dataset.count ?? ''
       if (focus) tabs[index].focus()
     }
 

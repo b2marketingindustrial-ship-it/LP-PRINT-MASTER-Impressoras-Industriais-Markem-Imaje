@@ -2,69 +2,182 @@
 /**
  * "Como funciona" — fase "apoio" da biblioteca B2.
  *
- * VARIANTE LOCAL — Print Master, pedido de 27/10/2026 (docs/BRIEFING.md): o painel das etapas
- * deu lugar ao banner enviado pelo usuário. O banner inteiro é o CTA (`processo-cta`); no
- * celular entra a arte vertical enviada pelo usuário. É o bloco escuro da primeira metade da página.
+ * VARIANTE LOCAL — Print Master, pedido de 05/11/2026 (docs/BRIEFING.md): segue a referência
+ * SEIVE. Painel verde profundo com o texto em HTML à esquerda (eyebrow com traço, H2 com a parte
+ * final em menta, texto, três destaques entre fios, CTA e selo Markem-Imaje) e a cena do banner
+ * à direita, fundida ao verde; as 4 etapas entram em cards brancos sobrepostos à base do painel.
+ * No celular a cena desce para baixo do texto. É o bloco escuro da primeira metade da página.
  * `npm run compose` sobrescreve este arquivo com o da biblioteca: ao recompor, reaplique.
  */
-import { getImage } from 'astro:assets'
+import { Image, Picture } from 'astro:assets'
 import Section from '@components/Section.astro'
+import Icon from '@components/Icon.astro'
+import Button from '@components/Button.astro'
 import type { SectionProps } from '@lib/layout'
+import { cta, hero } from '@data/content'
 import { process } from '@data/sections/processo'
 
 type Props = SectionProps
 
 const { tone, rhythm } = Astro.props
-
-const desktop = await Promise.all(
-  [640, 1024, 1536, 1870].map((width) =>
-    getImage({ src: process.banner.src, width, format: 'webp' }),
-  ),
-)
-const mobile = await Promise.all(
-  [480, 941].map((width) => getImage({ src: process.bannerMobile.src, width, format: 'webp' })),
-)
-const srcset = (images: typeof desktop) =>
-  images.map((img) => `${img.src} ${img.attributes.width}w`).join(', ')
 ---
 
 <Section id="processo" tone={tone} rhythm={rhythm}>
-  <h2 class="sr-only">{process.title}</h2>
-
-  <button
-    type="button"
-    data-cta="processo-cta"
-    class="btn-slave-whats group block w-full overflow-hidden rounded-2xl bg-hero-deep text-left shadow-[0_30px_60px_-34px_rgba(1,36,34,0.75)] ring-1 ring-brand-glow/15 transition-shadow duration-300 hover:shadow-[0_36px_70px_-30px_rgba(26,165,122,0.6)]"
-  >
-    <picture>
-      <source media="(max-width: 639px)" type="image/webp" srcset={srcset(mobile)} sizes="100vw" />
-      <source
-        type="image/webp"
-        srcset={srcset(desktop)}
-        sizes="(min-width: 1320px) 1240px, calc(100vw - 48px)"
-      />
-      <img
-        src={desktop[2].src}
-        alt={process.banner.alt}
-        width={process.banner.src.width}
-        height={process.banner.src.height}
+  <div class="process-block relative isolate overflow-hidden rounded-[28px] bg-hero-deep shadow-[0_40px_80px_-46px_rgba(1,36,34,0.9)]">
+    {/* Cena do desktop: presa à direita e apagada para a esquerda, dentro do verde */}
+    <div
+      aria-hidden="true"
+      class="process-scene absolute inset-y-0 right-0 hidden w-[60%] lg:block"
+    >
+      <Picture
+        src={process.scene.src}
+        alt=""
+        widths={[640, 960, 1070]}
+        sizes="(min-width: 1450px) 830px, 60vw"
+        formats={['avif', 'webp']}
+        fallbackFormat="webp"
         loading="lazy"
         decoding="async"
-        class="process-banner block h-auto w-full transition-[filter] duration-300 group-hover:brightness-105"
+        class="h-full w-full object-cover object-[70%_center]"
+        pictureAttributes={{ class: 'block h-full w-full' }}
       />
-    </picture>
-  </button>
+    </div>
+    <span aria-hidden="true" class="process-glow pointer-events-none absolute inset-0 -z-10"></span>
+
+    <div class="relative px-6 pt-11 pb-8 sm:px-10 lg:px-14 lg:pt-16 lg:pb-36 xl:px-16">
+      <div class="lg:max-w-[50%] xl:max-w-[47%]">
+        <span class="inline-flex items-center gap-3.5 font-sans text-[12px] font-semibold tracking-[0.24em] text-neutral-light/90 uppercase">
+          <span aria-hidden="true" class="h-[3px] w-9 rounded-full bg-brand-glow"></span>
+          {process.eyebrow}
+        </span>
+
+        <h2 class="mt-5 font-display text-[2rem] leading-[1.06] font-extrabold tracking-[-0.03em] text-neutral-light sm:text-[2.6rem] xl:text-[3.1rem]">
+          {process.titleLead} <span class="text-brand-glow">{process.titleHighlight}</span>
+        </h2>
+
+        <p class="mt-5 max-w-[36rem] font-sans text-[15px] leading-relaxed text-neutral-light/80 sm:text-[17px]">
+          {process.text}
+        </p>
+
+        <dl class="mt-8 grid grid-cols-1 border-y border-white/12 sm:grid-cols-3">
+          {process.highlights.map((item) => (
+            <div class="flex flex-col-reverse justify-end gap-1 border-white/12 py-4 not-last:border-b sm:py-5 sm:not-last:border-r sm:not-last:border-b-0 sm:not-first:pl-5 sm:not-last:pr-5">
+              <dt class="font-sans text-[13px] leading-snug text-neutral-light/70">{item.label}</dt>
+              <dd class="font-display text-[1.4rem] leading-tight font-extrabold tracking-[-0.02em] whitespace-nowrap text-brand-glow lg:text-[1.2rem] xl:text-[1.45rem]">
+                {item.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
+          <Button
+            cta="processo-cta"
+            variant="emerald"
+            size="lg"
+            class="w-full whitespace-nowrap sm:w-auto"
+          >
+            {cta.primary}
+          </Button>
+          <span class="inline-flex shrink-0 items-center gap-3 self-start rounded-xl bg-neutral-light py-2.5 pr-4 pl-3 shadow-[0_14px_30px_-18px_rgba(0,0,0,0.7)] sm:self-auto">
+            <Image
+              src={hero.badge.src}
+              alt={hero.badge.alt}
+              width={130}
+              format="webp"
+              loading="lazy"
+              decoding="async"
+              class="h-[22px] w-auto"
+            />
+            <span class="border-l border-ink/15 pl-3 font-sans text-[10px] leading-tight font-bold tracking-[0.12em] whitespace-nowrap text-ink-soft uppercase">
+              Distribuidor
+              <br />
+              autorizado
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    {/* Cena do celular e do tablet: abaixo do texto, fundida ao verde no alto */}
+    <div class="process-scene-mobile relative -mt-6 h-[300px] sm:h-[380px] lg:hidden">
+      <Picture
+        src={process.sceneMobile.src}
+        alt={process.sceneMobile.alt}
+        widths={[480, 941]}
+        sizes="100vw"
+        formats={['avif', 'webp']}
+        fallbackFormat="webp"
+        loading="lazy"
+        decoding="async"
+        class="h-full w-full object-cover object-[50%_30%]"
+        pictureAttributes={{ class: 'block h-full w-full' }}
+      />
+    </div>
+  </div>
+
+  {/* Etapas sobrepostas à base do painel */}
+  <ol class="relative z-10 -mt-14 grid gap-3 px-3 sm:grid-cols-2 sm:gap-4 sm:px-6 lg:-mt-24 lg:grid-cols-4 lg:gap-5 lg:px-14 xl:px-16">
+    {process.steps.map((step, i) => (
+      <li class="process-step group relative overflow-hidden rounded-2xl border border-[#dde8e3] bg-neutral-light p-5 shadow-[0_1px_2px_rgba(1,36,34,0.06),0_26px_50px_-30px_rgba(1,36,34,0.55)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-brand-leaf/45 lg:p-6">
+        <div class="flex items-center gap-3">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-mint-soft text-accent-orange ring-1 ring-brand-leaf/20 transition-colors duration-300 group-hover:bg-accent-orange group-hover:text-neutral-light">
+            <Icon name={step.icon} class="size-[19px]" />
+          </span>
+          <h3 class="font-display text-[15.5px] leading-snug font-bold text-ink">{step.title}</h3>
+          <span
+            aria-hidden="true"
+            data-index={String(i + 1).padStart(2, '0')}
+            class="process-step__num ml-auto self-start font-display text-[12px] font-extrabold tracking-[0.18em] text-primary-dark/25"
+          ></span>
+        </div>
+        <p class="mt-3.5 font-sans text-[13.5px] leading-relaxed text-ink-soft">
+          {step.description}
+        </p>
+      </li>
+    ))}
+  </ol>
 </Section>
 
 <style>
-  /* Proporção de cada arte reservada antes da imagem chegar (sem deslocar a página). */
-  .process-banner {
-    aspect-ratio: 941 / 1672;
+  /* Verde profundo com luz no alto à esquerda, como o lado do texto na referência. */
+  .process-glow {
+    background:
+      radial-gradient(70% 90% at 0% 0%, rgb(26 165 122 / 0.32) 0%, transparent 60%),
+      linear-gradient(
+        160deg,
+        var(--color-primary-dark-800) 0%,
+        var(--color-primary-dark) 40%,
+        var(--color-hero-deep) 100%
+      );
   }
 
-  @media (min-width: 640px) {
-    .process-banner {
-      aspect-ratio: 1870 / 841;
+  /* A cena se apaga para a esquerda e na base, fundindo-se ao verde. */
+  .process-scene {
+    mask-image:
+      linear-gradient(to right, transparent 0%, black 38%),
+      linear-gradient(to top, transparent 0%, black 22%);
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+  }
+
+  .process-scene-mobile {
+    mask-image: linear-gradient(to bottom, transparent 0%, black 32%);
+  }
+
+  /* Número da etapa por CSS: decorativo, fora da leitura (a lista já é ordenada). */
+  .process-step__num::before {
+    content: attr(data-index);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .process-step,
+    .process-step * {
+      transition: none !important;
+    }
+
+    .process-step:hover {
+      transform: none;
     }
   }
 </style>

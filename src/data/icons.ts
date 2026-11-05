@@ -93,6 +93,11 @@ export const iconPaths = {
   alert: '<path d="M12 4.3 21 19.7H3L12 4.3Z"/><path d="M12 10v3.8"/><path d="M12 16.8h.01"/>',
   'clipboard-check':
     '<rect x="5" y="4.5" width="14" height="16" rx="2"/><path d="M9 4.5V3.4c0-.5.4-.9.9-.9h4.2c.5 0 .9.4.9.9v1.1"/><path d="m9.2 12.6 2 2 3.6-4"/>',
+  /* Aplicações da Print Master (05/11/2026): garrafa de vidro e garrafa plástica. */
+  glass:
+    '<path d="M10 2.5h4"/><path d="M10.5 2.5v4.2L8.4 10a3 3 0 0 0-.4 1.5v8.5a1.5 1.5 0 0 0 1.5 1.5h5a1.5 1.5 0 0 0 1.5-1.5v-8.5a3 3 0 0 0-.4-1.5l-2.1-3.3V2.5"/><path d="M8 14h8"/>',
+  bottle:
+    '<path d="M10 2.5h4v2.5l2 2.5v13a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 8 20.5v-13L10 5V2.5Z"/><path d="M8 11.5h8M8 16h8"/>',
 } as const satisfies Record<string, string>
 
 export type IconName = keyof typeof iconPaths

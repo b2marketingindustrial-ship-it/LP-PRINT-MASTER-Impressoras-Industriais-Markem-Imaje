@@ -87,12 +87,12 @@
           "alpha": null
         }
       ],
-      "localVariant": "Print Master 26/10/2026 — mockup: grupos em abas com contagem, cards com painel verde-escuro (marca, modelo e Ver equipamento) e faixa de ajuda (docs/BRIEFING.md)"
+      "localVariant": "Print Master 26/10/2026 — mockup: grupos em abas com contagem, cards com painel verde-escuro (marca, modelo e Ver equipamento) e faixa de ajuda; 05/11/2026: abas em controle segmentado com ícone e contagem, fim do H2 em verde, palco da foto com luz e sombra de piso, ajuda em cartão com botão (docs/BRIEFING.md)"
     },
     {
       "slug": "processo",
       "id": "processo",
-      "title": "Como funciona (banner)",
+      "title": "Como funciona (bloco SEIVE)",
       "phase": "apoio",
       "component": "ProcessSteps.astro",
       "data": "processo.ts",
@@ -115,24 +115,24 @@
       "assets": [
         {
           "dir": "processo",
-          "match": "banner-mobile",
-          "files": "banner-mobile.jpg",
-          "spec": "Arte vertical 941×1672 do banner, para o celular (variante local)",
-          "width": 941,
-          "height": 1672,
+          "match": "cena-desktop",
+          "files": "cena-desktop.jpg",
+          "spec": "Cena 1070×841 recortada do banner, sem o texto (variante local)",
+          "width": 1070,
+          "height": 841,
           "alpha": false
         },
         {
           "dir": "processo",
-          "match": "banner-desktop",
-          "files": "banner-desktop.jpg",
-          "spec": "Banner 1870×841 com texto na arte, sem botão desenhado (variante local)",
-          "width": 1870,
-          "height": 841,
+          "match": "cena-mobile",
+          "files": "cena-mobile.jpg",
+          "spec": "Cena 941×882 recortada da arte vertical, sem o texto (variante local)",
+          "width": 941,
+          "height": 882,
           "alpha": false
         }
       ],
-      "localVariant": "Print Master 27/10/2026 — pedido do usuário: o painel das etapas deu lugar ao banner clicável (processo-cta), com arte vertical própria no celular (docs/BRIEFING.md)"
+      "localVariant": "Print Master 05/11/2026 — pedido do usuário: referência SEIVE. Painel verde com texto em HTML, cena do banner à direita, 3 destaques, CTA (processo-cta) com selo Markem-Imaje e as 4 etapas em cards sobrepostos (docs/BRIEFING.md)"
     },
     {
       "slug": "aplicacoes",
@@ -162,7 +162,7 @@
       "contract": {
         "itemsPath": "items",
         "itemsMin": 4,
-        "itemsMax": 4,
+        "itemsMax": 12,
         "requiredItemFields": [
           "id",
           "label",
@@ -171,20 +171,20 @@
         ],
         "maxLength": {
           "text": 170,
-          "item.description": 90
+          "item.description": 110
         }
       },
       "assets": [
         {
           "dir": "aplicacoes",
-          "files": "4 fotos",
+          "files": "4 fotos (7 aplicações sem foto mostram ícone)",
           "spec": "JPG 8:5, 640×400, aplicação ou material codificado (variante local)",
           "width": 640,
           "height": 400,
           "alpha": false
         }
       ],
-      "localVariant": "Print Master 27/10/2026 — mockup: H2 em duas linhas, cards com foto 8:5 e corpo verde-escuro, faixa \"Encontre a solução ideal\" com CTA (docs/BRIEFING.md)"
+      "localVariant": "Print Master 27/10/2026 — mockup: H2 em duas linhas, cards com foto 8:5 e corpo verde-escuro, faixa \"Encontre a solução ideal\" com CTA; 05/11/2026: 11 aplicações com os textos do usuário numa esteira infinita com pausa (docs/BRIEFING.md)"
     },
     {
       "slug": "diferenciais",

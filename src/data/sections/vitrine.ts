@@ -7,6 +7,7 @@
  * `groups` vazio deixa a vitrine em grade. Com grupos, cada um vira uma
  * prateleira própria, com a logo (ou o nome) no cabeçalho.
  */
+import type { IconName } from '@data/icons'
 import type { Photo } from '@data/types'
 
 import produto1 from '@assets/vitrine/produto-1.png'
@@ -27,6 +28,8 @@ export interface ShowcaseGroup {
   id: string
   label: string
   logo: Photo | null
+  /** Ícone da aba (variante local de 05/11/2026). */
+  icon: IconName
 }
 
 export interface ShowcaseItem {
@@ -42,12 +45,16 @@ export interface ShowcaseItem {
 export const showcase = {
   eyebrow: 'Equipamentos',
   title: 'Impressoras industriais por tecnologia',
+  /** Fim do H2 em verde (05/11/2026). Precisa ser o final exato de `title`. */
+  titleHighlight: 'por tecnologia',
   text: 'Datadores, codificadoras e etiquetadoras Markem-Imaje para as necessidades da sua produção.',
   /** Variante local (mockup de 26/10/2026): marca acima do modelo, rótulo do card e faixa de ajuda. */
   brand: 'Markem-Imaje',
   itemCta: 'Ver equipamento',
   help: {
     text: 'Precisa de ajuda para escolher o equipamento ideal?',
+    /** Linha de apoio do cartão de ajuda (05/11/2026). */
+    note: 'Conte o produto, a embalagem e a velocidade da linha: indicamos a tecnologia certa.',
     cta: 'Fale com um especialista',
   },
   groups: [
@@ -55,16 +62,19 @@ export const showcase = {
       id: 'jato-de-tinta',
       label: 'Jato de tinta contínuo',
       logo: null,
+      icon: 'droplet',
     },
     {
       id: 'transferencia-termica',
       label: 'Transferência térmica',
       logo: null,
+      icon: 'flame',
     },
     {
       id: 'print-apply',
       label: 'Print & Apply',
       logo: null,
+      icon: 'tag',
     },
   ],
   items: [
@@ -156,10 +166,11 @@ export const showcase = {
 } as const satisfies {
   eyebrow: string
   title: string
+  titleHighlight: string
   text: string
   brand: string
   itemCta: string
-  help: { text: string; cta: string }
+  help: { text: string; note: string; cta: string }
   groups: readonly ShowcaseGroup[]
   items: readonly ShowcaseItem[]
 }
