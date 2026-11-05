@@ -197,8 +197,7 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
   /* Medidas que amarram as colunas e o banner ao mesmo eixo. */
   .hero {
     --text-col: 400px;
-    /* O banner usa a mesma coluna de texto: o par de equipamentos cabe entre o título e o chat,
-             sem invadir o H1 em tela larga (05/11/2026). */
+    /* Banner com a mesma coluna de texto: os equipamentos não invadem o H1 (05/11/2026). */
     --photo-base: var(--text-col);
     --chat-col: 300px;
     --col-gap: 2rem;

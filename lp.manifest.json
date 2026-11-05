@@ -219,10 +219,10 @@
       "assets": [
         {
           "dir": "aplicacoes",
-          "files": "4 fotos (7 aplicações sem foto mostram ícone)",
-          "spec": "JPG 8:5, 640×400, aplicação ou material codificado (variante local)",
+          "files": "10 fotos (garrafas de plástico sem foto, com ícone)",
+          "spec": "JPG 6:5, 640×533, aplicação ou material codificado (variante local)",
           "width": 640,
-          "height": 400,
+          "height": 533,
           "alpha": false
         }
       ],
