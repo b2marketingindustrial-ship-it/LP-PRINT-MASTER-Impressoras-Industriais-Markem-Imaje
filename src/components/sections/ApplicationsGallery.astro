@@ -3,7 +3,7 @@
  * Galeria de aplicações — fase "prova" da biblioteca B2.
  *
  * VARIANTE LOCAL — Print Master, mockup de 27/10/2026 (docs/BRIEFING.md): cabeçalho centrado
- * com o H2 em duas linhas, 4 cards com foto 8:5 em cima e corpo verde-escuro (título, frase e
+ * com o H2 numa linha só (05/11/2026), 4 cards com foto 8:5 em cima e corpo verde-escuro (título, frase e
  * seta), e uma faixa "Encontre a solução ideal…" com CTA no fim. O card inteiro é o CTA.
  * Pedido do usuário (05/11/2026): as 11 aplicações rodam numa esteira infinita, que para no
  * hover, no foco e no botão de pausa; com movimento reduzido vira um trilho com rolagem.
@@ -13,6 +13,7 @@
 import { Image } from 'astro:assets'
 import Section from '@components/Section.astro'
 import Icon from '@components/Icon.astro'
+import ContactStrip from '@components/ContactStrip.astro'
 import type { SectionProps } from '@lib/layout'
 import { cta } from '@data/content'
 import { applications } from '@data/sections/aplicacoes'
@@ -23,16 +24,13 @@ const { tone, rhythm } = Astro.props
 ---
 
 <Section id="aplicacoes" tone={tone} rhythm={rhythm}>
-  <div class="mx-auto max-w-4xl text-center">
+  <div class="mx-auto max-w-5xl text-center">
     <span class="inline-flex items-center gap-3.5 font-sans text-[12px] font-semibold tracking-[0.3em] text-ink-soft uppercase">
       <span aria-hidden="true" class="h-1 w-10 rounded-full bg-accent-orange"></span>
       {applications.eyebrow}
     </span>
-    <h2 class="mt-4 font-display text-[2.1rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-primary-dark sm:text-5xl lg:text-[3.6rem]">
-      {/* Duas linhas fixas a partir do tablet; no celular o título quebra sozinho. */}
-      {applications.titleLines.map((line) => (
-        <span class="sm:block">{line} </span>
-      ))}
+    <h2 class="mt-4 font-display text-[2rem] leading-[1.08] font-extrabold tracking-[-0.03em] text-primary-dark sm:text-4xl lg:text-[2.9rem] xl:whitespace-nowrap">
+      {applications.title}
     </h2>
     <p class="mt-4 font-sans text-[15px] leading-relaxed text-ink-soft sm:text-[17px] lg:text-lg">
       {applications.text}
@@ -99,7 +97,7 @@ const { tone, rhythm } = Astro.props
                       <span class="font-sans text-[13.5px] font-medium text-neutral-light/90">
                         {cta.card}
                       </span>
-                      <span class="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand-leaf text-neutral-light transition-transform duration-300 group-hover:translate-x-0.5">
+                      <span class="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand-leaf text-neutral-light transition-[transform,background-color,color] duration-300 group-hover:translate-x-0.5 group-hover:bg-brand-glow group-hover:text-primary-dark-900">
                         <Icon name="arrow-right" class="size-[18px]" />
                       </span>
                     </span>
@@ -143,20 +141,13 @@ const { tone, rhythm } = Astro.props
     </div>
   </div>
 
-  <div class="mt-8 flex flex-col gap-3 border-t border-ink/10 pt-7 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-    <p class="font-sans text-[16px] text-ink-soft sm:text-[17px]">{applications.help.text}</p>
-    <button
-      type="button"
-      data-cta="aplicacoes-cta"
-      class="btn-slave-whats group inline-flex shrink-0 items-center gap-3 self-start font-sans text-[16px] font-bold text-primary-dark transition-colors duration-200 hover:text-accent-orange sm:self-auto sm:text-[17px]"
-    >
-      {applications.help.cta}
-      <Icon
-        name="arrow-right"
-        class="size-5 transition-transform duration-200 group-hover:translate-x-0.5"
-      />
-    </button>
-  </div>
+  <ContactStrip
+    cta="aplicacoes-cta"
+    title={applications.help.text}
+    note={applications.help.note}
+    label={applications.help.cta}
+    class="mt-8"
+  />
 </Section>
 
 <style>

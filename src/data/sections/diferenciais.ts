@@ -20,7 +20,7 @@ export interface Reason {
 export const why = {
   eyebrow: `Por que a ${site.brandShort}`,
   /** Cada item é uma linha do H2 (quebra forçada). 3–6 palavras no total. */
-  titleLines: ['Precisão para', 'sua linha de produção'],
+  titleLines: ['Precisão para', 'sua linha de produção.'],
   /** Mockup de 27/10/2026: texto curto, em duas linhas no desktop. */
   text: 'Soluções de marcação e rastreabilidade Markem-Imaje, com codificação precisa e suporte especializado para sua indústria.',
   /** Cena do bloco inteiro (mockup de 27/10/2026): os equipamentos já estão na foto. */

@@ -5,6 +5,8 @@
  * - `cta` é obrigatório e vira `data-cta` para rastreamento (convenção: `{secao}-{elemento}`).
  * - Pílula (rounded-full), ícone arrow-right à direita por padrão. Tamanhos: `md` (padrão), `sm` (header) e `lg` (hero e bloco de diferenciais).
  * - Todo CTA do site usa este componente: não estilize <button> de CTA à mão.
+ * - Print Master (05/11/2026): CTA de contato é sempre `variant="emerald" size="lg" whatsapp`
+ *   (o do header é `sm`): mesmo verde, mesmo tamanho, ícone do WhatsApp antes da seta.
  */
 import Icon from './Icon.astro'
 import type { IconName } from '../data/icons'
@@ -18,6 +20,8 @@ interface Props {
   icon?: boolean
   iconName?: IconName
   iconPosition?: 'left' | 'right'
+  /** Ícone do WhatsApp depois do texto: o CTA abre o atendimento. */
+  whatsapp?: boolean
   class?: string
 }
 
@@ -29,6 +33,7 @@ const {
   icon = true,
   iconName = 'arrow-right',
   iconPosition = 'right',
+  whatsapp = false,
   class: className = '',
 } = Astro.props
 
@@ -40,6 +45,8 @@ const sizes = {
   md: 'px-7 py-3.5 text-[15px]',
   sm: 'px-4 py-2.5 text-[12px] sm:px-6 sm:py-3 sm:text-[14px]',
 }
+
+const whatsSizes = { lg: 'size-6 xl:size-7', md: 'size-5', sm: 'size-4 sm:size-[18px]' }
 
 const variants = {
   primary:
@@ -60,9 +67,16 @@ const variants = {
   class:list={['btn-slave-whats', base, sizes[size], variants[variant], className]}
 >
   {icon && iconPosition === 'left' && <Icon name={iconName} class="size-4 shrink-0" />}
-  <span>
-    <slot />
-  </span>
+  {whatsapp ? (
+    <span class="inline-flex items-center gap-2.5 whitespace-nowrap sm:gap-3">
+      <slot />
+      <Icon name="whatsapp" class:list={['shrink-0', whatsSizes[size]]} />
+    </span>
+  ) : (
+    <span class="whitespace-nowrap">
+      <slot />
+    </span>
+  )}
   {icon && iconPosition === 'right' && (
     <Icon
       name={iconName}

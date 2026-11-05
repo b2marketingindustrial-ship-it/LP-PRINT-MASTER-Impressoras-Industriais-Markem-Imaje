@@ -1,0 +1,48 @@
+---
+/**
+ * Cartão de ajuda que fecha as seções claras (vitrine e aplicações).
+ *
+ * VARIANTE LOCAL — Print Master, pedido de 05/11/2026 ("padronize os CTAs de contato"):
+ * as duas faixas de ajuda usam o mesmo cartão — ícone em caixa verde, pergunta, linha de apoio
+ * e o CTA padrão da página (`Button` emerald, lg, com WhatsApp).
+ */
+import Icon from './Icon.astro'
+import Button from './Button.astro'
+
+interface Props {
+  /** `data-cta` do botão, ex.: "vitrine-ajuda". */
+  cta: string
+  title: string
+  note: string
+  label: string
+  class?: string
+}
+
+const { cta, title, note, label, class: className = '' } = Astro.props
+---
+
+<div
+  class:list={[
+    'contact-strip relative flex flex-col gap-5 overflow-hidden rounded-[20px] p-6 ring-1 ring-brand-leaf/20 sm:p-7 lg:flex-row lg:items-center lg:gap-6 lg:px-9',
+    className,
+  ]}
+>
+  <span class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary-dark text-brand-glow shadow-[0_12px_24px_-14px_rgba(6,67,55,0.9)]">
+    <Icon name="chat" class="size-[22px]" />
+  </span>
+  <div class="flex-1">
+    <p class="font-display text-lg leading-snug font-bold text-ink sm:text-xl">{title}</p>
+    <p class="mt-1 font-sans text-[14.5px] leading-relaxed text-ink-soft">{note}</p>
+  </div>
+  <Button cta={cta} variant="emerald" size="lg" whatsapp class="w-full shrink-0 lg:w-auto">
+    {label}
+  </Button>
+</div>
+
+<style>
+  .contact-strip {
+    background:
+      radial-gradient(60% 140% at 100% 0%, rgb(124 239 192 / 0.35) 0%, transparent 60%),
+      linear-gradient(120deg, var(--color-brand-mint-soft) 0%, #f4fbf8 100%);
+  }
+</style>

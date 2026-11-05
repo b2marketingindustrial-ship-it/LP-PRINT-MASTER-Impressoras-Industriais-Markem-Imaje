@@ -1,7 +1,7 @@
 /**
  * Dados da seção "Aplicações" (biblioteca B2, fase: prova).
  *
- * VARIANTE LOCAL — Print Master, mockup de 27/10/2026 (docs/BRIEFING.md): H2 em duas linhas,
+ * VARIANTE LOCAL — Print Master, mockup de 27/10/2026 (docs/BRIEFING.md): H2 numa linha só (pedido de 05/11/2026),
  * cards com foto 8:5 e corpo verde-escuro, e uma faixa de ajuda no fim. O card inteiro é o CTA.
  *
  * Pedido do usuário (05/11/2026): as 11 aplicações, com os textos enviados por ele, num
@@ -28,11 +28,10 @@ export interface Application {
 export const applications = {
   eyebrow: 'Aplicações',
   title: 'Codificação para cada tipo de embalagem.',
-  /** O H2 quebrado em duas linhas, como no mockup. */
-  titleLines: ['Codificação para cada', 'tipo de embalagem.'],
   text: 'Soluções para identificar embalagens, produtos e diferentes superfícies da sua produção.',
   help: {
     text: 'Encontre a solução ideal para sua aplicação.',
+    note: 'Conte o material e a embalagem: indicamos a tecnologia e a tinta certas.',
     cta: 'Fale com um especialista',
   },
   /** Intercaladas com e sem foto, para a esteira não juntar os palcos de ícone. */
@@ -127,8 +126,7 @@ export const applications = {
 } as const satisfies {
   eyebrow: string
   title: string
-  titleLines: readonly string[]
   text: string
-  help: { text: string; cta: string }
+  help: { text: string; note: string; cta: string }
   items: readonly Application[]
 }

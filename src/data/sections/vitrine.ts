@@ -5,7 +5,8 @@
  * itens têm a frase, ou nenhum tem — o componente recusa a mistura no build.
  *
  * `groups` vazio deixa a vitrine em grade. Com grupos, cada um vira uma
- * prateleira própria, com a logo (ou o nome) no cabeçalho.
+ * faixa própria, aberta por um bloco com o nome, a frase e a contagem (sem filtro: pedido do
+ * usuário de 05/11/2026, todos os modelos à vista).
  */
 import type { IconName } from '@data/icons'
 import type { Photo } from '@data/types'
@@ -28,8 +29,10 @@ export interface ShowcaseGroup {
   id: string
   label: string
   logo: Photo | null
-  /** Ícone da aba (variante local de 05/11/2026). */
+  /** Ícone do bloco da tecnologia (variante local de 05/11/2026). */
   icon: IconName
+  /** 1 frase curta sobre a tecnologia, no bloco que abre a faixa. */
+  description: string
 }
 
 export interface ShowcaseItem {
@@ -63,18 +66,23 @@ export const showcase = {
       label: 'Jato de tinta contínuo',
       logo: null,
       icon: 'droplet',
+      description:
+        'Datadores CIJ para data, lote e validade direto na embalagem, em linhas rápidas.',
     },
     {
       id: 'transferencia-termica',
       label: 'Transferência térmica',
       logo: null,
       icon: 'flame',
+      description:
+        'Codificadores TTO para filmes flexíveis e rótulos, com textos e códigos nítidos.',
     },
     {
       id: 'print-apply',
       label: 'Print & Apply',
       logo: null,
       icon: 'tag',
+      description: 'Etiquetadoras que imprimem e aplicam a etiqueta em caixas e paletes.',
     },
   ],
   items: [

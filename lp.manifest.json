@@ -5,6 +5,7 @@
   "primitives": [],
   "phases": {
     "oferta": [
+      "solucoes",
       "vitrine"
     ],
     "apoio": [
@@ -19,6 +20,45 @@
   },
   "sections": [
     {
+      "slug": "solucoes",
+      "id": "solucoes",
+      "title": "Soluções em destaque",
+      "phase": "oferta",
+      "component": "Solutions.astro",
+      "data": "solucoes.ts",
+      "dataExport": "solutions",
+      "carriesNavy": false,
+      "tone": "light",
+      "rhythm": "open",
+      "tones": [
+        "light",
+        "gray"
+      ],
+      "rhythms": [
+        "open",
+        "even"
+      ],
+      "exampleHash": "",
+      "ctas": [],
+      "contract": {
+        "itemsPath": "items",
+        "itemsMin": 4,
+        "itemsMax": 4,
+        "requiredItemFields": [
+          "id",
+          "icon",
+          "title",
+          "description"
+        ],
+        "maxLength": {
+          "text": 420,
+          "item.description": 100
+        }
+      },
+      "assets": [],
+      "localVariant": "Print Master 05/11/2026 — pedido do usuário: seção nova, sem par na biblioteca. Texto do cliente, setores em chips, logos Print Master + Markem-Imaje e 4 soluções em cards 2×2 (docs/BRIEFING.md)"
+    },
+    {
       "slug": "vitrine",
       "id": "vitrine",
       "title": "Vitrine de produtos",
@@ -28,7 +68,7 @@
       "dataExport": "showcase",
       "carriesNavy": false,
       "tone": "light",
-      "rhythm": "open",
+      "rhythm": "even",
       "tones": [
         "light",
         "gray"
@@ -87,7 +127,7 @@
           "alpha": null
         }
       ],
-      "localVariant": "Print Master 26/10/2026 — mockup: grupos em abas com contagem, cards com painel verde-escuro (marca, modelo e Ver equipamento) e faixa de ajuda; 05/11/2026: abas em controle segmentado com ícone e contagem, fim do H2 em verde, palco da foto com luz e sombra de piso, ajuda em cartão com botão (docs/BRIEFING.md)"
+      "localVariant": "Print Master 26/10/2026 — mockup: cards com painel verde-escuro (marca, modelo e Ver equipamento) e faixa de ajuda; 05/11/2026: sem abas nem filtro, uma faixa por tecnologia com bloco de abertura (ícone, nome, frase, contagem) em grade de 6 colunas, fim do H2 em verde, ajuda no ContactStrip padrão (docs/BRIEFING.md)"
     },
     {
       "slug": "processo",

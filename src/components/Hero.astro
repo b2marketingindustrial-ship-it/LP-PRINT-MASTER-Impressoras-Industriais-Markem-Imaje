@@ -84,15 +84,17 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
 
       {/* Coluna 1 (linha 2) — pontos, botão e link; no mobile vêm depois do banner */}
       <div class="hero-actions relative z-[3] max-w-xl lg:col-start-1 lg:row-start-2 lg:max-w-none">
-        {/* 3 pontos — ícone menta solto e texto sempre em duas linhas */}
+        {/* 3 pontos numa barra de vidro (referência SEIVE, 05/11/2026): ícone em caixa, fios entre eles */}
         <ul
-          class="grid grid-cols-3 gap-x-3 sm:flex sm:flex-nowrap lg:mt-7 lg:grid xl:flex"
+          class="hero-glass grid grid-cols-3 gap-x-3 rounded-2xl px-3 py-3.5 sm:flex sm:w-max sm:flex-nowrap sm:px-4 lg:mt-7 lg:grid lg:w-auto xl:flex xl:w-max xl:px-5 xl:py-4"
           aria-label="Destaques"
         >
           {hero.points.map((point) => (
-            <li class="hero-point flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-2.5 lg:flex-col lg:items-start lg:gap-2 xl:flex-row xl:items-center xl:gap-2.5">
-              <Icon name={point.icon} class="size-8 shrink-0 text-brand-glow" />
-              <span class="font-sans text-[13.5px] leading-snug text-neutral-light/90">
+            <li class="hero-point flex flex-1 flex-col items-start gap-2.5 sm:flex-row sm:items-center sm:gap-3 lg:flex-col lg:items-start lg:gap-2.5 xl:flex-row xl:items-center xl:gap-3">
+              <span class="hero-glass__icon flex size-10 shrink-0 items-center justify-center rounded-xl text-brand-glow">
+                <Icon name={point.icon} class="size-[22px]" />
+              </span>
+              <span class="font-sans text-[13px] leading-snug font-semibold text-neutral-light xl:text-[13.5px]">
                 <span class="block whitespace-nowrap">{point.line1}</span>
                 <span class="block whitespace-nowrap">{point.line2}</span>
               </span>
@@ -100,11 +102,8 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
           ))}
         </ul>
 
-        <Button cta="hero-primary" variant="emerald" size="lg" class="mt-8">
-          <span class="inline-flex items-center gap-3">
-            {cta.primary}
-            <Icon name="whatsapp" class="size-6 shrink-0 xl:size-7" />
-          </span>
+        <Button cta="hero-primary" variant="emerald" size="lg" whatsapp class="mt-8">
+          {cta.primary}
         </Button>
 
         <a
@@ -200,7 +199,30 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
   /* Divisórias sutis entre os destaques. */
   .hero-point + .hero-point {
     padding-left: 0.75rem;
-    border-left: 1px solid rgb(255 255 255 / 0.16);
+    border-left: 1px solid rgb(255 255 255 / 0.14);
+  }
+
+  @media (min-width: 640px) {
+    .hero-point + .hero-point {
+      padding-left: 1rem;
+    }
+  }
+
+  /* Barra de vidro: véu claro com desfoque, fio de luz no alto e sombra funda. */
+  .hero-glass {
+    background: linear-gradient(160deg, rgb(255 255 255 / 0.1) 0%, rgb(255 255 255 / 0.03) 100%);
+    border: 1px solid rgb(255 255 255 / 0.12);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.14),
+      0 24px 44px -26px rgb(0 0 0 / 0.75);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+  }
+
+  .hero-glass__icon {
+    background: rgb(255 255 255 / 0.05);
+    border: 1px solid rgb(255 255 255 / 0.16);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1);
   }
 
   /* Mobile (mockup de 27/10/2026): selo à esquerda, alinhado ao texto, e banner sangrando até

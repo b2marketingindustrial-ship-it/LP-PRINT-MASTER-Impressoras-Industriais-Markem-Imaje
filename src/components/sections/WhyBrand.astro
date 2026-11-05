@@ -8,8 +8,8 @@
  *
  * VARIANTE LOCAL — Print Master, mockup de 27/10/2026 (docs/BRIEFING.md): a cena (fundo escuro
  * à esquerda, equipamentos e linha de envase à direita) cobre o bloco inteiro e substitui a
- * pessoa recortada; H2 maior com barra verde, botão arredondado e cards com ícone em caixa
- * menta, sem corte de texto. `npm run compose` sobrescreve este arquivo: reaplique ao recompor.
+ * pessoa recortada. Pedido de 05/11/2026 (referência SEIVE): eyebrow com traço, última linha do
+ * H2 em menta, CTA padrão com WhatsApp e cards compactos com ícone e título na mesma linha. `npm run compose` sobrescreve este arquivo: reaplique ao recompor.
  */
 import { Picture } from 'astro:assets'
 import Section from '@components/Section.astro'
@@ -42,28 +42,31 @@ const { tone, rhythm } = Astro.props
       />
     </div>
 
-    <div class="relative z-[2] mx-auto w-full max-w-page px-6 pt-12 pb-10 lg:px-10 lg:pt-24 lg:pb-36">
+    <div class="relative z-[2] mx-auto w-full max-w-page px-6 pt-12 pb-10 lg:px-10 lg:pt-24 lg:pb-32">
       <div class="max-w-xl lg:max-w-[47%]">
-        <span class="relative inline-flex items-center pl-5 font-sans text-[12.5px] font-semibold tracking-[0.2em] text-neutral-light uppercase">
-          <span
-            aria-hidden="true"
-            class="absolute -top-2 left-0 size-[18px] border-t-2 border-l-2 border-brand-leaf"
-          ></span>
+        <span class="inline-flex items-center gap-3.5 font-sans text-[12px] font-semibold tracking-[0.24em] text-neutral-light/90 uppercase">
+          <span aria-hidden="true" class="h-[3px] w-9 rounded-full bg-brand-glow"></span>
           {why.eyebrow}
         </span>
-        <h2 class="mt-4 font-display text-[2.2rem] leading-[1.06] font-extrabold tracking-[-0.03em] text-neutral-light sm:text-5xl xl:text-[3.6rem]">
-          {why.titleLines.map((line) => (
-            <span class="block">{line}</span>
+        <h2 class="mt-5 font-display text-[2.2rem] leading-[1.04] font-extrabold tracking-[-0.03em] text-neutral-light sm:text-5xl xl:text-[3.6rem]">
+          {why.titleLines.map((line, i) => (
+            <span class:list={['block', i === why.titleLines.length - 1 && 'text-brand-glow']}>
+              {line}
+            </span>
           ))}
         </h2>
 
-        <span aria-hidden="true" class="mt-6 block h-1 w-24 rounded-full bg-brand-leaf"></span>
-
-        <p class="mt-6 max-w-[36rem] font-sans text-base leading-relaxed text-neutral-light/90 sm:text-lg xl:text-[19px]">
+        <p class="mt-6 max-w-[36rem] font-sans text-base leading-relaxed text-neutral-light/85 sm:text-lg">
           {why.text}
         </p>
 
-        <Button cta="diferenciais-cta" variant="emerald" size="lg" class="mt-8 w-full sm:w-auto">
+        <Button
+          cta="diferenciais-cta"
+          variant="emerald"
+          size="lg"
+          whatsapp
+          class="mt-8 w-full sm:w-auto"
+        >
           {cta.primary}
         </Button>
       </div>
@@ -71,42 +74,22 @@ const { tone, rhythm } = Astro.props
   </div>
 
   {/* Cards sobrepostos à base do bloco escuro */}
-  <div class="relative z-10 mx-auto -mt-16 max-w-page px-6 lg:px-10" data-why>
+  <div class="relative z-10 mx-auto -mt-16 max-w-page px-6 lg:-mt-20 lg:px-10" data-why>
     <ul
       class="why-track scroll-track -mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-3 lg:mx-0 lg:grid lg:grid-cols-5 lg:gap-5 lg:overflow-visible lg:px-0 lg:pb-0"
       aria-label={why.eyebrow}
     >
-      {why.reasons.map((reason, i) => (
-        <li class="why-card group relative flex w-[78%] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-[#dde8e3] bg-neutral-light p-6 shadow-[0_1px_2px_rgba(1,36,34,0.06),0_26px_50px_-30px_rgba(1,36,34,0.55)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1.5 hover:border-brand-leaf/45 hover:shadow-[0_1px_2px_rgba(1,36,34,0.06),0_36px_64px_-30px_rgba(1,36,34,0.6)] sm:w-[44%] lg:w-auto lg:p-5 xl:p-6">
-          {/* Brilho menta no canto e faixa em degradê no topo (aparece no hover) */}
-          <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -top-20 -right-16 size-44 rounded-full bg-brand-glow/20 opacity-60 blur-2xl transition-opacity duration-300 group-hover:opacity-100"
-          />
-          <span
-            aria-hidden="true"
-            class="why-card__bar pointer-events-none absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100"
-          />
-
-          <div class="relative flex items-start justify-between">
-            <span class="why-card__icon flex size-12 shrink-0 items-center justify-center rounded-xl text-brand-glow transition-shadow duration-300">
-              <Icon name={reason.icon} class="size-[22px]" />
+      {why.reasons.map((reason) => (
+        <li class="why-card group relative flex w-[78%] shrink-0 snap-start flex-col rounded-2xl border border-[#dde8e3] bg-neutral-light p-5 shadow-[0_1px_2px_rgba(1,36,34,0.06),0_26px_50px_-30px_rgba(1,36,34,0.55)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-brand-leaf/45 sm:w-[44%] lg:w-auto">
+          <div class="flex items-center gap-3">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-mint-soft text-accent-orange ring-1 ring-brand-leaf/20 transition-colors duration-300 group-hover:bg-accent-orange group-hover:text-neutral-light">
+              <Icon name={reason.icon} class="size-[19px]" />
             </span>
-            <span
-              aria-hidden="true"
-              data-index={String(i + 1).padStart(2, '0')}
-              class="why-card__num font-display text-[12px] font-extrabold tracking-[0.2em] text-primary-dark/25"
-            ></span>
+            <h3 class="font-display text-[15.5px] leading-snug font-bold text-ink">
+              {reason.title}
+            </h3>
           </div>
-
-          <h3 class="relative mt-5 font-display text-[16px] leading-snug font-bold text-ink lg:min-h-[2.75em]">
-            {reason.title}
-          </h3>
-          <span
-            aria-hidden="true"
-            class="relative mt-3 block h-[2px] w-8 rounded-full bg-brand-leaf transition-[width] duration-300 group-hover:w-12"
-          />
-          <p class="relative mt-3 font-sans text-[13.5px] leading-relaxed text-ink-soft">
+          <p class="mt-3.5 font-sans text-[13.5px] leading-relaxed text-ink-soft">
             {reason.description}
           </p>
         </li>
@@ -178,39 +161,6 @@ const { tone, rhythm } = Astro.props
     .why-scene :global(.why-scene-img) {
       object-position: right top;
     }
-  }
-
-  /* Placa do ícone: verde-escuro com brilho no alto, como os painéis da página. */
-  .why-card__icon {
-    background: linear-gradient(
-      145deg,
-      var(--color-primary-dark-800) 0%,
-      var(--color-primary-dark) 55%,
-      var(--color-primary-dark-900) 100%
-    );
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.18),
-      0 10px 20px -12px rgb(1 36 34 / 0.8);
-  }
-
-  .why-card:hover .why-card__icon {
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.18),
-      0 12px 26px -10px rgb(26 165 122 / 0.75);
-  }
-
-  /* Índice do card por CSS: decorativo, fica fora da leitura e da conta de contraste. */
-  .why-card__num::before {
-    content: attr(data-index);
-  }
-
-  .why-card__bar {
-    background: linear-gradient(
-      90deg,
-      var(--color-brand-emerald),
-      var(--color-brand-leaf),
-      var(--color-brand-glow)
-    );
   }
 
   @media (prefers-reduced-motion: reduce) {

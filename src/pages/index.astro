@@ -15,6 +15,7 @@ import Header from '../components/Header.astro'
 import Hero from '../components/Hero.astro'
 import QuoteForm from '../components/QuoteForm.astro'
 import Footer from '../components/Footer.astro'
+import Solutions from '../components/sections/Solutions.astro'
 import ProductShowcase from '../components/sections/ProductShowcase.astro'
 import ProcessSteps from '../components/sections/ProcessSteps.astro'
 import ApplicationsGallery from '../components/sections/ApplicationsGallery.astro'
@@ -29,7 +30,8 @@ import { shortcodes } from '../data/site'
     <Hero>
       <Fragment slot="shortcode">{shortcodes.chat}</Fragment>
     </Hero>
-    <ProductShowcase tone="light" rhythm="open" />
+    <Solutions tone="light" rhythm="open" />
+    <ProductShowcase tone="light" rhythm="even" />
     <ProcessSteps tone="light" rhythm="panel-lead" />
     <ApplicationsGallery tone="gray" rhythm="centered-lead" />
     <WhyBrand tone="gray" rhythm="overlap" />
