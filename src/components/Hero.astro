@@ -19,6 +19,7 @@
 import { Image, Picture } from 'astro:assets'
 import Icon from './Icon.astro'
 import Button from './Button.astro'
+import Eyebrow from './Eyebrow.astro'
 import { hero, cta } from '../data/content'
 
 const isDev = import.meta.env.DEV
@@ -35,15 +36,12 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
     <div class="hero-grid grid items-center gap-y-8 lg:gap-x-8 lg:gap-y-0">
       {/* Coluna 1 (linha 1) — eyebrow, H1 e texto */}
       <div class="hero-copy relative z-[3] max-w-xl lg:col-start-1 lg:row-start-1 lg:max-w-none">
-        <span class="inline-flex items-center gap-3 font-sans text-[12px] font-medium tracking-[0.2em] text-brand-glow uppercase sm:text-[12.5px]">
-          <span aria-hidden="true" class="h-[3px] w-9 rounded-full bg-brand-glow"></span>
-          {hero.eyebrow}
-        </span>
+        <Eyebrow tone="light">{hero.eyebrow}</Eyebrow>
 
         <h1 class="mt-4 font-display text-[2.75rem] leading-[1] font-extrabold tracking-[-0.04em] text-neutral-light sm:text-[2.9rem] lg:text-[2.45rem] xl:text-[3.25rem]">
           {/* Duas linhas a partir do tablet: a 1ª não quebra; no celular o título quebra sozinho. */}
           <span class="sm:block sm:whitespace-nowrap">{titleBefore}</span>
-          {at >= 0 && <span class="block text-brand-glow">{hero.highlight}</span>}
+          {at >= 0 && <span class="block text-brand-mint">{hero.highlight}</span>}
           {titleAfter}
         </h1>
 
@@ -85,39 +83,39 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
 
       {/* Coluna 1 (linha 2) — pontos, botão e link; no mobile vêm depois do banner */}
       <div class="hero-actions relative z-[3] max-w-xl lg:col-start-1 lg:row-start-2 lg:max-w-none">
-        {/* 3 pontos numa barra de vidro (referência SEIVE, 05/11/2026): ícone em caixa, fios entre eles */}
+        {/* Botão e link lado a lado, como na LP de locação (05/11/2026) */}
+        <div class="flex flex-wrap items-center gap-x-2 gap-y-3 lg:mt-7">
+          <Button cta="hero-primary" variant="mint">
+            {cta.primary}
+          </Button>
+          {/* Link para a vitrine: não abre o atendimento, por isso não é btn-slave-whats. */}
+          <a
+            href="#vitrine"
+            data-cta="hero-secondary"
+            class="group inline-flex items-center gap-2.5 rounded-full px-4 py-3 font-sans text-[15px] font-semibold text-neutral-light transition-colors duration-200 hover:text-brand-mint"
+          >
+            <span class="flex size-8 items-center justify-center rounded-full bg-neutral-light/10 text-brand-mint ring-1 ring-brand-mint/50 transition-colors duration-200 group-hover:bg-brand-mint/25">
+              <Icon name="arrow-down" class="size-4" />
+            </span>
+            {hero.link}
+          </a>
+        </div>
+
+        {/* Pontos numa barra de vidro abaixo dos botões, no desenho da LP de locação */}
         <ul
-          class="hero-glass grid grid-cols-3 gap-x-3 rounded-2xl px-3 py-3.5 sm:flex sm:w-max sm:flex-nowrap sm:px-4 lg:mt-7 lg:grid lg:w-auto xl:flex xl:w-max xl:px-5 xl:py-4"
+          class="mt-9 grid w-fit max-w-full grid-cols-1 gap-y-3 rounded-2xl border border-neutral-light/20 bg-neutral-light/10 px-2 py-3 shadow-[0_20px_40px_-24px_rgba(0,0,0,0.6)] backdrop-blur-md sm:grid-cols-3 lg:grid-cols-1 xl:flex xl:max-w-none xl:flex-nowrap xl:items-stretch"
           aria-label="Destaques"
         >
           {hero.points.map((point) => (
-            <li class="hero-point flex flex-1 flex-col items-start gap-2.5 sm:flex-row sm:items-center sm:gap-3 lg:flex-col lg:items-start lg:gap-2.5 xl:flex-row xl:items-center xl:gap-3">
-              <span class="hero-glass__icon flex size-10 shrink-0 items-center justify-center rounded-xl text-brand-glow">
-                <Icon name={point.icon} class="size-[22px]" />
-              </span>
-              <span class="font-sans text-[13px] leading-snug font-semibold text-neutral-light xl:text-[13.5px]">
+            <li class="flex items-center gap-3 border-neutral-light/20 px-4 sm:not-first:border-l lg:not-first:border-l-0 xl:gap-2.5 xl:px-3.5 xl:not-first:border-l">
+              <Icon name={point.icon} class="size-6 shrink-0 text-brand-mint" />
+              <span class="font-sans text-[13.5px] leading-snug font-semibold text-neutral-light">
                 <span class="block whitespace-nowrap">{point.line1}</span>
-                <span class="block whitespace-nowrap">{point.line2}</span>
+                <span class="block whitespace-nowrap text-neutral-light/70">{point.line2}</span>
               </span>
             </li>
           ))}
         </ul>
-
-        <Button cta="hero-primary" variant="emerald" size="md" whatsapp class="mt-8">
-          {cta.primary}
-        </Button>
-
-        <a
-          href="#vitrine"
-          data-cta="hero-secondary"
-          class="group mt-6 flex w-fit items-center gap-3 border-b border-neutral-light/45 pb-1.5 font-sans text-base text-neutral-light/90 xl:text-[17px] transition-colors duration-200 hover:border-brand-glow hover:text-brand-glow"
-        >
-          {hero.link}
-          <Icon
-            name="arrow-right"
-            class="size-5 transition-transform duration-200 group-hover:translate-x-0.5"
-          />
-        </a>
       </div>
 
       {/* Coluna 3 — espaço vazio para o chat do plugin (shortcode, 300px) */}
@@ -198,35 +196,6 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
     --photo-w: calc(
       (min(100vw, var(--container-page)) - 80px - var(--photo-base) - var(--chat-col)) / 0.35
     );
-  }
-
-  /* Divisórias sutis entre os destaques. */
-  .hero-point + .hero-point {
-    padding-left: 0.75rem;
-    border-left: 1px solid rgb(255 255 255 / 0.14);
-  }
-
-  @media (min-width: 640px) {
-    .hero-point + .hero-point {
-      padding-left: 1rem;
-    }
-  }
-
-  /* Barra de vidro: véu claro com desfoque, fio de luz no alto e sombra funda. */
-  .hero-glass {
-    background: linear-gradient(160deg, rgb(255 255 255 / 0.1) 0%, rgb(255 255 255 / 0.03) 100%);
-    border: 1px solid rgb(255 255 255 / 0.12);
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.14),
-      0 24px 44px -26px rgb(0 0 0 / 0.75);
-    backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
-  }
-
-  .hero-glass__icon {
-    background: rgb(255 255 255 / 0.05);
-    border: 1px solid rgb(255 255 255 / 0.16);
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1);
   }
 
   /* Mobile (mockup de 27/10/2026): selo à esquerda, alinhado ao texto, e banner sangrando até

@@ -4,7 +4,7 @@
  *
  * VARIANTE LOCAL — Print Master, pedido de 05/11/2026 ("padronize os CTAs de contato"):
  * as duas faixas de ajuda usam o mesmo cartão — ícone em caixa verde, pergunta, linha de apoio
- * e o CTA padrão da página (`Button` emerald, lg, com WhatsApp).
+ * e o CTA padrão da página (`Button` primary, como na LP de locação).
  */
 import Icon from './Icon.astro'
 import Button from './Button.astro'
@@ -27,14 +27,14 @@ const { cta, title, note, label, class: className = '' } = Astro.props
     className,
   ]}
 >
-  <span class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary-dark text-brand-glow shadow-[0_12px_24px_-14px_rgba(6,67,55,0.9)]">
+  <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-brand-mint-soft text-accent-orange ring-1 ring-brand-mint/60">
     <Icon name="chat" class="size-[22px]" />
   </span>
   <div class="flex-1">
     <p class="font-display text-lg leading-snug font-bold text-ink sm:text-xl">{title}</p>
     <p class="mt-1 font-sans text-[14.5px] leading-relaxed text-ink-soft">{note}</p>
   </div>
-  <Button cta={cta} variant="emerald" size="md" whatsapp class="w-full shrink-0 lg:w-auto">
+  <Button cta={cta} class="w-full shrink-0 lg:w-auto">
     {label}
   </Button>
 </div>

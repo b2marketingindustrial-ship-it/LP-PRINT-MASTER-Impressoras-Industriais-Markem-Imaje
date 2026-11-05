@@ -5,8 +5,9 @@
  * - `cta` é obrigatório e vira `data-cta` para rastreamento (convenção: `{secao}-{elemento}`).
  * - Pílula (rounded-full), ícone arrow-right à direita por padrão. Tamanhos: `md` (padrão), `sm` (header) e `lg` (hero e bloco de diferenciais).
  * - Todo CTA do site usa este componente: não estilize <button> de CTA à mão.
- * - Print Master (05/11/2026): CTA de contato é sempre `variant="emerald" size="md" whatsapp`
- *   (o do header é `sm`); revisto no mesmo dia para um tamanho mais contido: mesmo verde, mesmo tamanho, ícone do WhatsApp antes da seta.
+ * - Print Master (05/11/2026): mesma estética da LP de locação — sobre fundo escuro `mint`, sobre
+ *   fundo claro `primary`, tamanho `md` (o header é `sm`), só a seta; "Chamar no WhatsApp" leva
+ *   o ícone do WhatsApp à esquerda.
  */
 import Icon from './Icon.astro'
 import type { IconName } from '../data/icons'
@@ -42,7 +43,7 @@ const base =
 
 const sizes = {
   lg: 'px-8 py-4 text-[17px] xl:px-10 xl:py-[1.15rem] xl:text-[19px]',
-  md: 'px-6 py-3 text-[15px]',
+  md: 'px-7 py-3.5 text-[15px]',
   sm: 'px-4 py-2.5 text-[12px] sm:px-6 sm:py-3 sm:text-[14px]',
 }
 

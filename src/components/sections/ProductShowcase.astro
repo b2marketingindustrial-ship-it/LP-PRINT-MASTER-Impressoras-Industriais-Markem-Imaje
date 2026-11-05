@@ -2,12 +2,11 @@
 /**
  * Vitrine de produtos — fase "oferta" da biblioteca B2.
  *
- * VARIANTE LOCAL — Print Master, mockup de 26/10/2026 (docs/BRIEFING.md): cada card tem a foto
- * grande em cima e um painel verde-escuro com a marca, o modelo em destaque e "Ver equipamento";
- * uma faixa de ajuda fecha a seção. Pedido de 05/11/2026: sem abas nem filtro — três blocos
+ * VARIANTE LOCAL — Print Master (docs/BRIEFING.md). Pedido de 05/11/2026: mesma estética da LP
+ * de locação — H2 à esquerda com o cartão de ajuda à direita, cards brancos com palco menta, selo
+ * da tecnologia, marca, modelo e botão de cotação. Sem abas nem filtro — três blocos
  * compactos apresentam as tecnologias (ícone, nome e frase, sem contagem) e os 12 modelos ficam numa
- * grade só (6 × 2 no desktop, sem sobras), com o selo da tecnologia em cada card; fim do H2 em
- * verde, palco da foto com luz e sombra de piso, e a ajuda no ContactStrip padrão.
+ * grade só (4 × 3 no desktop, sem sobras); fim do H2 em verde.
  * `npm run compose` sobrescreve este arquivo com o da biblioteca: ao recompor,
  * reaplique a variante.
  *
@@ -20,7 +19,8 @@
 import { Image } from 'astro:assets'
 import Section from '@components/Section.astro'
 import Icon from '@components/Icon.astro'
-import ContactStrip from '@components/ContactStrip.astro'
+import Button from '@components/Button.astro'
+import { cta } from '@data/content'
 import type { SectionProps } from '@lib/layout'
 import { showcase, type ShowcaseGroup, type ShowcaseItem } from '@data/sections/vitrine'
 
@@ -88,45 +88,51 @@ if (titleLead === showcase.title) {
 const modelOf = (title: string) =>
   title.startsWith(`${showcase.brand} `) ? title.slice(showcase.brand.length + 1) : title
 
-/** Número curto em destaque; nome longo desce de tamanho para caber no card. */
-const modelSize = (model: string) =>
-  model.length <= 6
-    ? 'text-[1.6rem] sm:text-[2rem]'
-    : model.length <= 12
-      ? 'text-[1.2rem] sm:text-[1.4rem]'
-      : 'text-[1rem] sm:text-[1.1rem]'
+/** Mesmo tamanho para todo modelo, como os títulos dos cards da LP de locação. */
+const modelSize = () => 'text-[1.05rem] sm:text-[1.35rem]'
 ---
 
-<Section id="vitrine" tone={tone} rhythm={rhythm} data-showcase>
-  <div class="max-w-4xl">
-    <span class="inline-flex items-center gap-3 font-sans text-[12px] font-semibold tracking-[0.22em] text-ink-soft uppercase">
-      <span aria-hidden="true" class="h-[3px] w-6 rounded-full bg-accent-orange"></span>
-      {showcase.eyebrow}
-    </span>
-    <h2 class="mt-3 font-display text-3xl leading-[1.08] font-extrabold tracking-[-0.025em] text-ink sm:text-4xl lg:text-[2.9rem]">
-      {titleLead} <span class="text-accent-orange">{showcase.titleHighlight}</span>
-    </h2>
-    <p class="mt-3 font-sans text-[15px] leading-relaxed text-ink-soft sm:text-[17px]">
-      {showcase.text}
-    </p>
+<Section id="vitrine" tone={tone} rhythm={rhythm} class="showcase" data-showcase>
+  {/* Cabeçalho como o dos produtos da LP de locação: H2 à esquerda, ajuda à direita */}
+  <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
+    <div class="max-w-3xl">
+      <h2 class="font-display text-[2.2rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-balance text-ink sm:text-5xl lg:text-[3.35rem]">
+        {titleLead} <span class="text-accent-orange">{showcase.titleHighlight}</span>
+      </h2>
+      <p class="mt-5 font-sans text-[17px] leading-relaxed text-ink-soft sm:text-lg">
+        {showcase.text}
+      </p>
+    </div>
+
+    <div class="flex shrink-0 flex-col gap-4 rounded-2xl border border-primary-dark/15 bg-neutral-light/60 p-5 shadow-[0_20px_40px_-28px_rgba(6,67,55,0.5)] backdrop-blur-md lg:w-[380px]">
+      <div class="flex items-center gap-3">
+        <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-mint-soft text-accent-orange ring-1 ring-brand-mint/60">
+          <Icon name="chat" class="size-[18px]" />
+        </span>
+        <p class="font-sans text-[15px] leading-snug font-bold text-primary-dark">
+          {showcase.help.text}
+        </p>
+      </div>
+      <Button cta="vitrine-ajuda" class="w-full sm:whitespace-nowrap">
+        {showcase.help.cta}
+      </Button>
+    </div>
   </div>
 
   {grouped && (
-    <ul class="mt-9 grid gap-3 sm:grid-cols-3 sm:gap-4 xl:gap-5" aria-label="Tecnologias">
+    <ul class="mt-10 grid gap-3 sm:grid-cols-3 sm:gap-5" aria-label="Tecnologias">
       {shelves.map((shelf) => (
-        <li class="showcase-tech flex items-start gap-4 rounded-[20px] p-4 ring-1 ring-brand-leaf/20 sm:p-5">
+        <li class="flex items-start gap-4 rounded-2xl border border-primary-dark/10 bg-neutral-light/70 p-4 backdrop-blur-sm sm:p-5">
           {shelf.icon && (
-            <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-dark text-brand-glow shadow-[0_12px_24px_-14px_rgba(6,67,55,0.9)]">
-              <Icon name={shelf.icon} class="size-[21px]" />
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-mint-soft text-accent-orange ring-1 ring-brand-mint/60">
+              <Icon name={shelf.icon} class="size-[19px]" />
             </span>
           )}
           <div class="min-w-0">
-            <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <h3 class="font-display text-[1.1rem] leading-tight font-extrabold tracking-[-0.015em] text-ink">
-                {shelf.label}
-              </h3>
-            </div>
-            <p class="mt-1.5 font-sans text-[13.5px] leading-relaxed text-ink-soft">
+            <h3 class="font-display text-[1.1rem] leading-tight font-extrabold text-ink">
+              {shelf.label}
+            </h3>
+            <p class="mt-1.5 font-sans text-[14px] leading-relaxed text-ink-soft">
               {shelf.description}
             </p>
           </div>
@@ -135,9 +141,10 @@ const modelSize = (model: string) =>
     </ul>
   )}
 
+  {/* Cards no desenho da LP de locação: palco menta com selo, título e botão */}
   <ul
     aria-label={showcase.title}
-    class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 xl:grid-cols-6 xl:gap-5"
+    class="mt-5 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4"
   >
     {ordered.map((item) => {
       const model = modelOf(item.title)
@@ -147,56 +154,49 @@ const modelSize = (model: string) =>
           <button
             type="button"
             data-cta={`vitrine-${item.id}`}
-            class="btn-slave-whats showcase-card group flex h-full w-full flex-col overflow-hidden rounded-[20px] bg-neutral-light text-left shadow-[0_1px_2px_rgba(6,67,55,0.06),0_18px_40px_-28px_rgba(6,67,55,0.45)] ring-1 ring-primary-dark/10 hover:ring-brand-leaf/40 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_32px_60px_-30px_rgba(6,67,55,0.6)]"
+            class="btn-slave-whats showcase-card group flex h-full w-full flex-col rounded-[22px] border border-primary-dark/10 bg-neutral-light p-2 text-left shadow-[0_22px_44px_-30px_rgba(6,67,55,0.45)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_30px_56px_-30px_rgba(6,67,55,0.55)] sm:p-3"
           >
-            <span class="showcase-card__stage relative flex aspect-[4/3] items-center justify-center overflow-hidden">
+            <span class="showcase-stage relative flex aspect-[6/5] w-full items-center justify-center overflow-hidden rounded-2xl">
               {tech && (
-                <span class="absolute top-2.5 left-2.5 z-[1] inline-flex items-center gap-1.5 rounded-full bg-neutral-light/90 px-2.5 py-1 font-sans text-[10.5px] font-bold text-primary-dark ring-1 ring-primary-dark/10 backdrop-blur-sm sm:top-3 sm:left-3">
-                  <Icon name={tech.icon} class="size-3 text-accent-orange" />
+                <span class="absolute top-2.5 left-2.5 z-[2] rounded-full bg-brand-mint-soft px-2.5 py-1 font-sans text-[9.5px] font-bold tracking-[0.08em] text-primary-dark uppercase ring-1 ring-brand-mint/50 sm:top-3 sm:left-3 sm:px-3 sm:py-1.5 sm:text-[10.5px]">
                   {tech.short}
                 </span>
               )}
-              <span
-                aria-hidden="true"
-                class="showcase-card__floor absolute inset-x-[18%] bottom-[7%] h-[9%] rounded-[50%]"
-              />
               <Image
                 src={item.photo.src}
                 alt={item.photo.alt}
                 format="webp"
                 widths={[320, 480, 640]}
-                sizes="(min-width: 1280px) 210px, (min-width: 1024px) 240px, (min-width: 640px) 31vw, 48vw"
+                sizes="(min-width: 1280px) 300px, (min-width: 1024px) 30vw, 46vw"
                 loading="lazy"
                 decoding="async"
-                class="showcase-card__img relative h-full w-full object-contain px-3 pt-8 pb-3 transition-transform sm:px-4 sm:pt-9 duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-[1.04]"
+                class="relative z-[1] mt-5 max-h-[84%] w-auto max-w-[88%] object-contain transition-transform duration-500 ease-out group-hover:scale-[1.04]"
               />
             </span>
 
-            <span class="showcase-card__panel relative flex flex-1 flex-col px-3 pt-3.5 pb-3.5 sm:px-5 sm:pt-4 sm:pb-4">
-              <span class="font-sans text-[10.5px] font-bold tracking-[0.18em] text-neutral-light/85 uppercase">
+            <span class="flex flex-1 flex-col px-1.5 pt-4 pb-1.5 sm:px-3 sm:pt-5 sm:pb-3">
+              <span class="font-sans text-[10.5px] font-bold tracking-[0.16em] text-accent-orange uppercase">
                 {showcase.brand}
               </span>
               <span
-                class:list={[
-                  'mt-0.5 font-display leading-[1.12] font-extrabold tracking-[-0.01em] text-neutral-light',
-                  modelSize(model),
-                ]}
+                class:list={['mt-1 font-display leading-snug font-extrabold text-ink', modelSize()]}
               >
                 {model}
               </span>
               {showText && (
-                <span class="mt-1.5 font-sans text-[12.5px] leading-relaxed text-neutral-light/75">
+                <span class="mt-2 font-sans text-[14px] leading-relaxed text-ink-soft">
                   {item.description}
                 </span>
               )}
-              <span aria-hidden="true" class="min-h-3 flex-1" />
-              <span class="flex items-center justify-between gap-3 border-t border-white/15 pt-3">
-                <span class="font-sans text-[12.5px] font-medium whitespace-nowrap text-neutral-light/90 sm:text-[13.5px]">
-                  {showcase.itemCta}
-                </span>
-                <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-leaf text-neutral-light transition-[transform,background-color,color] sm:size-9 duration-300 group-hover:translate-x-0.5 group-hover:bg-brand-glow group-hover:text-primary-dark-900">
-                  <Icon name="arrow-right" class="size-4" />
-                </span>
+              <span aria-hidden="true" class="min-h-4 flex-1 sm:min-h-5" />
+              {/* Aparência do Button primary: o card inteiro já é o botão */}
+              <span class="inline-flex w-full items-center justify-between gap-2 rounded-full bg-accent-orange px-4 py-2.5 font-sans text-[13px] font-bold text-neutral-light shadow-[0_18px_36px_-16px_rgba(2,118,83,0.8)] transition-colors duration-200 group-hover:bg-accent-orange-dark sm:px-6 sm:py-3.5 sm:text-[15px]">
+                <span class="sm:hidden">{cta.primaryShort}</span>
+                <span class="hidden sm:inline">{cta.primary}</span>
+                <Icon
+                  name="arrow-right"
+                  class="size-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
+                />
               </span>
             </span>
           </button>
@@ -204,67 +204,21 @@ const modelSize = (model: string) =>
       )
     })}
   </ul>
-
-  <ContactStrip
-    cta="vitrine-ajuda"
-    title={showcase.help.text}
-    note={showcase.help.note}
-    label={showcase.help.cta}
-    class="mt-12"
-  />
 </Section>
 
 <style>
-  /* Palco claro da foto: luz no centro, menta suave nas bordas e sombra de piso sob o produto. */
-  .showcase-card__stage {
-    background:
-      radial-gradient(65% 60% at 50% 42%, #ffffff 0%, transparent 100%),
-      linear-gradient(180deg, #eef5f2 0%, #f8fbfa 100%);
+  /* Camada menta sobre o tom da seção, dissolvendo em branco na base (LP de locação) */
+  :global([data-showcase]) {
+    background-image:
+      radial-gradient(900px 420px at 85% 0%, rgb(97 229 169 / 0.12) 0%, transparent 70%),
+      linear-gradient(180deg, #f0f9f5 0%, #f5fbf8 70%, #ffffff 100%);
   }
 
-  .showcase-card__floor {
-    background: radial-gradient(closest-side, rgb(6 67 55 / 0.22), transparent);
-    transition:
-      transform 500ms ease-out,
-      opacity 500ms ease-out;
-  }
-
-  .showcase-card:hover .showcase-card__floor {
-    transform: scaleX(0.9);
-    opacity: 0.7;
-  }
-
-  .showcase-card__img {
-    filter: drop-shadow(0 14px 14px rgb(6 67 55 / 0.14));
-  }
-
-  /* Fio menta no topo do painel, separando foto e texto. */
-  .showcase-card__panel::before {
-    content: '';
-    position: absolute;
-    inset: 0 0 auto;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--color-brand-glow), transparent);
-    opacity: 0.55;
-  }
-
-  /* Painel verde-escuro do card, com um brilho sutil no topo. */
-  .showcase-card__panel {
-    background:
-      radial-gradient(120% 90% at 0% 0%, rgb(255 255 255 / 0.07) 0%, transparent 60%),
-      linear-gradient(
-        165deg,
-        var(--color-primary-dark-800) 0%,
-        var(--color-primary-dark) 55%,
-        var(--color-primary-dark-900) 100%
-      );
-  }
-
-  /* Bloco que abre cada faixa: menta claro com luz no canto. */
-  .showcase-tech {
-    background:
-      radial-gradient(90% 70% at 0% 0%, rgb(124 239 192 / 0.28) 0%, transparent 65%),
-      linear-gradient(160deg, var(--color-brand-mint-soft) 0%, #f6fbf9 100%);
+  /* Palco menta da foto, com brilho sob o produto */
+  .showcase-stage {
+    background-image:
+      radial-gradient(ellipse 70% 55% at 50% 70%, rgb(97 229 169 / 0.24) 0%, transparent 72%),
+      linear-gradient(180deg, #e9f6f0 0%, #f3faf7 100%);
   }
 
   @media (prefers-reduced-motion: reduce) {

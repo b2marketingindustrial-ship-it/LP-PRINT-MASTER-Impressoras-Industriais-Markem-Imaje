@@ -14,6 +14,7 @@
 import { Picture } from 'astro:assets'
 import Section from '@components/Section.astro'
 import Icon from '@components/Icon.astro'
+import Eyebrow from '@components/Eyebrow.astro'
 import Button from '@components/Button.astro'
 import type { SectionProps } from '@lib/layout'
 import { cta } from '@data/content'
@@ -44,29 +45,22 @@ const { tone, rhythm } = Astro.props
 
     <div class="relative z-[2] mx-auto w-full max-w-page px-6 pt-12 pb-10 lg:px-10 lg:pt-24 lg:pb-32">
       <div class="max-w-xl lg:max-w-[47%]">
-        <span class="inline-flex items-center gap-3.5 font-sans text-[12px] font-semibold tracking-[0.24em] text-neutral-light/90 uppercase">
-          <span aria-hidden="true" class="h-[3px] w-9 rounded-full bg-brand-glow"></span>
-          {why.eyebrow}
-        </span>
-        <h2 class="mt-5 font-display text-[2.2rem] leading-[1.04] font-extrabold tracking-[-0.03em] text-neutral-light sm:text-5xl xl:text-[3.6rem]">
+        <Eyebrow tone="light">{why.eyebrow}</Eyebrow>
+        <h2 class="mt-4 font-display text-[2.3rem] leading-[1.06] font-extrabold tracking-[-0.03em] text-neutral-light sm:text-5xl lg:text-[3.1rem] xl:text-[3.4rem]">
           {why.titleLines.map((line, i) => (
-            <span class:list={['block', i === why.titleLines.length - 1 && 'text-brand-glow']}>
+            <span class:list={['block', i === why.titleLines.length - 1 && 'text-brand-mint']}>
               {line}
             </span>
           ))}
         </h2>
 
+        <span aria-hidden="true" class="mt-6 block h-[3px] w-20 rounded-full bg-brand-mint"></span>
+
         <p class="mt-6 max-w-[36rem] font-sans text-base leading-relaxed text-neutral-light/85 sm:text-lg">
           {why.text}
         </p>
 
-        <Button
-          cta="diferenciais-cta"
-          variant="emerald"
-          size="md"
-          whatsapp
-          class="mt-8 w-full sm:w-auto"
-        >
+        <Button cta="diferenciais-cta" variant="mint" class="mt-8 w-full sm:w-auto">
           {cta.primary}
         </Button>
       </div>

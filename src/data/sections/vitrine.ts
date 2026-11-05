@@ -57,9 +57,8 @@ export const showcase = {
   brand: 'Markem-Imaje',
   itemCta: 'Ver equipamento',
   help: {
-    text: 'Precisa de ajuda para escolher o equipamento ideal?',
-    /** Linha de apoio do cartão de ajuda (05/11/2026). */
-    note: 'Conte o produto, a embalagem e a velocidade da linha: indicamos a tecnologia certa.',
+    /** Cartão de ajuda à direita do H2, como na LP de locação (05/11/2026). */
+    text: 'Precisa de ajuda para escolher?',
     cta: 'Fale com um especialista',
   },
   groups: [
@@ -183,7 +182,7 @@ export const showcase = {
   text: string
   brand: string
   itemCta: string
-  help: { text: string; note: string; cta: string }
+  help: { text: string; cta: string }
   groups: readonly ShowcaseGroup[]
   items: readonly ShowcaseItem[]
 }

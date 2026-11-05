@@ -13,9 +13,9 @@
 import { Image } from 'astro:assets'
 import Section from '@components/Section.astro'
 import Icon from '@components/Icon.astro'
+import Eyebrow from '@components/Eyebrow.astro'
 import ContactStrip from '@components/ContactStrip.astro'
 import type { SectionProps } from '@lib/layout'
-import { cta } from '@data/content'
 import { applications } from '@data/sections/aplicacoes'
 
 type Props = SectionProps
@@ -25,11 +25,8 @@ const { tone, rhythm } = Astro.props
 
 <Section id="aplicacoes" tone={tone} rhythm={rhythm}>
   <div class="mx-auto max-w-5xl text-center">
-    <span class="inline-flex items-center gap-3.5 font-sans text-[12px] font-semibold tracking-[0.3em] text-ink-soft uppercase">
-      <span aria-hidden="true" class="h-1 w-10 rounded-full bg-accent-orange"></span>
-      {applications.eyebrow}
-    </span>
-    <h2 class="mt-4 font-display text-[2rem] leading-[1.08] font-extrabold tracking-[-0.03em] text-primary-dark sm:text-4xl lg:text-[2.9rem] xl:whitespace-nowrap">
+    <Eyebrow>{applications.eyebrow}</Eyebrow>
+    <h2 class="mt-4 font-display text-[2.2rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-balance text-primary-dark sm:text-5xl lg:text-[3.35rem] xl:whitespace-nowrap">
       {applications.title}
     </h2>
     <p class="mt-4 font-sans text-[15px] leading-relaxed text-ink-soft sm:text-[17px] lg:text-lg">
@@ -54,10 +51,10 @@ const { tone, rhythm } = Astro.props
                 <button
                   type="button"
                   data-cta={`aplicacoes-${app.id}`}
-                  class="btn-slave-whats app-card group flex h-full w-full flex-col overflow-hidden rounded-2xl bg-primary-dark text-left shadow-[0_22px_44px_-28px_rgba(1,36,34,0.65)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_32px_60px_-30px_rgba(1,36,34,0.75)]"
+                  class="btn-slave-whats app-card group flex h-full w-full flex-col overflow-hidden rounded-[20px] bg-primary-dark text-left shadow-[0_26px_50px_-30px_rgba(6,67,55,0.6)] ring-1 ring-primary-dark/10 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_32px_60px_-30px_rgba(1,36,34,0.75)]"
                 >
                   {app.photo ? (
-                    <span class="block aspect-[8/5] overflow-hidden bg-primary-dark-900">
+                    <span class="block aspect-[6/5] overflow-hidden bg-primary-dark-900">
                       <Image
                         src={app.photo.src}
                         alt={app.photo.alt}
@@ -70,7 +67,7 @@ const { tone, rhythm } = Astro.props
                       />
                     </span>
                   ) : (
-                    <span class="app-card__stage relative flex aspect-[8/5] items-center justify-center overflow-hidden">
+                    <span class="app-card__stage relative flex aspect-[6/5] items-center justify-center overflow-hidden">
                       <span aria-hidden="true" class="app-card__grid absolute inset-0"></span>
                       <span
                         aria-hidden="true"
@@ -86,19 +83,15 @@ const { tone, rhythm } = Astro.props
                     </span>
                   )}
                   <span class="app-card__body flex flex-1 flex-col px-6 pt-5 pb-6">
-                    <span class="font-display text-[1.2rem] leading-snug font-bold text-neutral-light lg:text-[1.3rem]">
+                    <span class="font-display text-[1.3rem] leading-snug font-extrabold text-neutral-light">
                       {app.label}
                     </span>
-                    <span class="mt-2 font-sans text-[14px] leading-relaxed text-neutral-light/80">
-                      {app.description}
-                    </span>
-                    <span aria-hidden="true" class="min-h-4 flex-1"></span>
-                    <span class="flex items-center justify-between gap-3 border-t border-white/15 pt-4">
-                      <span class="font-sans text-[13.5px] font-medium text-neutral-light/90">
-                        {cta.card}
+                    <span class="mt-2 flex flex-1 items-center justify-between gap-3">
+                      <span class="font-sans text-[14.5px] leading-relaxed text-neutral-light/85">
+                        {app.description}
                       </span>
-                      <span class="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand-leaf text-neutral-light transition-[transform,background-color,color] duration-300 group-hover:translate-x-0.5 group-hover:bg-brand-glow group-hover:text-primary-dark-900">
-                        <Icon name="arrow-right" class="size-[18px]" />
+                      <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-brand-mint-soft text-primary-dark transition-[background-color,transform] duration-300 group-hover:translate-x-0.5 group-hover:bg-brand-mint">
+                        <Icon name="arrow-right" class="size-5" />
                       </span>
                     </span>
                   </span>
@@ -152,10 +145,13 @@ const { tone, rhythm } = Astro.props
 
 <style>
   /* Corpo verde-escuro do card, com um brilho sutil no topo. */
+  /* Corpo verde do card, como os segmentos da LP de locação. */
   .app-card__body {
-    background:
-      radial-gradient(120% 90% at 0% 0%, rgb(255 255 255 / 0.06) 0%, transparent 60%),
-      linear-gradient(165deg, var(--color-primary-dark) 0%, var(--color-primary-dark-900) 100%);
+    background-image: linear-gradient(
+      170deg,
+      var(--color-primary-dark-800) 0%,
+      var(--color-primary-dark) 100%
+    );
   }
 
   /* Palco de quem ainda não tem foto: verde profundo, malha fina e luz menta no centro. */
