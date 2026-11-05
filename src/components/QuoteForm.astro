@@ -6,12 +6,14 @@
  * Visual igual ao da LP de locação (pedido do usuário, 27/10/2026): fundo menta suave com
  * textura, H2 escuro com o fim em verde, convite e 3 selos em duas linhas com divisórias.
  * Pedido do usuário (27/10/2026): o formulário e o botão de WhatsApp vêm do plugin — a coluna
- * do formulário é só o shortcode, num espaço vazio com altura reservada, e o botão é um espaço
- * vazio (#cotacao-whatsapp). Fora do WordPress o texto cru do shortcode é apagado.
+ * do formulário é só o shortcode, num espaço vazio com altura reservada. Fora do WordPress o
+ * texto cru do shortcode é apagado. Pedido de 05/11/2026: no lugar do espaço vazio do botão de
+ * WhatsApp entra o CTA padrão da página ("Chamar no WhatsApp", `cotacao-whatsapp`).
  */
 import Icon from './Icon.astro'
 import Eyebrow from './Eyebrow.astro'
-import { quote } from '../data/content'
+import Button from './Button.astro'
+import { quote, cta } from '../data/content'
 
 const isDev = import.meta.env.DEV
 
@@ -92,8 +94,16 @@ const twoLines = (label: string) => {
         <p class="mt-8 font-sans text-[17px] font-semibold text-primary-dark">
           {quote.whatsappPrompt}
         </p>
-        {/* Espaço vazio para o botão de WhatsApp do plugin */}
-        <div id="cotacao-whatsapp" class="mt-4 min-h-[62px]"></div>
+        {/* CTA padrão (pedido de 05/11/2026): `btn-slave-whats` abre o atendimento do plugin */}
+        <Button
+          cta="cotacao-whatsapp"
+          variant="emerald"
+          size="lg"
+          whatsapp
+          class="mt-4 w-full sm:w-auto"
+        >
+          {cta.whatsapp}
+        </Button>
 
         <ul class="mt-9 grid grid-cols-3 border-t border-primary-dark/15 pt-7 sm:flex sm:justify-between">
           {quote.trust.map((item) => {

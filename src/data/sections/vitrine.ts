@@ -5,8 +5,8 @@
  * itens têm a frase, ou nenhum tem — o componente recusa a mistura no build.
  *
  * `groups` vazio deixa a vitrine em grade. Com grupos, cada um vira uma
- * faixa própria, aberta por um bloco com o nome, a frase e a contagem (sem filtro: pedido do
- * usuário de 05/11/2026, todos os modelos à vista).
+ * bloco no topo (nome, frase e contagem) e um selo nos seus cards; os modelos ficam todos numa
+ * grade só, sem filtro (pedido do usuário de 05/11/2026).
  */
 import type { IconName } from '@data/icons'
 import type { Photo } from '@data/types'
@@ -31,8 +31,10 @@ export interface ShowcaseGroup {
   logo: Photo | null
   /** Ícone do bloco da tecnologia (variante local de 05/11/2026). */
   icon: IconName
-  /** 1 frase curta sobre a tecnologia, no bloco que abre a faixa. */
+  /** 1 frase curta sobre a tecnologia, no bloco do topo. */
   description: string
+  /** Rótulo curto do selo no card. */
+  short: string
 }
 
 export interface ShowcaseItem {
@@ -66,6 +68,7 @@ export const showcase = {
       label: 'Jato de tinta contínuo',
       logo: null,
       icon: 'droplet',
+      short: 'Jato de tinta',
       description:
         'Datadores CIJ para data, lote e validade direto na embalagem, em linhas rápidas.',
     },
@@ -74,6 +77,7 @@ export const showcase = {
       label: 'Transferência térmica',
       logo: null,
       icon: 'flame',
+      short: 'Térmica',
       description:
         'Codificadores TTO para filmes flexíveis e rótulos, com textos e códigos nítidos.',
     },
@@ -82,6 +86,7 @@ export const showcase = {
       label: 'Print & Apply',
       logo: null,
       icon: 'tag',
+      short: 'Print & Apply',
       description: 'Etiquetadoras que imprimem e aplicam a etiqueta em caixas e paletes.',
     },
   ],

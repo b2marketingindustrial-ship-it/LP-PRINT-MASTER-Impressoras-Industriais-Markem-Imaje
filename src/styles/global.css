@@ -198,11 +198,8 @@
   border-top: var(--round) solid transparent;
 }
 
-/* Bloco escuro de "Por que a Print Master": um cartão em largura total. */
-.why-hero {
-  border-radius: var(--round);
-  box-shadow: 0 30px 60px -34px rgb(1 36 34 / 0.6);
-}
+/* Bloco escuro de "Por que a Print Master": faixa reta em largura total, sem cantos
+   arredondados (referência SEIVE, pedido de 05/11/2026). */
 
 /*
  * Texturas das seções claras (padrão Print Master): pontos, malha técnica, grafo de nós e

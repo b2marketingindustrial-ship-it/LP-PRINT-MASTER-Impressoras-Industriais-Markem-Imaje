@@ -208,9 +208,9 @@ for (const f of astroFiles) {
       'id="cotacao"',
       'lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]',
       'order-2 w-full lg:order-1',
-      // Repinada em 27/10/2026 (pedido do usuário, docs/BRIEFING.md): o botão de WhatsApp da
-      // Cotação vem do plugin; no lugar dele fica o espaço vazio #cotacao-whatsapp.
-      'id="cotacao-whatsapp"',
+      // Repinada em 05/11/2026 (pedido do usuário, docs/BRIEFING.md): no lugar do espaço vazio
+      // #cotacao-whatsapp entra o CTA padrão com WhatsApp (`btn-slave-whats`, capturado pelo plugin).
+      'cta="cotacao-whatsapp"',
     ],
     'Footer.astro': [
       'navy-premium border-t border-white/15',

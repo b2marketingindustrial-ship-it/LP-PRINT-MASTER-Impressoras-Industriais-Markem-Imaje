@@ -6,10 +6,6 @@
  * "Impressoras a laser" aparece só aqui: a vitrine ainda não tem modelo laser.
  */
 import type { IconName } from '@data/icons'
-import type { Photo } from '@data/types'
-
-import logoPrintMaster from '@assets/LOGO.png'
-import logoMarkem from '@assets/heroMarca.png'
 
 export interface Solution {
   id: string
@@ -29,13 +25,6 @@ export const solutions = {
     'garantem codificação precisa e legível para alimentos, bebidas, farmacêuticos e eletrônicos, ' +
     'integrando-se perfeitamente às linhas de produção, ' +
     'otimizando a operação e reduzindo erros.',
-  /** Setores citados no texto do cliente, repetidos em chips. */
-  sectorsLabel: 'Setores atendidos',
-  sectors: ['Alimentos', 'Bebidas', 'Farmacêuticos', 'Eletrônicos'],
-  logos: [
-    { src: logoPrintMaster, alt: 'Print Master' },
-    { src: logoMarkem, alt: 'Markem-Imaje' },
-  ],
   listTitle: 'Nossas soluções em destaque',
   items: [
     {
@@ -69,9 +58,6 @@ export const solutions = {
   title: string
   highlight: string
   text: string
-  sectorsLabel: string
-  sectors: readonly string[]
-  logos: readonly [Photo, Photo]
   listTitle: string
   items: readonly [Solution, Solution, Solution, Solution]
 }

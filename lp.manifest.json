@@ -39,7 +39,9 @@
         "even"
       ],
       "exampleHash": "",
-      "ctas": [],
+      "ctas": [
+        "solucoes-cta"
+      ],
       "contract": {
         "itemsPath": "items",
         "itemsMin": 4,
@@ -56,7 +58,7 @@
         }
       },
       "assets": [],
-      "localVariant": "Print Master 05/11/2026 — pedido do usuário: seção nova, sem par na biblioteca. Texto do cliente, setores em chips, logos Print Master + Markem-Imaje e 4 soluções em cards 2×2 (docs/BRIEFING.md)"
+      "localVariant": "Print Master 05/11/2026 — pedido do usuário: seção nova, sem par na biblioteca. Texto do cliente, CTA padrão de contato (solucoes-cta) e 4 soluções em cards 2×2 (docs/BRIEFING.md)"
     },
     {
       "slug": "vitrine",

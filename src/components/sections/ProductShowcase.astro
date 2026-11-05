@@ -4,9 +4,10 @@
  *
  * VARIANTE LOCAL — Print Master, mockup de 26/10/2026 (docs/BRIEFING.md): cada card tem a foto
  * grande em cima e um painel verde-escuro com a marca, o modelo em destaque e "Ver equipamento";
- * uma faixa de ajuda fecha a seção. Pedido de 05/11/2026: sem abas nem filtro — os 12 modelos
- * ficam à vista, numa faixa por tecnologia aberta por um bloco com ícone, nome, frase e contagem;
- * fim do H2 em verde, palco da foto com luz e sombra de piso, e a ajuda num cartão com botão.
+ * uma faixa de ajuda fecha a seção. Pedido de 05/11/2026: sem abas nem filtro — três blocos
+ * compactos apresentam as tecnologias (ícone, nome, contagem, frase) e os 12 modelos ficam numa
+ * grade só (6 × 2 no desktop, sem sobras), com o selo da tecnologia em cada card; fim do H2 em
+ * verde, palco da foto com luz e sombra de piso, e a ajuda no ContactStrip padrão.
  * `npm run compose` sobrescreve este arquivo com o da biblioteca: ao recompor,
  * reaplique a variante.
  *
@@ -64,15 +65,9 @@ const shelves = grouped
     }))
   : [{ id: 'todos', label: showcase.title, icon: null, description: '', items: [...items] }]
 
-/**
- * No desktop cada faixa fecha 6 colunas (3 no lg): o bloco da tecnologia ocupa o que os
- * modelos deixam livre — 5 + 1, 4 + 2, 3 + 3 —, e todos os cards ficam do mesmo tamanho.
- */
-const headSpan: Record<number, string> = {
-  5: 'lg:col-span-1',
-  4: 'lg:col-span-2',
-  3: 'lg:col-span-3',
-}
+/** Grupo de cada item, para o selo do card. A grade segue a ordem dos grupos. */
+const groupOf = new Map(groups.map((group) => [group.id, group]))
+const ordered = grouped ? shelves.flatMap((shelf) => shelf.items) : [...items]
 
 for (const shelf of shelves) {
   if (!shelf.items.length) {
@@ -98,10 +93,10 @@ const modelOf = (title: string) =>
 /** Número curto em destaque; nome longo desce de tamanho para caber no card. */
 const modelSize = (model: string) =>
   model.length <= 6
-    ? 'text-[1.9rem] sm:text-[2.1rem]'
+    ? 'text-[1.6rem] sm:text-[2rem]'
     : model.length <= 12
-      ? 'text-[1.45rem]'
-      : 'text-[1.15rem]'
+      ? 'text-[1.2rem] sm:text-[1.4rem]'
+      : 'text-[1rem] sm:text-[1.1rem]'
 ---
 
 <Section id="vitrine" tone={tone} rhythm={rhythm} data-showcase>
@@ -118,138 +113,102 @@ const modelSize = (model: string) =>
     </p>
   </div>
 
-  <div class="mt-10 space-y-10 lg:space-y-6">
-    {shelves.map((shelf) => (
-      <div
-        data-showcase-shelf
-        class="lg:grid lg:grid-cols-3 lg:gap-5 xl:grid-cols-6"
-        aria-labelledby={grouped ? `vitrine-${shelf.id}` : undefined}
-        role={grouped ? 'group' : undefined}
-      >
-        {grouped && (
-          <div
-            class:list={[
-              'showcase-tech relative mb-4 flex items-start gap-4 overflow-hidden rounded-[20px] p-4 ring-1 ring-brand-leaf/20 sm:p-5 lg:mb-0 lg:flex-col lg:gap-0 lg:p-6',
-              headSpan[shelf.items.length] ?? 'lg:col-span-full',
-            ]}
-          >
-            {shelf.icon && (
-              <Icon
-                name={shelf.icon}
-                class="pointer-events-none absolute -right-6 -bottom-8 hidden size-40 text-accent-orange/[0.07] lg:block"
-              />
-            )}
-            {shelf.icon && (
-              <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-dark text-brand-glow shadow-[0_12px_24px_-14px_rgba(6,67,55,0.9)]">
-                <Icon name={shelf.icon} class="size-[21px]" />
-              </span>
-            )}
-            <div class="relative min-w-0 flex-1 lg:mt-5 lg:flex lg:w-full lg:flex-col">
-              <h3
-                id={`vitrine-${shelf.id}`}
-                class="font-display text-[1.15rem] leading-tight font-extrabold tracking-[-0.015em] text-ink lg:text-[1.3rem]"
-              >
+  {grouped && (
+    <ul class="mt-9 grid gap-3 sm:grid-cols-3 sm:gap-4 xl:gap-5" aria-label="Tecnologias">
+      {shelves.map((shelf) => (
+        <li class="showcase-tech flex items-start gap-4 rounded-[20px] p-4 ring-1 ring-brand-leaf/20 sm:p-5">
+          {shelf.icon && (
+            <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-dark text-brand-glow shadow-[0_12px_24px_-14px_rgba(6,67,55,0.9)]">
+              <Icon name={shelf.icon} class="size-[21px]" />
+            </span>
+          )}
+          <div class="min-w-0">
+            <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <h3 class="font-display text-[1.1rem] leading-tight font-extrabold tracking-[-0.015em] text-ink">
                 {shelf.label}
               </h3>
-              <p class="mt-1.5 font-sans text-[13.5px] leading-relaxed text-ink-soft lg:mt-2 lg:max-w-[22rem]">
-                {shelf.description}
-              </p>
-              <span aria-hidden="true" class="hidden flex-1 lg:block lg:min-h-5" />
-              <span class="mt-2.5 inline-flex items-center gap-2 font-sans text-[11.5px] font-bold tracking-[0.18em] text-accent-orange uppercase lg:mt-0">
-                <span aria-hidden="true" class="h-[2px] w-5 rounded-full bg-accent-orange" />
+              <span class="font-sans text-[11px] font-bold tracking-[0.16em] text-accent-orange uppercase">
                 {countLabel(shelf.items.length)}
               </span>
             </div>
+            <p class="mt-1.5 font-sans text-[13.5px] leading-relaxed text-ink-soft">
+              {shelf.description}
+            </p>
           </div>
-        )}
+        </li>
+      ))}
+    </ul>
+  )}
 
-        <ul
-          data-showcase-rail
-          aria-label={shelf.label}
-          class="scroll-track -mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-3 lg:contents"
-        >
-          {shelf.items.map((item) => {
-            const model = modelOf(item.title)
-            return (
-              <li class="w-[62%] shrink-0 snap-start sm:w-[36%] lg:w-auto">
-                <button
-                  type="button"
-                  data-cta={`vitrine-${item.id}`}
-                  class="btn-slave-whats showcase-card group flex h-full w-full flex-col overflow-hidden rounded-[20px] bg-neutral-light text-left shadow-[0_1px_2px_rgba(6,67,55,0.06),0_18px_40px_-28px_rgba(6,67,55,0.45)] ring-1 ring-primary-dark/10 hover:ring-brand-leaf/40 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_32px_60px_-30px_rgba(6,67,55,0.6)]"
-                >
-                  <span class="showcase-card__stage relative flex aspect-[4/3] items-center justify-center overflow-hidden">
-                    <span
-                      aria-hidden="true"
-                      class="showcase-card__floor absolute inset-x-[18%] bottom-[7%] h-[9%] rounded-[50%]"
-                    />
-                    <Image
-                      src={item.photo.src}
-                      alt={item.photo.alt}
-                      format="webp"
-                      widths={[320, 480, 640]}
-                      sizes="(min-width: 1280px) 210px, (min-width: 1024px) 300px, (min-width: 640px) 36vw, 62vw"
-                      loading="lazy"
-                      decoding="async"
-                      class="showcase-card__img relative h-full w-full object-contain px-4 pt-5 pb-4 transition-transform duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-[1.04]"
-                    />
-                  </span>
+  <ul
+    aria-label={showcase.title}
+    class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 xl:grid-cols-6 xl:gap-5"
+  >
+    {ordered.map((item) => {
+      const model = modelOf(item.title)
+      const tech = groupOf.get(item.group)
+      return (
+        <li>
+          <button
+            type="button"
+            data-cta={`vitrine-${item.id}`}
+            class="btn-slave-whats showcase-card group flex h-full w-full flex-col overflow-hidden rounded-[20px] bg-neutral-light text-left shadow-[0_1px_2px_rgba(6,67,55,0.06),0_18px_40px_-28px_rgba(6,67,55,0.45)] ring-1 ring-primary-dark/10 hover:ring-brand-leaf/40 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_32px_60px_-30px_rgba(6,67,55,0.6)]"
+          >
+            <span class="showcase-card__stage relative flex aspect-[4/3] items-center justify-center overflow-hidden">
+              {tech && (
+                <span class="absolute top-2.5 left-2.5 z-[1] inline-flex items-center gap-1.5 rounded-full bg-neutral-light/90 px-2.5 py-1 font-sans text-[10.5px] font-bold text-primary-dark ring-1 ring-primary-dark/10 backdrop-blur-sm sm:top-3 sm:left-3">
+                  <Icon name={tech.icon} class="size-3 text-accent-orange" />
+                  {tech.short}
+                </span>
+              )}
+              <span
+                aria-hidden="true"
+                class="showcase-card__floor absolute inset-x-[18%] bottom-[7%] h-[9%] rounded-[50%]"
+              />
+              <Image
+                src={item.photo.src}
+                alt={item.photo.alt}
+                format="webp"
+                widths={[320, 480, 640]}
+                sizes="(min-width: 1280px) 210px, (min-width: 1024px) 240px, (min-width: 640px) 31vw, 48vw"
+                loading="lazy"
+                decoding="async"
+                class="showcase-card__img relative h-full w-full object-contain px-3 pt-8 pb-3 transition-transform sm:px-4 sm:pt-9 duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-[1.04]"
+              />
+            </span>
 
-                  <span class="showcase-card__panel relative flex flex-1 flex-col px-4 pt-4 pb-4 sm:px-5">
-                    <span class="font-sans text-[10.5px] font-bold tracking-[0.18em] text-neutral-light/85 uppercase">
-                      {showcase.brand}
-                    </span>
-                    <span
-                      class:list={[
-                        'mt-0.5 font-display leading-[1.12] font-extrabold tracking-[-0.01em] text-neutral-light',
-                        modelSize(model),
-                      ]}
-                    >
-                      {model}
-                    </span>
-                    {showText && (
-                      <span class="mt-1.5 font-sans text-[12.5px] leading-relaxed text-neutral-light/75">
-                        {item.description}
-                      </span>
-                    )}
-                    <span aria-hidden="true" class="min-h-3 flex-1" />
-                    <span class="flex items-center justify-between gap-3 border-t border-white/15 pt-3">
-                      <span class="font-sans text-[13.5px] font-medium text-neutral-light/90">
-                        {showcase.itemCta}
-                      </span>
-                      <span class="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand-leaf text-neutral-light transition-[transform,background-color,color] duration-300 group-hover:translate-x-0.5 group-hover:bg-brand-glow group-hover:text-primary-dark-900">
-                        <Icon name="arrow-right" class="size-4" />
-                      </span>
-                    </span>
-                  </span>
-                </button>
-              </li>
-            )
-          })}
-        </ul>
-
-        {shelf.items.length > 2 && (
-          <div class="mt-2 flex items-center justify-center gap-3 sm:hidden">
-            <button
-              type="button"
-              data-rail-prev
-              aria-label={`Modelo anterior de ${shelf.label}`}
-              class="flex size-10 items-center justify-center rounded-full border border-neutral-gray-200 bg-neutral-light text-primary-dark transition-colors hover:border-accent-orange hover:text-accent-orange"
-            >
-              <Icon name="chevron-right" class="size-4 rotate-180" />
-            </button>
-            <button
-              type="button"
-              data-rail-next
-              aria-label={`Próximo modelo de ${shelf.label}`}
-              class="flex size-10 items-center justify-center rounded-full border border-neutral-gray-200 bg-neutral-light text-primary-dark transition-colors hover:border-accent-orange hover:text-accent-orange"
-            >
-              <Icon name="chevron-right" class="size-4" />
-            </button>
-          </div>
-        )}
-      </div>
-    ))}
-  </div>
+            <span class="showcase-card__panel relative flex flex-1 flex-col px-3 pt-3.5 pb-3.5 sm:px-5 sm:pt-4 sm:pb-4">
+              <span class="font-sans text-[10.5px] font-bold tracking-[0.18em] text-neutral-light/85 uppercase">
+                {showcase.brand}
+              </span>
+              <span
+                class:list={[
+                  'mt-0.5 font-display leading-[1.12] font-extrabold tracking-[-0.01em] text-neutral-light',
+                  modelSize(model),
+                ]}
+              >
+                {model}
+              </span>
+              {showText && (
+                <span class="mt-1.5 font-sans text-[12.5px] leading-relaxed text-neutral-light/75">
+                  {item.description}
+                </span>
+              )}
+              <span aria-hidden="true" class="min-h-3 flex-1" />
+              <span class="flex items-center justify-between gap-3 border-t border-white/15 pt-3">
+                <span class="font-sans text-[12.5px] font-medium whitespace-nowrap text-neutral-light/90 sm:text-[13.5px]">
+                  {showcase.itemCta}
+                </span>
+                <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-leaf text-neutral-light transition-[transform,background-color,color] sm:size-9 duration-300 group-hover:translate-x-0.5 group-hover:bg-brand-glow group-hover:text-primary-dark-900">
+                  <Icon name="arrow-right" class="size-4" />
+                </span>
+              </span>
+            </span>
+          </button>
+        </li>
+      )
+    })}
+  </ul>
 
   <ContactStrip
     cta="vitrine-ajuda"
@@ -324,25 +283,3 @@ const modelSize = (model: string) =>
     }
   }
 </style>
-
-<script>
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-  // Trilho do celular: setas que rolam um card por vez, em cada faixa.
-  document.querySelectorAll<HTMLElement>('[data-showcase-shelf]').forEach((shelf) => {
-    const rail = shelf.querySelector<HTMLElement>('[data-showcase-rail]')
-    const prev = shelf.querySelector<HTMLButtonElement>('[data-rail-prev]')
-    const next = shelf.querySelector<HTMLButtonElement>('[data-rail-next]')
-    if (!rail || !prev || !next) return
-
-    const step = () => {
-      const card = rail.querySelector<HTMLElement>('li')
-      return card ? card.offsetWidth + 16 : rail.clientWidth * 0.8
-    }
-    const go = (dir: number) =>
-      rail.scrollBy({ left: dir * step(), behavior: reduce ? 'auto' : 'smooth' })
-
-    prev.addEventListener('click', () => go(-1))
-    next.addEventListener('click', () => go(1))
-  })
-</script>
