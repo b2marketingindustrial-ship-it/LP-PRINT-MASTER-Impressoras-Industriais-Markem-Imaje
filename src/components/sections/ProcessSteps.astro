@@ -2,11 +2,11 @@
 /**
  * "Como funciona" — fase "apoio" da biblioteca B2.
  *
- * VARIANTE LOCAL — Print Master, pedido de 05/11/2026 (docs/BRIEFING.md): segue a referência
- * SEIVE. Painel verde profundo com o texto em HTML à esquerda (eyebrow com traço, H2 com a parte
- * final em menta, texto, três destaques entre fios, CTA e selo Markem-Imaje) e a cena do banner
- * à direita, fundida ao verde; as 4 etapas entram em cards brancos sobrepostos à base do painel.
- * No celular a cena desce para baixo do texto. É o bloco escuro da primeira metade da página.
+ * VARIANTE LOCAL — Print Master, pedido de 05/11/2026 (docs/BRIEFING.md): "sem conter em uma
+ * caixa". O conteúdo pousa direto numa faixa verde em largura total (sem painel arredondado nem
+ * cards): texto à esquerda com CTA e selo Markem-Imaje, foto do técnico sangrando até a borda
+ * direita e fundida ao verde, e as 4 etapas numa linha do tempo — ícone em círculo ligado por um
+ * fio, título e frase, sem números. Continua sendo o bloco escuro da primeira metade da página.
  * `npm run compose` sobrescreve este arquivo com o da biblioteca: ao recompor, reaplique.
  */
 import { Image, Picture } from 'astro:assets'
@@ -23,18 +23,18 @@ type Props = SectionProps
 const { tone, rhythm } = Astro.props
 ---
 
-<Section id="processo" tone={tone} rhythm={rhythm}>
-  <div class="process-block relative isolate overflow-hidden rounded-[28px] bg-hero-deep shadow-[0_40px_80px_-46px_rgba(1,36,34,0.9)]">
-    {/* Cena do desktop: presa à direita e apagada para a esquerda, dentro do verde */}
+<Section id="processo" tone={tone} rhythm={rhythm} container={false}>
+  <div class="process-band relative isolate overflow-hidden">
+    {/* Foto à direita, sangrando até a borda e apagada para a esquerda */}
     <div
       aria-hidden="true"
-      class="process-scene absolute inset-y-0 right-0 hidden w-[60%] lg:block"
+      class="process-scene absolute inset-y-0 right-0 hidden w-[55%] lg:block"
     >
       <Picture
         src={process.scene.src}
         alt=""
         widths={[640, 960, 1070]}
-        sizes="(min-width: 1450px) 830px, 60vw"
+        sizes="55vw"
         formats={['avif', 'webp']}
         fallbackFormat="webp"
         loading="lazy"
@@ -43,41 +43,27 @@ const { tone, rhythm } = Astro.props
         pictureAttributes={{ class: 'block h-full w-full' }}
       />
     </div>
-    <span aria-hidden="true" class="process-glow pointer-events-none absolute inset-0 -z-10"></span>
-    {/* Malha técnica da LP de locação, só no lado do texto */}
     <span
       aria-hidden="true"
-      class="blueprint-grid pointer-events-none absolute inset-0 -z-[5]"
+      class="blueprint-grid pointer-events-none absolute inset-0 -z-[1]"
     ></span>
 
-    <div class="relative px-6 pt-11 pb-8 sm:px-10 lg:px-14 lg:pt-16 lg:pb-36 xl:px-16">
-      <div class="lg:max-w-[50%] xl:max-w-[47%]">
+    <div class="relative mx-auto max-w-page px-6 pt-14 pb-14 lg:px-10 lg:pt-20 lg:pb-20">
+      <div class="lg:max-w-[46%]">
         <Eyebrow tone="light">{process.eyebrow}</Eyebrow>
-
-        <h2 class="mt-4 font-display text-[2.1rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-neutral-light sm:text-5xl lg:text-[2.75rem] xl:text-[3rem]">
+        <h2 class="mt-4 font-display text-[2.2rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-neutral-light sm:text-5xl lg:text-[3.1rem]">
           {process.titleLead} <span class="text-brand-mint">{process.titleHighlight}</span>
         </h2>
-
-        <p class="mt-5 max-w-[36rem] font-sans text-[15px] leading-relaxed text-neutral-light/80 sm:text-[17px]">
+        <span aria-hidden="true" class="mt-6 block h-[3px] w-20 rounded-full bg-brand-mint"></span>
+        <p class="mt-6 max-w-[34rem] font-sans text-[17px] leading-relaxed text-neutral-light/85">
           {process.text}
         </p>
 
-        <dl class="mt-8 grid grid-cols-1 border-y border-white/12 sm:grid-cols-3">
-          {process.highlights.map((item) => (
-            <div class="flex flex-col-reverse justify-end gap-1 border-white/12 py-4 not-last:border-b sm:py-5 sm:not-last:border-r sm:not-last:border-b-0 sm:not-first:pl-5 sm:not-last:pr-5">
-              <dt class="font-sans text-[13px] leading-snug text-neutral-light/70">{item.label}</dt>
-              <dd class="font-display text-[1.4rem] leading-tight font-extrabold tracking-[-0.02em] whitespace-nowrap text-brand-mint lg:text-[1.15rem] xl:text-[1.35rem]">
-                {item.value}
-              </dd>
-            </div>
-          ))}
-        </dl>
-
         <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
-          <Button cta="processo-cta" variant="mint" class="w-full whitespace-nowrap sm:w-auto">
+          <Button cta="processo-cta" variant="mint" class="w-full sm:w-auto">
             {cta.primary}
           </Button>
-          <span class="inline-flex shrink-0 items-center gap-3 self-start rounded-xl bg-neutral-light py-2.5 pr-4 pl-3 shadow-[0_14px_30px_-18px_rgba(0,0,0,0.7)] sm:self-auto">
+          <span class="inline-flex shrink-0 items-center gap-3 self-start rounded-xl bg-neutral-light py-2.5 pr-4 pl-3 sm:self-auto">
             <Image
               src={hero.badge.src}
               alt={hero.badge.alt}
@@ -95,77 +81,81 @@ const { tone, rhythm } = Astro.props
           </span>
         </div>
       </div>
-    </div>
 
-    {/* Cena do celular e do tablet: abaixo do texto, fundida ao verde no alto */}
-    <div class="process-scene-mobile relative -mt-6 h-[300px] sm:h-[380px] lg:hidden">
-      <Picture
-        src={process.sceneMobile.src}
-        alt={process.sceneMobile.alt}
-        widths={[480, 941]}
-        sizes="100vw"
-        formats={['avif', 'webp']}
-        fallbackFormat="webp"
-        loading="lazy"
-        decoding="async"
-        class="h-full w-full object-cover object-[50%_30%]"
-        pictureAttributes={{ class: 'block h-full w-full' }}
-      />
+      {/* Foto no celular e no tablet, abaixo do texto */}
+      <div class="process-scene-mobile relative -mx-6 mt-10 h-[300px] sm:h-[380px] lg:hidden">
+        <Picture
+          src={process.sceneMobile.src}
+          alt={process.sceneMobile.alt}
+          widths={[480, 941]}
+          sizes="100vw"
+          formats={['avif', 'webp']}
+          fallbackFormat="webp"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover object-[50%_30%]"
+          pictureAttributes={{ class: 'block h-full w-full' }}
+        />
+      </div>
+
+      {/* Etapas numa linha do tempo, direto sobre o verde */}
+      <ol class="process-timeline relative mt-12 grid gap-8 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-6">
+        {process.steps.map((step) => (
+          <li class="relative flex gap-4 lg:flex-col lg:gap-0">
+            <span class="relative z-[1] flex size-12 shrink-0 items-center justify-center rounded-full bg-brand-mint text-primary-dark-900 shadow-[0_0_0_6px_rgb(6_67_55)]">
+              <Icon name={step.icon} class="size-[22px]" />
+            </span>
+            <div class="lg:mt-5 lg:pr-6">
+              <h3 class="font-display text-[1.1rem] leading-snug font-extrabold text-neutral-light">
+                {step.title}
+              </h3>
+              <p class="mt-2 font-sans text-[14.5px] leading-relaxed text-neutral-light/75">
+                {step.description}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
     </div>
   </div>
-
-  {/* Etapas sobrepostas à base do painel */}
-  <ol class="relative z-10 -mt-14 grid gap-3 px-3 sm:grid-cols-2 sm:gap-4 sm:px-6 lg:-mt-24 lg:grid-cols-4 lg:gap-5 lg:px-14 xl:px-16">
-    {process.steps.map((step) => (
-      <li class="process-step group relative overflow-hidden rounded-2xl border border-[#dde8e3] bg-neutral-light p-5 shadow-[0_1px_2px_rgba(1,36,34,0.06),0_26px_50px_-30px_rgba(1,36,34,0.55)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-brand-leaf/45 lg:p-6">
-        <div class="flex items-center gap-3">
-          <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-mint-soft text-accent-orange ring-1 ring-brand-leaf/20 transition-colors duration-300 group-hover:bg-accent-orange group-hover:text-neutral-light">
-            <Icon name={step.icon} class="size-[19px]" />
-          </span>
-          <h3 class="font-display text-[15.5px] leading-snug font-bold text-ink">{step.title}</h3>
-        </div>
-        <p class="mt-3.5 font-sans text-[13.5px] leading-relaxed text-ink-soft">
-          {step.description}
-        </p>
-      </li>
-    ))}
-  </ol>
 </Section>
 
 <style>
-  /* Verde profundo com luz no alto à esquerda, como o lado do texto na referência. */
-  .process-glow {
+  /* Verde profundo com luz no alto à esquerda, em largura total. */
+  .process-band {
     background:
-      radial-gradient(70% 90% at 0% 0%, rgb(26 165 122 / 0.32) 0%, transparent 60%),
+      radial-gradient(60% 80% at 0% 0%, rgb(26 165 122 / 0.3) 0%, transparent 60%),
       linear-gradient(
         160deg,
         var(--color-primary-dark-800) 0%,
-        var(--color-primary-dark) 40%,
+        var(--color-primary-dark) 45%,
         var(--color-hero-deep) 100%
       );
   }
 
-  /* A cena se apaga para a esquerda e na base, fundindo-se ao verde. */
+  /* A foto se apaga para a esquerda e na base, sob a linha do tempo. */
   .process-scene {
     mask-image:
-      linear-gradient(to right, transparent 0%, black 38%),
-      linear-gradient(to top, transparent 0%, black 22%);
+      linear-gradient(to right, transparent 0%, black 40%),
+      linear-gradient(to top, transparent 0%, black 45%);
     mask-composite: intersect;
     -webkit-mask-composite: source-in;
   }
 
   .process-scene-mobile {
-    mask-image: linear-gradient(to bottom, transparent 0%, black 32%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 75%, transparent 100%);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .process-step,
-    .process-step * {
-      transition: none !important;
-    }
-
-    .process-step:hover {
-      transform: none;
+  /* Fio da linha do tempo, passando pelo centro dos ícones (desktop). */
+  @media (min-width: 1024px) {
+    .process-timeline::before {
+      content: '';
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, rgb(97 229 169 / 0.6), rgb(97 229 169 / 0.15));
     }
   }
 </style>

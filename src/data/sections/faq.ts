@@ -15,16 +15,26 @@ export const faq = {
   eyebrow: 'Perguntas frequentes',
   title: 'Dúvidas sobre codificação industrial',
   text: 'O que as indústrias mais perguntam antes de escolher o equipamento.',
+  /** Cartão de contato que fecha a coluna do cabeçalho (05/11/2026). */
+  contact: {
+    title: 'Não encontrou a sua dúvida?',
+    text: 'Fale com um especialista da Print Master e receba a indicação certa para a sua linha.',
+    points: [
+      'Distribuidor autorizado Markem-Imaje',
+      'Instalação e integração na sua linha',
+      'Suporte da escolha ao pós-venda',
+    ],
+  },
   items: [
     {
       id: 'tecnologia',
       question: 'Qual tecnologia de codificação é a ideal para a minha linha?',
       answer:
-        'Depende do material, da embalagem e da velocidade da linha. O jato de tinta contínuo atende linhas rápidas e superfícies variadas, a transferência térmica é indicada para filmes flexíveis e rótulos, e o Print & Apply imprime e aplica etiquetas em caixas e paletes. Nossa equipe avalia a sua linha e indica a melhor opção.',
+        'Depende do produto, do material e da velocidade da linha. O jato de tinta contínuo atende linhas rápidas e superfícies variadas, a transferência térmica é indicada para filmes flexíveis e rótulos, e o Print & Apply imprime e aplica etiquetas em caixas e paletes. Nossa equipe avalia a sua linha e indica a melhor opção.',
     },
     {
       id: 'informacoes',
-      question: 'Que informações é possível gravar na embalagem?',
+      question: 'Que informações é possível gravar no produto?',
       answer:
         'Data de validade, lote, data de fabricação e outros códigos de rastreabilidade, em diversas posições e materiais, com marcação nítida e de alta definição.',
     },
@@ -38,7 +48,7 @@ export const faq = {
       id: 'instalacao',
       question: 'A Print Master faz a instalação do equipamento?',
       answer:
-        'Sim. Entregamos o equipamento e o integramos à sua linha de produção, depois de entender o produto, a embalagem e a velocidade da linha.',
+        'Sim. Entregamos o equipamento e o integramos à sua linha de produção, depois de entender o produto, o material e a velocidade da linha.',
     },
     {
       id: 'suporte',
@@ -56,12 +66,13 @@ export const faq = {
       id: 'cotacao',
       question: 'Como solicito uma cotação?',
       answer:
-        'Preencha o formulário desta página ou chame a nossa equipe no WhatsApp. Conte o produto, a embalagem e a velocidade da linha para indicarmos o equipamento certo.',
+        'Preencha o formulário desta página ou chame a nossa equipe no WhatsApp. Conte o produto, o material e a velocidade da linha para indicarmos o equipamento certo.',
     },
   ],
 } as const satisfies {
   eyebrow: string
   title: string
   text: string
+  contact: { title: string; text: string; points: readonly string[] }
   items: readonly FaqItem[]
 }

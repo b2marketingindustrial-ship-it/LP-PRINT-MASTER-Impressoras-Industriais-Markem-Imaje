@@ -93,7 +93,7 @@ export const quote = {
   title: 'Fale com quem entende de codificação industrial.',
   /** Trecho final do H2, em menta. */
   highlight: 'codificação industrial.',
-  text: 'Nossa equipe ajuda a escolher o equipamento certo para a sua linha e sua embalagem. Preencha o formulário ou fale diretamente conosco pelo WhatsApp.',
+  text: 'Nossa equipe ajuda a escolher o equipamento certo para a sua linha e o seu produto. Preencha o formulário ou fale diretamente conosco pelo WhatsApp.',
   /** Convite acima do espaço do botão de WhatsApp (o botão vem do plugin). */
   whatsappPrompt: 'Prefere conversar com a nossa equipe?',
   trust: [

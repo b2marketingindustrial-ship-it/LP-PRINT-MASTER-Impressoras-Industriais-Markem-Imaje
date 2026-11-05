@@ -3,8 +3,8 @@
  * Perguntas frequentes — fase "prova", entre aplicações e diferenciais.
  *
  * VARIANTE LOCAL — Print Master, pedido de 05/11/2026 (docs/BRIEFING.md): seção nova, sem par na
- * biblioteca, no visual da LP de locação. Cabeçalho à esquerda (fixo ao rolar no desktop) com o
- * CTA padrão; perguntas em acordeão nativo (<details>) à direita, a primeira aberta. Leva o
+ * biblioteca, no visual da LP de locação. Cabeçalho à esquerda (fixo ao rolar no desktop) com um
+ * cartão verde de contato (WhatsApp e três garantias da página); perguntas em acordeão nativo (<details>) à direita, a primeira aberta. Leva o
  * JSON-LD FAQPage com as mesmas perguntas e respostas.
  */
 import Section from '@components/Section.astro'
@@ -39,9 +39,46 @@ const jsonLd = {
           {faq.title}
         </h2>
         <p class="mt-5 font-sans text-[17px] leading-relaxed text-ink-soft">{faq.text}</p>
-        <Button cta="faq-cta" class="mt-7 w-full sm:w-auto">
-          {cta.primary}
-        </Button>
+
+        {/* Cartão de contato: preenche a coluna e acompanha a rolagem das perguntas */}
+        <div class="faq-contact relative mt-8 overflow-hidden rounded-[22px] p-6 shadow-[0_30px_60px_-34px_rgba(1,36,34,0.75)] sm:p-7">
+          <span
+            aria-hidden="true"
+            class="blueprint-grid pointer-events-none absolute inset-0"
+          ></span>
+          <div class="relative">
+            <div class="flex items-center gap-3">
+              <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-neutral-light/10 text-brand-mint ring-1 ring-brand-mint/40">
+                <Icon name="chat" class="size-5" />
+              </span>
+              <p class="font-display text-[1.2rem] leading-snug font-extrabold text-neutral-light">
+                {faq.contact.title}
+              </p>
+            </div>
+            <p class="mt-3 font-sans text-[15px] leading-relaxed text-neutral-light/80">
+              {faq.contact.text}
+            </p>
+            <Button
+              cta="faq-cta"
+              variant="mint"
+              iconName="whatsapp"
+              iconPosition="left"
+              class="mt-6 w-full sm:w-auto"
+            >
+              {cta.whatsapp}
+            </Button>
+            <ul class="mt-6 flex flex-col gap-2.5 border-t border-white/12 pt-5">
+              {faq.contact.points.map((point) => (
+                <li class="flex items-center gap-2.5 font-sans text-[14px] text-neutral-light/90">
+                  <span class="flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-mint/15 text-brand-mint">
+                    <Icon name="check" class="size-3" />
+                  </span>
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -73,6 +110,18 @@ const jsonLd = {
 </Section>
 
 <style>
+  /* Verde profundo dos painéis da página. */
+  .faq-contact {
+    background:
+      radial-gradient(80% 90% at 100% 0%, rgb(97 229 169 / 0.18) 0%, transparent 60%),
+      linear-gradient(
+        160deg,
+        var(--color-primary-dark-800) 0%,
+        var(--color-primary-dark) 55%,
+        var(--color-primary-dark-900) 100%
+      );
+  }
+
   .faq-item summary::-webkit-details-marker {
     display: none;
   }

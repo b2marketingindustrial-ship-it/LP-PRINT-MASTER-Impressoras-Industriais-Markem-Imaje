@@ -19,12 +19,8 @@ export const solutions = {
   title: 'Aumente a eficiência e reduza erros com as nossas soluções!',
   /** Trecho do H2 em verde. Precisa estar dentro de `title`. */
   highlight: 'reduza erros',
-  text:
-    'Na Print Master, oferecemos as soluções de marcação e rastreabilidade de produtos ' +
-    'industriais Markem-Imaje, líderes globais em qualidade e desempenho. Nossas impressoras ' +
-    'garantem codificação precisa e legível para alimentos, bebidas, farmacêuticos e eletrônicos, ' +
-    'integrando-se perfeitamente às linhas de produção, ' +
-    'otimizando a operação e reduzindo erros.',
+  /** Três linhas no desktop (pedido de 05/11/2026): versão enxuta do texto do cliente. */
+  text: 'Na Print Master, você encontra as soluções de marcação e rastreabilidade Markem-Imaje, líderes globais em qualidade e desempenho, com codificação precisa e legível para alimentos, bebidas, farmacêuticos e eletrônicos.',
   listTitle: 'Nossas soluções em destaque',
   items: [
     {
@@ -44,13 +40,13 @@ export const solutions = {
       icon: 'tag',
       title: 'Etiquetagem automática',
       description:
-        'Perfeição no posicionamento e aplicação de etiquetas para embalagens de todos os tamanhos.',
+        'Perfeição no posicionamento e aplicação de etiquetas em caixas e produtos de todos os tamanhos.',
     },
     {
       id: 'termica',
       icon: 'flame',
       title: 'Codificação térmica',
-      description: 'Ideal para embalagens flexíveis, garantindo qualidade superior em codificação.',
+      description: 'Ideal para filmes flexíveis, garantindo qualidade superior em codificação.',
     },
   ],
 } as const satisfies {

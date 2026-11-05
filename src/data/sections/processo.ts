@@ -1,7 +1,9 @@
 /**
  * Dados da seção "Como funciona" (biblioteca B2, fase: apoio).
  *
- * VARIANTE LOCAL — Print Master, pedido de 05/11/2026 (docs/BRIEFING.md): o banner com o texto
+ * VARIANTE LOCAL — Print Master, pedido de 05/11/2026 (docs/BRIEFING.md). Refeita no mesmo dia
+ * ("sem conter em uma caixa"): faixa verde em largura total, foto sangrando à direita e as etapas
+ * numa linha do tempo, sem cards; os destaques (`highlights`) saíram da página. Antes: o banner com o texto
  * embutido virou um bloco no estilo da referência SEIVE — texto em HTML sobre o verde profundo,
  * a cena do banner à direita, destaques sem quantidades, CTA com o selo Markem-Imaje e as 4 etapas da ficha
  * (`docs/FICHA-LP.md`) em cards sobrepostos à base do bloco.
@@ -21,29 +23,18 @@ export interface ProcessStep {
   description: string
 }
 
-/** Destaque da faixa entre fios. Sem quantidades (pedido de 05/11/2026): nada de "N modelos". */
-export interface ProcessHighlight {
-  value: string
-  label: string
-}
-
 const sceneAlt =
   'Técnico da Print Master ao lado de aplicadores de etiquetas Markem-Imaje numa linha de caixas'
 
 export const process = {
   eyebrow: 'Como funciona',
-  title: 'Impressoras industriais para codificação e rastreabilidade com mais precisão.',
+  title: 'Codificação e rastreabilidade com mais precisão.',
   /** O H2 em duas partes: a segunda em menta, como na arte do banner. */
-  titleLead: 'Impressoras industriais para codificação e rastreabilidade',
+  titleLead: 'Codificação e rastreabilidade',
   titleHighlight: 'com mais precisão.',
   text:
-    'Tecnologia Markem-Imaje e suporte especializado da Print Master para sua indústria. ' +
+    'Tecnologia Markem-Imaje e suporte especializado da Print Master para a sua indústria. ' +
     'Acompanhamos a sua linha em cada etapa, da escolha da tecnologia à assistência depois da instalação.',
-  highlights: [
-    { value: 'Markem-Imaje', label: 'distribuidor autorizado' },
-    { value: 'Linha completa', label: 'jato de tinta, térmica e Print & Apply' },
-    { value: 'Ponta a ponta', label: 'da escolha ao pós-venda' },
-  ],
   /** Cena à direita no desktop. */
   scene: { src: cenaDesktop, alt: sceneAlt },
   /** Recorte da arte vertical, abaixo do texto no celular. */
@@ -53,7 +44,7 @@ export const process = {
       id: 'diagnostico',
       icon: 'search',
       title: 'Diagnóstico da linha',
-      description: 'Entendemos o produto, a embalagem e a velocidade da sua linha de produção.',
+      description: 'Entendemos o produto, o material e a velocidade da sua linha de produção.',
     },
     {
       id: 'tecnologia',
@@ -81,7 +72,6 @@ export const process = {
   titleLead: string
   titleHighlight: string
   text: string
-  highlights: readonly [ProcessHighlight, ProcessHighlight, ProcessHighlight]
   scene: Photo
   sceneMobile: Photo
   steps: readonly [ProcessStep, ProcessStep, ProcessStep, ProcessStep]

@@ -71,8 +71,7 @@ export const showcase = {
       logo: null,
       icon: 'droplet',
       short: 'Jato de tinta',
-      description:
-        'Datadores CIJ para data, lote e validade direto na embalagem, em linhas rápidas.',
+      description: 'Datadores CIJ para data, lote e validade direto no produto, em linhas rápidas.',
     },
     {
       id: 'transferencia-termica',

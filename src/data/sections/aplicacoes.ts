@@ -27,17 +27,17 @@ export interface Application {
 
 export const applications = {
   eyebrow: 'Aplicações',
-  title: 'Codificação para cada tipo de embalagem.',
-  text: 'Soluções para identificar embalagens, produtos e diferentes superfícies da sua produção.',
+  title: 'Codificação para cada material e superfície.',
+  text: 'Soluções para identificar produtos, caixas e diferentes superfícies da sua produção.',
   /** Intercaladas com e sem foto, para a esteira não juntar os palcos de ícone. */
   items: [
     {
       id: 'papel-cartao',
-      label: 'Embalagens de papel cartão',
+      label: 'Papel cartão',
       description:
         'Tintas de secagem rápida com resistência a manchas para impressão em papel cartão.',
       icon: 'box',
-      photo: { src: app1, alt: 'Data e hora impressas em embalagem de papel cartão' },
+      photo: { src: app1, alt: 'Data e hora impressas em caixa de papel cartão' },
     },
     {
       id: 'vidro',
