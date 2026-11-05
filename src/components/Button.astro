@@ -5,8 +5,8 @@
  * - `cta` é obrigatório e vira `data-cta` para rastreamento (convenção: `{secao}-{elemento}`).
  * - Pílula (rounded-full), ícone arrow-right à direita por padrão. Tamanhos: `md` (padrão), `sm` (header) e `lg` (hero e bloco de diferenciais).
  * - Todo CTA do site usa este componente: não estilize <button> de CTA à mão.
- * - Print Master (05/11/2026): CTA de contato é sempre `variant="emerald" size="lg" whatsapp`
- *   (o do header é `sm`): mesmo verde, mesmo tamanho, ícone do WhatsApp antes da seta.
+ * - Print Master (05/11/2026): CTA de contato é sempre `variant="emerald" size="md" whatsapp`
+ *   (o do header é `sm`); revisto no mesmo dia para um tamanho mais contido: mesmo verde, mesmo tamanho, ícone do WhatsApp antes da seta.
  */
 import Icon from './Icon.astro'
 import type { IconName } from '../data/icons'
@@ -42,18 +42,18 @@ const base =
 
 const sizes = {
   lg: 'px-8 py-4 text-[17px] xl:px-10 xl:py-[1.15rem] xl:text-[19px]',
-  md: 'px-7 py-3.5 text-[15px]',
+  md: 'px-6 py-3 text-[15px]',
   sm: 'px-4 py-2.5 text-[12px] sm:px-6 sm:py-3 sm:text-[14px]',
 }
 
-const whatsSizes = { lg: 'size-6 xl:size-7', md: 'size-5', sm: 'size-4 sm:size-[18px]' }
+const whatsSizes = { lg: 'size-6 xl:size-7', md: 'size-[18px]', sm: 'size-4 sm:size-[18px]' }
 
 const variants = {
   primary:
     'bg-accent-orange text-neutral-light shadow-[0_18px_36px_-16px_rgba(2,118,83,0.8)] hover:bg-accent-orange-dark',
   /* Verde vivo do mockup de abertura, sobre fundo verde-escuro. */
   emerald:
-    'bg-brand-emerald text-neutral-light shadow-[0_18px_44px_-16px_rgba(26,165,122,0.85)] ring-1 ring-brand-glow/30 ring-inset hover:bg-accent-orange',
+    'bg-brand-emerald text-neutral-light shadow-[0_10px_24px_-14px_rgba(26,165,122,0.75)] ring-1 ring-brand-glow/25 ring-inset hover:bg-accent-orange',
   mint: 'bg-brand-mint text-primary-dark-900 shadow-[0_18px_36px_-16px_rgba(0,0,0,0.5)] hover:bg-neutral-light',
   'outline-light': 'border border-neutral-light/35 text-neutral-light hover:bg-neutral-light/10',
   'outline-dark':

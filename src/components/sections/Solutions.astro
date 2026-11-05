@@ -5,7 +5,9 @@
  * VARIANTE LOCAL — Print Master, pedido de 05/11/2026 (docs/BRIEFING.md): seção nova, sem par
  * na biblioteca. Duas colunas no desktop: à esquerda eyebrow, H2 com trecho em verde, texto do
  * cliente e o CTA padrão de contato (`solucoes-cta`); à direita as 4
- * soluções em cards 2×2, com ícone em caixa verde. No celular tudo empilha.
+ * soluções em cards 2×2, com ícone em caixa verde. As duas colunas têm a mesma altura no desktop
+ * (05/11/2026): o CTA desce até a base dos cards e as linhas de cards dividem a altura por igual.
+ * No celular tudo empilha.
  */
 import Section from '@components/Section.astro'
 import Icon from '@components/Icon.astro'
@@ -27,7 +29,7 @@ const titleAfter = solutions.title.slice(at + solutions.highlight.length)
 <Section id="solucoes" tone={tone} rhythm={rhythm}>
   <div class="grid gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
     {/* Coluna 1 — mensagem */}
-    <div class="lg:col-span-5">
+    <div class="lg:col-span-5 lg:flex lg:flex-col">
       <span class="inline-flex items-center gap-3 font-sans text-[12px] font-semibold tracking-[0.22em] text-ink-soft uppercase">
         <span aria-hidden="true" class="h-[3px] w-6 rounded-full bg-accent-orange"></span>
         {solutions.eyebrow}
@@ -41,13 +43,21 @@ const titleAfter = solutions.title.slice(at + solutions.highlight.length)
         {solutions.text}
       </p>
 
-      <Button cta="solucoes-cta" variant="emerald" size="lg" whatsapp class="mt-8 w-full sm:w-auto">
+      {/* No desktop o botão desce até a base dos cards: as duas colunas fecham na mesma linha. */}
+      <span aria-hidden="true" class="hidden lg:block lg:min-h-8 lg:flex-1"></span>
+      <Button
+        cta="solucoes-cta"
+        variant="emerald"
+        size="md"
+        whatsapp
+        class="mt-8 w-full sm:w-auto lg:mt-0 lg:self-start"
+      >
         {cta.primary}
       </Button>
     </div>
 
     {/* Coluna 2 — soluções em destaque */}
-    <div class="lg:col-span-7">
+    <div class="lg:col-span-7 lg:flex lg:flex-col">
       <h3 class="flex items-center gap-3 font-display text-lg font-bold text-primary-dark sm:text-xl">
         {solutions.listTitle}
         <span
@@ -55,8 +65,8 @@ const titleAfter = solutions.title.slice(at + solutions.highlight.length)
           class="h-px flex-1 bg-gradient-to-r from-brand-leaf/40 to-transparent"
         ></span>
       </h3>
-      <ul class="mt-5 grid gap-4 sm:grid-cols-2 sm:gap-5">
-        {solutions.items.map((item, i) => (
+      <ul class="mt-5 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:flex-1 lg:auto-rows-fr">
+        {solutions.items.map((item) => (
           <li class="solution-card group relative flex flex-col overflow-hidden rounded-[20px] bg-neutral-light p-6 shadow-[0_1px_2px_rgba(6,67,55,0.06),0_22px_46px_-32px_rgba(6,67,55,0.55)] ring-1 ring-primary-dark/10 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_1px_2px_rgba(6,67,55,0.06),0_30px_56px_-30px_rgba(6,67,55,0.6)] hover:ring-brand-leaf/40 lg:p-7">
             <span
               aria-hidden="true"
@@ -66,11 +76,6 @@ const titleAfter = solutions.title.slice(at + solutions.highlight.length)
               <span class="solution-card__icon flex size-12 items-center justify-center rounded-xl text-brand-glow">
                 <Icon name={item.icon} class="size-[22px]" />
               </span>
-              <span
-                aria-hidden="true"
-                data-index={String(i + 1).padStart(2, '0')}
-                class="solution-card__num font-display text-[12px] font-extrabold tracking-[0.2em] text-primary-dark/25"
-              ></span>
             </div>
             <h4 class="relative mt-5 font-display text-[1.1rem] leading-snug font-bold text-ink">
               {item.title}
@@ -100,11 +105,6 @@ const titleAfter = solutions.title.slice(at + solutions.highlight.length)
 
   .solution-card__glow {
     background: radial-gradient(circle, rgb(124 239 192 / 0.28) 0%, transparent 70%);
-  }
-
-  /* Índice por CSS: decorativo, fora da leitura. */
-  .solution-card__num::before {
-    content: attr(data-index);
   }
 
   @media (prefers-reduced-motion: reduce) {

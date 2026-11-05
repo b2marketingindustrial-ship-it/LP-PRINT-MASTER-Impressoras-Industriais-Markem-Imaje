@@ -5,7 +5,7 @@
  * VARIANTE LOCAL — Print Master, mockup de 26/10/2026 (docs/BRIEFING.md): cada card tem a foto
  * grande em cima e um painel verde-escuro com a marca, o modelo em destaque e "Ver equipamento";
  * uma faixa de ajuda fecha a seção. Pedido de 05/11/2026: sem abas nem filtro — três blocos
- * compactos apresentam as tecnologias (ícone, nome, contagem, frase) e os 12 modelos ficam numa
+ * compactos apresentam as tecnologias (ícone, nome e frase, sem contagem) e os 12 modelos ficam numa
  * grade só (6 × 2 no desktop, sem sobras), com o selo da tecnologia em cada card; fim do H2 em
  * verde, palco da foto com luz e sombra de piso, e a ajuda no ContactStrip padrão.
  * `npm run compose` sobrescreve este arquivo com o da biblioteca: ao recompor,
@@ -84,8 +84,6 @@ if (titleLead === showcase.title) {
   throw new Error('vitrine: titleHighlight precisa ser o final exato de title.')
 }
 
-const countLabel = (n: number) => `${n} ${n === 1 ? 'modelo' : 'modelos'}`
-
 /** O card mostra a marca em cima e o modelo em destaque: "Markem-Imaje 9018" → "9018". */
 const modelOf = (title: string) =>
   title.startsWith(`${showcase.brand} `) ? title.slice(showcase.brand.length + 1) : title
@@ -127,9 +125,6 @@ const modelSize = (model: string) =>
               <h3 class="font-display text-[1.1rem] leading-tight font-extrabold tracking-[-0.015em] text-ink">
                 {shelf.label}
               </h3>
-              <span class="font-sans text-[11px] font-bold tracking-[0.16em] text-accent-orange uppercase">
-                {countLabel(shelf.items.length)}
-              </span>
             </div>
             <p class="mt-1.5 font-sans text-[13.5px] leading-relaxed text-ink-soft">
               {shelf.description}

@@ -62,7 +62,7 @@ export const applications = {
     {
       id: 'filmes-flexiveis',
       label: 'Filmes flexíveis',
-      description: 'Quatro tecnologias de impressão para melhor atender às suas necessidades.',
+      description: 'Diferentes tecnologias de impressão para melhor atender às suas necessidades.',
       icon: 'layers',
       photo: null,
     },

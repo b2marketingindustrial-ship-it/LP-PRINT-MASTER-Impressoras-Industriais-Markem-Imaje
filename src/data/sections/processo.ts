@@ -3,7 +3,7 @@
  *
  * VARIANTE LOCAL — Print Master, pedido de 05/11/2026 (docs/BRIEFING.md): o banner com o texto
  * embutido virou um bloco no estilo da referência SEIVE — texto em HTML sobre o verde profundo,
- * a cena do banner à direita, três destaques, CTA com o selo Markem-Imaje e as 4 etapas da ficha
+ * a cena do banner à direita, destaques sem quantidades, CTA com o selo Markem-Imaje e as 4 etapas da ficha
  * (`docs/FICHA-LP.md`) em cards sobrepostos à base do bloco.
  *
  * As cenas são recortes das artes enviadas pelo usuário em 27/10/2026, sem a parte do texto.
@@ -21,7 +21,7 @@ export interface ProcessStep {
   description: string
 }
 
-/** Destaque da faixa de números. Só fatos da própria página: sem números sem fonte. */
+/** Destaque da faixa entre fios. Sem quantidades (pedido de 05/11/2026): nada de "N modelos". */
 export interface ProcessHighlight {
   value: string
   label: string
@@ -40,8 +40,8 @@ export const process = {
     'Tecnologia Markem-Imaje e suporte especializado da Print Master para sua indústria. ' +
     'Acompanhamos a sua linha em cada etapa, da escolha da tecnologia à assistência depois da instalação.',
   highlights: [
-    { value: '3 tecnologias', label: 'jato de tinta, térmica e Print & Apply' },
-    { value: '12 modelos', label: 'Markem-Imaje para a sua linha' },
+    { value: 'Markem-Imaje', label: 'distribuidor autorizado' },
+    { value: 'Linha completa', label: 'jato de tinta, térmica e Print & Apply' },
     { value: 'Ponta a ponta', label: 'da escolha ao pós-venda' },
   ],
   /** Cena à direita no desktop. */
