@@ -2,7 +2,7 @@
  * Dados da seção "Aplicações" (biblioteca B2, fase: prova).
  *
  * VARIANTE LOCAL — Print Master, mockup de 27/10/2026 (docs/BRIEFING.md): H2 numa linha só (pedido de 05/11/2026),
- * cards com foto 8:5 e corpo verde-escuro, e uma faixa de ajuda no fim. O card inteiro é o CTA.
+ * cards com foto 6:5 e corpo verde-escuro, sem faixa de ajuda (removida em 05/11/2026). O card inteiro é o CTA.
  *
  * Pedido do usuário (05/11/2026): as 11 aplicações, com os textos enviados por ele, num
  * carrossel infinito. Só 4 têm foto (recortadas do mockup); as outras levam `photo: null` e
@@ -29,11 +29,6 @@ export const applications = {
   eyebrow: 'Aplicações',
   title: 'Codificação para cada tipo de embalagem.',
   text: 'Soluções para identificar embalagens, produtos e diferentes superfícies da sua produção.',
-  help: {
-    text: 'Encontre a solução ideal para sua aplicação.',
-    note: 'Conte o material e a embalagem: indicamos a tecnologia e a tinta certas.',
-    cta: 'Fale com um especialista',
-  },
   /** Intercaladas com e sem foto, para a esteira não juntar os palcos de ícone. */
   items: [
     {
@@ -127,6 +122,5 @@ export const applications = {
   eyebrow: string
   title: string
   text: string
-  help: { text: string; note: string; cta: string }
   items: readonly Application[]
 }

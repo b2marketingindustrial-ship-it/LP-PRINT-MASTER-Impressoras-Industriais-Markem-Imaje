@@ -179,23 +179,28 @@
   }
 }
 
-/* Hero (verde) sobre os equipamentos (branco, o fundo da página). */
+/* Hero (verde) sobre a seção seguinte (branco, o fundo da página). */
 [data-hero] {
   z-index: 1;
   border-radius: 0 0 var(--round) var(--round);
   box-shadow: 0 30px 60px -30px rgb(1 36 34 / 0.55);
 }
 
-/* "Como funciona" (branco) sobre as aplicações (cinza). */
-#processo {
-  z-index: 1;
-  border-radius: 0 0 var(--round) var(--round);
-  box-shadow: 0 26px 50px -30px rgb(1 36 34 / 0.24);
+/* Pedido de 05/11/2026 ("erros de transição"): sem o corte arredondado entre "Como funciona" e
+   aplicações. O cinza das aplicações nasce do branco, sem linha na divisa. */
+#aplicacoes {
+  background-image: linear-gradient(180deg, #ffffff 0, var(--color-neutral-gray-100) 240px);
 }
 
-#aplicacoes {
-  margin-top: calc(-1 * var(--round));
-  border-top: var(--round) solid transparent;
+/* Diferenciais: acima do bloco escuro, o cinza das aplicações; abaixo, o menta da cotação. Os
+   cards sobrepostos pousam no mesmo fundo da seção seguinte, sem faixa no meio (como na locação). */
+#diferenciais {
+  background-image: linear-gradient(
+    180deg,
+    var(--color-neutral-gray-100) 0,
+    var(--color-neutral-gray-100) 50%,
+    var(--color-brand-mint-soft) 50%
+  );
 }
 
 /* Bloco escuro de "Por que a Print Master": faixa reta em largura total, sem cantos

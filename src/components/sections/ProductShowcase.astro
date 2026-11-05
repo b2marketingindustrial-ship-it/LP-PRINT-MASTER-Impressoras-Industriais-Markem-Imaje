@@ -95,11 +95,11 @@ const modelSize = () => 'text-[1.05rem] sm:text-[1.35rem]'
 <Section id="vitrine" tone={tone} rhythm={rhythm} class="showcase" data-showcase>
   {/* Cabeçalho como o dos produtos da LP de locação: H2 à esquerda, ajuda à direita */}
   <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
-    <div class="max-w-3xl">
-      <h2 class="font-display text-[2.2rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-balance text-ink sm:text-5xl lg:text-[3.35rem]">
+    <div class="min-w-0">
+      <h2 class="font-display text-[2.2rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-balance text-ink sm:text-5xl lg:text-[3.35rem] lg:whitespace-nowrap">
         {titleLead} <span class="text-accent-orange">{showcase.titleHighlight}</span>
       </h2>
-      <p class="mt-5 font-sans text-[17px] leading-relaxed text-ink-soft sm:text-lg">
+      <p class="mt-5 font-sans text-[17px] leading-relaxed text-ink-soft sm:text-lg lg:whitespace-nowrap">
         {showcase.text}
       </p>
     </div>
@@ -207,11 +207,11 @@ const modelSize = () => 'text-[1.05rem] sm:text-[1.35rem]'
 </Section>
 
 <style>
-  /* Camada menta sobre o tom da seção, dissolvendo em branco na base (LP de locação) */
+  /* Camada menta sobre o tom da seção, nascendo e dissolvendo em branco (sem divisa com Soluções) */
   :global([data-showcase]) {
     background-image:
-      radial-gradient(900px 420px at 85% 0%, rgb(97 229 169 / 0.12) 0%, transparent 70%),
-      linear-gradient(180deg, #f0f9f5 0%, #f5fbf8 70%, #ffffff 100%);
+      radial-gradient(900px 420px at 85% 160px, rgb(97 229 169 / 0.12) 0%, transparent 70%),
+      linear-gradient(180deg, #ffffff 0, #f0f9f5 220px, #f5fbf8 70%, #ffffff 100%);
   }
 
   /* Palco menta da foto, com brilho sob o produto */

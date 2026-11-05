@@ -49,10 +49,11 @@ export interface ShowcaseItem {
 
 export const showcase = {
   eyebrow: 'Equipamentos',
-  title: 'Impressoras industriais por tecnologia',
+  /** Pedido de 05/11/2026: sem "impressora" no título; título e texto em uma linha cada. */
+  title: 'Equipamentos Markem-Imaje',
   /** Fim do H2 em verde (05/11/2026). Precisa ser o final exato de `title`. */
-  titleHighlight: 'por tecnologia',
-  text: 'Datadores, codificadoras e etiquetadoras Markem-Imaje para as necessidades da sua produção.',
+  titleHighlight: 'Markem-Imaje',
+  text: 'Jato de tinta, transferência térmica e Print & Apply para a sua linha.',
   /** Variante local (mockup de 26/10/2026): marca acima do modelo, rótulo do card e faixa de ajuda. */
   brand: 'Markem-Imaje',
   itemCta: 'Ver equipamento',

@@ -198,8 +198,7 @@
       ],
       "exampleHash": "61d1254bd3fc3c58",
       "ctas": [
-        "aplicacoes-{item.id}",
-        "aplicacoes-cta"
+        "aplicacoes-{item.id}"
       ],
       "contract": {
         "itemsPath": "items",

@@ -41,15 +41,9 @@ const DECOR: Record<string, { glowA: string; glowB: string; rings: string; dots:
     rings: '-top-64 -right-64',
     dots: 'top-0 left-0 [mask-image:radial-gradient(ellipse_at_top_left,black,transparent_70%)]',
   },
-  processo: {
-    glowA: '-bottom-56 -left-48 size-[36rem]',
-    glowB: '-top-40 right-[10%] size-[26rem]',
-    rings: '-bottom-72 -right-60',
-    dots: 'right-0 bottom-0 [mask-image:radial-gradient(ellipse_at_bottom_right,black,transparent_70%)]',
-  },
   aplicacoes: {
     glowA: '-top-56 -left-48 size-[40rem]',
-    glowB: 'bottom-[-12rem] -right-40 size-[40rem]',
+    glowB: 'top-[30%] -right-48 size-[36rem]',
     rings: '-top-64 -left-64',
     dots: 'right-0 top-0 [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_70%)]',
   },
@@ -63,7 +57,7 @@ const decor = container ? DECOR[id] : undefined
   {...rest}
 >
   {decor && (
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div aria-hidden="true" class="section-decor pointer-events-none absolute inset-0 -z-10">
       <span class:list={['section-glow absolute rounded-full', decor.glowA]} />
       <span class:list={['section-glow section-glow--mint absolute rounded-full', decor.glowB]} />
       <svg
@@ -93,6 +87,12 @@ const decor = container ? DECOR[id] : undefined
 </section>
 
 <style>
+  /* As texturas se apagam no alto e na base: nada corta seco na divisa com a seção vizinha
+     (pedido de 05/11/2026, "erros de transição"). */
+  .section-decor {
+    mask-image: linear-gradient(180deg, transparent 0, black 22%, black 70%, transparent 100%);
+  }
+
   /* Mancha de luz verde, sem blur (o degradê radial já é suave e custa menos). */
   .section-glow {
     background: radial-gradient(circle, rgb(26 165 122 / 0.18) 0%, transparent 65%);
