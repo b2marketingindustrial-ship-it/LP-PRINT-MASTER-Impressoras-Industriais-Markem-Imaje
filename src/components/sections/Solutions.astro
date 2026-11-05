@@ -3,7 +3,9 @@
  * Soluções — fase "oferta", entre o hero e a vitrine.
  *
  * VARIANTE LOCAL — Print Master, pedido de 05/11/2026 (docs/BRIEFING.md): seção nova, sem par
- * na biblioteca. Duas colunas no desktop: à esquerda eyebrow, H2 com trecho em verde, texto do
+ * na biblioteca. Refeita no mesmo dia ("melhore"): cabeçalho largo — eyebrow e H2 à esquerda,
+ * texto e CTA à direita — e as 4 soluções numa linha de cards no desenho dos cards de produto da
+ * LP de locação (palco menta com o ícone, título e frase). O texto abaixo descreve a versão antiga. Duas colunas no desktop: à esquerda eyebrow, H2 com trecho em verde, texto do
  * cliente e o CTA padrão de contato (`solucoes-cta`); à direita as 4
  * soluções em cards 2×2, com ícone em caixa verde. As duas colunas têm a mesma altura no desktop
  * (05/11/2026): o CTA desce até a base dos cards e as linhas de cards dividem a altura por igual.
@@ -28,66 +30,76 @@ const titleAfter = solutions.title.slice(at + solutions.highlight.length)
 ---
 
 <Section id="solucoes" tone={tone} rhythm={rhythm}>
-  <div class="grid gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
-    {/* Coluna 1 — mensagem */}
-    <div class="lg:col-span-5 lg:flex lg:flex-col">
+  {/* Cabeçalho largo: H2 à esquerda, texto e CTA à direita, alinhados pela base */}
+  <div class="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-12 xl:gap-16">
+    <div class="lg:col-span-6">
       <Eyebrow>{solutions.eyebrow}</Eyebrow>
-      <h2 class="mt-4 font-display text-[2.2rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-ink sm:text-5xl lg:text-[2.75rem]">
+      <h2 class="mt-4 font-display text-[2.2rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-balance text-ink sm:text-5xl lg:text-[3.1rem]">
         {titleBefore}
         <span class="text-accent-orange">{solutions.highlight}</span>
         {titleAfter}
       </h2>
-      <p class="mt-5 font-sans text-[17px] leading-relaxed text-ink-soft">{solutions.text}</p>
-
-      {/* No desktop o botão desce até a base dos cards: as duas colunas fecham na mesma linha. */}
-      <span aria-hidden="true" class="hidden lg:block lg:min-h-8 lg:flex-1"></span>
-      <Button cta="solucoes-cta" class="mt-8 w-full sm:w-auto lg:mt-0 lg:self-start">
+    </div>
+    <div class="lg:col-span-6">
+      <p class="font-sans text-[16px] leading-relaxed text-ink-soft sm:text-[17px]">
+        {solutions.text}
+      </p>
+      <Button cta="solucoes-cta" class="mt-6 w-full sm:w-auto">
         {cta.primary}
       </Button>
     </div>
-
-    {/* Coluna 2 — soluções em destaque */}
-    <div class="lg:col-span-7 lg:flex lg:flex-col">
-      <h3 class="flex items-center gap-3 font-display text-lg font-bold text-primary-dark sm:text-xl">
-        {solutions.listTitle}
-        <span
-          aria-hidden="true"
-          class="h-px flex-1 bg-gradient-to-r from-brand-leaf/40 to-transparent"
-        ></span>
-      </h3>
-      <ul class="mt-5 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:flex-1 lg:auto-rows-fr">
-        {solutions.items.map((item) => (
-          <li class="solution-card group relative flex flex-col overflow-hidden rounded-[20px] bg-neutral-light p-6 shadow-[0_1px_2px_rgba(6,67,55,0.06),0_22px_46px_-32px_rgba(6,67,55,0.55)] ring-1 ring-primary-dark/10 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_1px_2px_rgba(6,67,55,0.06),0_30px_56px_-30px_rgba(6,67,55,0.6)] hover:ring-brand-leaf/40 lg:p-7">
-            <span
-              aria-hidden="true"
-              class="solution-card__glow pointer-events-none absolute -top-16 -right-16 size-44 rounded-full opacity-70 transition-opacity duration-300 group-hover:opacity-100"
-            ></span>
-            <div class="relative flex items-start justify-between">
-              <span class="flex size-12 items-center justify-center rounded-full bg-brand-mint-soft text-accent-orange ring-1 ring-brand-mint/60">
-                <Icon name={item.icon} class="size-[22px]" />
-              </span>
-            </div>
-            <h4 class="relative mt-5 font-display text-[1.1rem] leading-snug font-bold text-ink">
-              {item.title}
-            </h4>
-            <p class="relative mt-2 font-sans text-[14px] leading-relaxed text-ink-soft">
-              {item.description}
-            </p>
-          </li>
-        ))}
-      </ul>
-    </div>
   </div>
+
+  {/* Soluções em destaque: cards no desenho da LP de locação */}
+  <div class="mt-14 flex items-center gap-5">
+    <h3 class="shrink-0 font-sans text-[11.5px] font-bold tracking-[0.2em] text-ink-soft uppercase">
+      {solutions.listTitle}
+    </h3>
+    <span aria-hidden="true" class="h-px flex-1 bg-primary-dark/15"></span>
+  </div>
+  <ul class="mt-6 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+    {solutions.items.map((item) => (
+      <li class="solution-card group flex flex-col rounded-[22px] border border-primary-dark/10 bg-neutral-light p-3 shadow-[0_22px_44px_-30px_rgba(6,67,55,0.45)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_30px_56px_-30px_rgba(6,67,55,0.55)]">
+        <div class="solution-stage relative flex h-32 items-center ring-1 ring-brand-mint/30 ring-inset justify-center overflow-hidden rounded-2xl">
+          <span aria-hidden="true" class="solution-stage__rings absolute size-48"></span>
+          <span class="relative flex size-16 items-center justify-center rounded-2xl bg-primary-dark text-brand-mint shadow-[0_16px_30px_-14px_rgba(6,67,55,0.9)] transition-transform duration-300 group-hover:scale-105">
+            <Icon name={item.icon} class="size-7" />
+          </span>
+        </div>
+        <div class="flex flex-1 flex-col px-3 pt-5 pb-3">
+          <h4 class="font-display text-[1.15rem] leading-snug font-extrabold text-ink">
+            {item.title}
+          </h4>
+          <p class="mt-2 font-sans text-[14.5px] leading-relaxed text-ink-soft">
+            {item.description}
+          </p>
+        </div>
+      </li>
+    ))}
+  </ul>
 </Section>
 
 <style>
-  .solution-card__glow {
-    background: radial-gradient(circle, rgb(124 239 192 / 0.28) 0%, transparent 70%);
+  /* Palco menta, o mesmo dos cards de produto da LP de locação. */
+  .solution-stage {
+    background-image:
+      radial-gradient(ellipse 60% 75% at 50% 55%, rgb(97 229 169 / 0.42) 0%, transparent 75%),
+      linear-gradient(180deg, #e2f3eb 0%, #eef8f3 100%);
+  }
+
+  /* Anéis finos atrás do ícone, eco das curvas da página. */
+  .solution-stage__rings {
+    border-radius: 9999px;
+    border: 1px solid rgb(2 118 83 / 0.08);
+    box-shadow:
+      0 0 0 22px rgb(255 255 255 / 0),
+      0 0 0 23px rgb(2 118 83 / 0.05);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .solution-card {
-      transition: none;
+    .solution-card,
+    .solution-card * {
+      transition: none !important;
     }
 
     .solution-card:hover {

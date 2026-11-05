@@ -8,7 +8,8 @@
  *
  * VARIANTE LOCAL — Print Master, mockup de 27/10/2026 (docs/BRIEFING.md): a cena (fundo escuro
  * à esquerda, equipamentos e linha de envase à direita) cobre o bloco inteiro e substitui a
- * pessoa recortada. Pedido de 05/11/2026 (referência SEIVE): eyebrow com traço, última linha do
+ * pessoa recortada. Pedido de 05/11/2026: desenho e foco institucional da LP de locação (cantos
+ * de cima arredondados, H2 branco, traço menta, cards compactos). Antes (referência SEIVE): eyebrow com traço, última linha do
  * H2 em menta, CTA padrão com WhatsApp e cards compactos com ícone e título na mesma linha. `npm run compose` sobrescreve este arquivo: reaplique ao recompor.
  */
 import { Picture } from 'astro:assets'
@@ -27,7 +28,7 @@ const { tone, rhythm } = Astro.props
 
 <Section id="diferenciais" tone={tone} rhythm={rhythm} container={false} class="relative">
   {/* Bloco escuro em largura total, com a cena por trás */}
-  <div class="why-hero relative overflow-hidden bg-hero-deep">
+  <div class="why-hero relative overflow-hidden rounded-t-[40px] bg-hero-deep lg:rounded-t-[64px]">
     <div class="why-scene">
       <Picture
         src={why.scene.src}
@@ -44,13 +45,11 @@ const { tone, rhythm } = Astro.props
     </div>
 
     <div class="relative z-[2] mx-auto w-full max-w-page px-6 pt-12 pb-10 lg:px-10 lg:pt-24 lg:pb-32">
-      <div class="max-w-xl lg:max-w-[47%]">
+      <div class="max-w-xl lg:max-w-[680px]">
         <Eyebrow tone="light">{why.eyebrow}</Eyebrow>
         <h2 class="mt-4 font-display text-[2.3rem] leading-[1.06] font-extrabold tracking-[-0.03em] text-neutral-light sm:text-5xl lg:text-[3.1rem] xl:text-[3.4rem]">
-          {why.titleLines.map((line, i) => (
-            <span class:list={['block', i === why.titleLines.length - 1 && 'text-brand-mint']}>
-              {line}
-            </span>
+          {why.titleLines.map((line) => (
+            <span class="block">{line}</span>
           ))}
         </h2>
 
@@ -74,18 +73,14 @@ const { tone, rhythm } = Astro.props
       aria-label={why.eyebrow}
     >
       {why.reasons.map((reason) => (
-        <li class="why-card group relative flex w-[78%] shrink-0 snap-start flex-col rounded-2xl border border-[#dde8e3] bg-neutral-light p-5 shadow-[0_1px_2px_rgba(1,36,34,0.06),0_26px_50px_-30px_rgba(1,36,34,0.55)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-brand-leaf/45 sm:w-[44%] lg:w-auto">
+        <li class="why-card group relative flex w-[78%] shrink-0 snap-start flex-col gap-2.5 overflow-hidden rounded-2xl border border-neutral-gray-200/70 bg-neutral-light p-4 shadow-[0_24px_48px_-24px_rgba(1,36,34,0.45)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1.5 hover:border-accent-orange/50 hover:shadow-[0_32px_60px_-28px_rgba(1,36,34,0.5)] sm:w-[44%] lg:w-auto">
           <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-mint-soft text-accent-orange ring-1 ring-brand-leaf/20 transition-colors duration-300 group-hover:bg-accent-orange group-hover:text-neutral-light">
-              <Icon name={reason.icon} class="size-[19px]" />
+            <span class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-neutral-gray-100 text-primary-dark-800 transition-colors duration-300 group-hover:bg-accent-orange/10 group-hover:text-accent-orange">
+              <Icon name={reason.icon} class="size-[18px]" />
             </span>
-            <h3 class="font-display text-[15.5px] leading-snug font-bold text-ink">
-              {reason.title}
-            </h3>
+            <h3 class="font-display text-[15px] leading-snug font-bold text-ink">{reason.title}</h3>
           </div>
-          <p class="mt-3.5 font-sans text-[13.5px] leading-relaxed text-ink-soft">
-            {reason.description}
-          </p>
+          <p class="font-sans text-[13.5px] leading-relaxed text-ink-soft">{reason.description}</p>
         </li>
       ))}
     </ul>

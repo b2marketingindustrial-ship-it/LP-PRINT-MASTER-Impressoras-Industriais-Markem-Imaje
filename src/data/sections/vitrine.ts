@@ -49,6 +49,8 @@ export interface ShowcaseItem {
 
 export const showcase = {
   eyebrow: 'Equipamentos',
+  /** Pílula acima do H2 (pedido de 05/11/2026). */
+  pill: 'Distribuidor autorizado',
   /** Pedido de 05/11/2026: sem "impressora" no título; título e texto em uma linha cada. */
   title: 'Equipamentos Markem-Imaje',
   /** Fim do H2 em verde (05/11/2026). Precisa ser o final exato de `title`. */
@@ -178,6 +180,7 @@ export const showcase = {
   ],
 } as const satisfies {
   eyebrow: string
+  pill: string
   title: string
   titleHighlight: string
   text: string

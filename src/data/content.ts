@@ -89,9 +89,10 @@ export const hero = {
 export const quote = {
   /** Mockup da cotação (27/10/2026). */
   eyebrow: 'Atendimento Print Master',
-  title: 'Fale com quem entende de impressoras industriais.',
+  /** Pedido de 05/11/2026: sem "impressoras" no título da cotação. */
+  title: 'Fale com quem entende de codificação industrial.',
   /** Trecho final do H2, em menta. */
-  highlight: 'industriais.',
+  highlight: 'codificação industrial.',
   text: 'Nossa equipe ajuda a escolher o equipamento certo para a sua linha e sua embalagem. Preencha o formulário ou fale diretamente conosco pelo WhatsApp.',
   /** Convite acima do espaço do botão de WhatsApp (o botão vem do plugin). */
   whatsappPrompt: 'Prefere conversar com a nossa equipe?',

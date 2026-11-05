@@ -19,10 +19,13 @@ export interface Reason {
 
 export const why = {
   eyebrow: `Por que a ${site.brandShort}`,
-  /** Cada item é uma linha do H2 (quebra forçada). 3–6 palavras no total. */
-  titleLines: ['Precisão para', 'sua linha de produção.'],
-  /** Mockup de 27/10/2026: texto curto, em duas linhas no desktop. */
-  text: 'Soluções de marcação e rastreabilidade Markem-Imaje, com codificação precisa e suporte especializado para sua indústria.',
+  /**
+   * Pedido de 05/11/2026: foco institucional, como na LP de locação. "Desde 2003" vem da LP de
+   * locação no ar (mesmo cliente); a área atendida segue não confirmada — só a sede em Goiânia.
+   * Cada item é uma linha do H2 (quebra forçada).
+   */
+  titleLines: ['Duas décadas de', 'soluções em impressão.'],
+  text: 'A Print Master une a tecnologia Markem-Imaje, suporte técnico e atendimento próximo para indústrias que precisam codificar com precisão, da escolha do equipamento ao pós-venda.',
   /** Cena do bloco inteiro (mockup de 27/10/2026): os equipamentos já estão na foto. */
   scene: {
     src: cenario,
@@ -30,29 +33,29 @@ export const why = {
   },
   reasons: [
     {
-      icon: 'cpu',
-      title: 'Tecnologia de ponta',
-      description: 'Sistemas modernos, com alta performance e confiabilidade.',
+      icon: 'badge-check',
+      title: 'Desde 2003',
+      description: 'Mais de duas décadas em soluções de impressão para empresas.',
     },
     {
       icon: 'shield',
-      title: 'Conformidade regulatória',
-      description: 'Produtos que atendem às normas locais e internacionais.',
+      title: 'Distribuidor autorizado',
+      description: 'Revenda autorizada da linha de codificação Markem-Imaje.',
+    },
+    {
+      icon: 'building',
+      title: 'Escritório e indústria',
+      description: 'Experiência em dois segmentos, com solução para cada rotina.',
+    },
+    {
+      icon: 'map-pin',
+      title: 'Sede em Goiânia',
+      description: 'Estrutura e equipe técnica próprias em Goiânia/GO.',
     },
     {
       icon: 'users',
-      title: 'Suporte especializado',
-      description: 'Apoio técnico da escolha do equipamento ao pós-venda.',
-    },
-    {
-      icon: 'leaf',
-      title: 'Sustentabilidade',
-      description: 'Menor consumo de energia e de materiais na operação.',
-    },
-    {
-      icon: 'gear',
-      title: 'Codificação confiável',
-      description: 'Equipamentos de alta performance para sua linha de produção.',
+      title: 'Suporte completo',
+      description: 'Suporte técnico em todas as etapas, da indicação à assistência.',
     },
   ],
 } as const satisfies {

@@ -1,0 +1,86 @@
+---
+/**
+ * Perguntas frequentes — fase "prova", entre aplicações e diferenciais.
+ *
+ * VARIANTE LOCAL — Print Master, pedido de 05/11/2026 (docs/BRIEFING.md): seção nova, sem par na
+ * biblioteca, no visual da LP de locação. Cabeçalho à esquerda (fixo ao rolar no desktop) com o
+ * CTA padrão; perguntas em acordeão nativo (<details>) à direita, a primeira aberta. Leva o
+ * JSON-LD FAQPage com as mesmas perguntas e respostas.
+ */
+import Section from '@components/Section.astro'
+import Icon from '@components/Icon.astro'
+import Eyebrow from '@components/Eyebrow.astro'
+import Button from '@components/Button.astro'
+import type { SectionProps } from '@lib/layout'
+import { cta } from '@data/content'
+import { faq } from '@data/sections/faq'
+
+type Props = SectionProps
+
+const { tone, rhythm } = Astro.props
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.items.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer },
+  })),
+}
+---
+
+<Section id="faq" tone={tone} rhythm={rhythm}>
+  <div class="grid gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
+    <div class="lg:col-span-5">
+      <div class="lg:sticky lg:top-28">
+        <Eyebrow>{faq.eyebrow}</Eyebrow>
+        <h2 class="mt-4 font-display text-[2.2rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-ink sm:text-5xl lg:text-[3rem]">
+          {faq.title}
+        </h2>
+        <p class="mt-5 font-sans text-[17px] leading-relaxed text-ink-soft">{faq.text}</p>
+        <Button cta="faq-cta" class="mt-7 w-full sm:w-auto">
+          {cta.primary}
+        </Button>
+      </div>
+    </div>
+
+    <ul class="flex flex-col gap-3 lg:col-span-7">
+      {faq.items.map((item, i) => (
+        <li>
+          <details
+            class="faq-item group rounded-2xl border border-primary-dark/10 bg-neutral-light shadow-[0_18px_40px_-32px_rgba(6,67,55,0.5)] transition-[border-color,box-shadow] duration-300 open:border-brand-leaf/40 open:shadow-[0_24px_48px_-30px_rgba(6,67,55,0.55)]"
+            open={i === 0}
+          >
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 sm:px-6 sm:py-5">
+              <span class="font-display text-[16px] leading-snug font-bold text-ink sm:text-[17px]">
+                {item.question}
+              </span>
+              <span class="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand-mint-soft text-accent-orange ring-1 ring-brand-mint/60 transition-[transform,background-color,color] duration-300 group-open:rotate-180 group-open:bg-accent-orange group-open:text-neutral-light">
+                <Icon name="chevron-down" class="size-4" />
+              </span>
+            </summary>
+            <p class="px-5 pb-5 font-sans text-[15px] leading-relaxed text-ink-soft sm:px-6 sm:pb-6">
+              {item.answer}
+            </p>
+          </details>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+</Section>
+
+<style>
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-item,
+    .faq-item * {
+      transition: none !important;
+    }
+  }
+</style>

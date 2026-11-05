@@ -120,8 +120,12 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
 
       {/* Coluna 3 — espaço vazio para o chat do plugin (shortcode, 300px) */}
       <div
-        class="hero-chat relative z-[3] min-h-[430px] w-full lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:w-[300px]"
+        class:list={[
+          'hero-chat relative z-[3] min-h-[430px] w-full lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:w-[300px]',
+          isDev && 'hero-shortcode-dev',
+        ]}
         data-shortcode-slot
+        data-dev={isDev ? '' : undefined}
       >
         <slot name="shortcode">
           {isDev && (
@@ -142,7 +146,12 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
       <script is:inline>
         ;(() => {
           const slot = document.currentScript?.previousElementSibling
-          if (!slot || /wordpress|printmaster\.net\.br/i.test(location.hostname)) return
+          if (
+            !slot ||
+            slot.hasAttribute('data-dev') ||
+            /wordpress|printmaster\.net\.br/i.test(location.hostname)
+          )
+            return
           if (slot.children.length === 0 && /^\[[^\]]+\]$/.test(slot.textContent.trim()))
             slot.replaceChildren()
         })()
@@ -175,6 +184,16 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
 </section>
 
 <style>
+  /* Só em `npm run dev`: o shortcode cru do chat fica visível, só o texto, para conferir. */
+  .hero-shortcode-dev {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-brand-mint);
+  }
+
   /* Medidas que amarram as colunas e o banner ao mesmo eixo. */
   .hero {
     --text-col: 400px;

@@ -4,9 +4,9 @@
  *
  * VARIANTE LOCAL — Print Master (docs/BRIEFING.md). Pedido de 05/11/2026: mesma estética da LP
  * de locação — H2 à esquerda com o cartão de ajuda à direita, cards brancos com palco menta, selo
- * da tecnologia, marca, modelo e botão de cotação. Sem abas nem filtro — três blocos
- * compactos apresentam as tecnologias (ícone, nome e frase, sem contagem) e os 12 modelos ficam numa
- * grade só (4 × 3 no desktop, sem sobras); fim do H2 em verde.
+ * da tecnologia, marca, modelo e botão de cotação. Sem abas nem filtro, e sem os blocos de
+ * tecnologia (repetiam a seção Soluções, 05/11/2026): o selo de cada card diz a tecnologia e os
+ * 12 modelos ficam numa grade só (4 × 3 no desktop, sem sobras); fim do H2 em verde.
  * `npm run compose` sobrescreve este arquivo com o da biblioteca: ao recompor,
  * reaplique a variante.
  *
@@ -96,7 +96,13 @@ const modelSize = () => 'text-[1.05rem] sm:text-[1.35rem]'
   {/* Cabeçalho como o dos produtos da LP de locação: H2 à esquerda, ajuda à direita */}
   <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
     <div class="min-w-0">
-      <h2 class="font-display text-[2.2rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-balance text-ink sm:text-5xl lg:text-[3.35rem] lg:whitespace-nowrap">
+      <span class="inline-flex items-center gap-2 rounded-full bg-brand-mint-soft py-1.5 pr-4 pl-2 font-sans text-[11.5px] font-bold tracking-[0.12em] text-primary-dark uppercase ring-1 ring-brand-mint/50">
+        <span class="flex size-5 items-center justify-center rounded-full bg-accent-orange text-neutral-light">
+          <Icon name="badge-check" class="size-3" />
+        </span>
+        {showcase.pill} {showcase.brand}
+      </span>
+      <h2 class="mt-5 font-display text-[2.2rem] leading-[1.05] font-extrabold tracking-[-0.03em] text-balance text-ink sm:text-5xl lg:text-[3.35rem] lg:whitespace-nowrap">
         {titleLead} <span class="text-accent-orange">{showcase.titleHighlight}</span>
       </h2>
       <p class="mt-5 font-sans text-[17px] leading-relaxed text-ink-soft sm:text-lg lg:whitespace-nowrap">
@@ -119,32 +125,10 @@ const modelSize = () => 'text-[1.05rem] sm:text-[1.35rem]'
     </div>
   </div>
 
-  {grouped && (
-    <ul class="mt-10 grid gap-3 sm:grid-cols-3 sm:gap-5" aria-label="Tecnologias">
-      {shelves.map((shelf) => (
-        <li class="flex items-start gap-4 rounded-2xl border border-primary-dark/10 bg-neutral-light/70 p-4 backdrop-blur-sm sm:p-5">
-          {shelf.icon && (
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-mint-soft text-accent-orange ring-1 ring-brand-mint/60">
-              <Icon name={shelf.icon} class="size-[19px]" />
-            </span>
-          )}
-          <div class="min-w-0">
-            <h3 class="font-display text-[1.1rem] leading-tight font-extrabold text-ink">
-              {shelf.label}
-            </h3>
-            <p class="mt-1.5 font-sans text-[14px] leading-relaxed text-ink-soft">
-              {shelf.description}
-            </p>
-          </div>
-        </li>
-      ))}
-    </ul>
-  )}
-
   {/* Cards no desenho da LP de locação: palco menta com selo, título e botão */}
   <ul
     aria-label={showcase.title}
-    class="mt-5 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4"
+    class="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4"
   >
     {ordered.map((item) => {
       const model = modelOf(item.title)

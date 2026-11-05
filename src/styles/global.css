@@ -71,6 +71,18 @@
     letter-spacing: -0.015em;
   }
 
+  /* Sem palavra sozinha na última linha (pedido de 05/11/2026): o navegador redistribui as
+     linhas de títulos e parágrafos. */
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  dd,
+  dt {
+    text-wrap: pretty;
+  }
+
   ::selection {
     @apply bg-accent-orange text-neutral-light;
   }

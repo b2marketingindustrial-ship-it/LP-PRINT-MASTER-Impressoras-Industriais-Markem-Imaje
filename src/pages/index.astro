@@ -19,6 +19,7 @@ import Solutions from '../components/sections/Solutions.astro'
 import ProductShowcase from '../components/sections/ProductShowcase.astro'
 import ProcessSteps from '../components/sections/ProcessSteps.astro'
 import ApplicationsGallery from '../components/sections/ApplicationsGallery.astro'
+import Faq from '../components/sections/Faq.astro'
 import WhyBrand from '../components/sections/WhyBrand.astro'
 import { shortcodes } from '../data/site'
 ---
@@ -34,6 +35,7 @@ import { shortcodes } from '../data/site'
     <ProductShowcase tone="light" rhythm="even" />
     <ProcessSteps tone="light" rhythm="panel-lead" />
     <ApplicationsGallery tone="gray" rhythm="centered-lead" />
+    <Faq tone="gray" rhythm="flow" />
     <WhyBrand tone="gray" rhythm="overlap" />
     <QuoteForm>
       <Fragment slot="shortcode">{shortcodes.form}</Fragment>

@@ -12,7 +12,8 @@
       "processo"
     ],
     "prova": [
-      "aplicacoes"
+      "aplicacoes",
+      "faq"
     ],
     "autoridade": [
       "diferenciais"
@@ -226,6 +227,45 @@
         }
       ],
       "localVariant": "Print Master 27/10/2026 — mockup: H2 em duas linhas, cards com foto 8:5 e corpo verde-escuro, faixa \"Encontre a solução ideal\" com CTA; 05/11/2026: 11 aplicações com os textos do usuário numa esteira infinita com pausa (docs/BRIEFING.md)"
+    },
+    {
+      "slug": "faq",
+      "id": "faq",
+      "title": "Perguntas frequentes",
+      "phase": "prova",
+      "component": "Faq.astro",
+      "data": "faq.ts",
+      "dataExport": "faq",
+      "carriesNavy": false,
+      "tone": "gray",
+      "rhythm": "flow",
+      "tones": [
+        "light",
+        "gray"
+      ],
+      "rhythms": [
+        "flow",
+        "even"
+      ],
+      "exampleHash": "",
+      "ctas": [
+        "faq-cta"
+      ],
+      "contract": {
+        "itemsPath": "items",
+        "itemsMin": 4,
+        "itemsMax": 10,
+        "requiredItemFields": [
+          "id",
+          "question",
+          "answer"
+        ],
+        "maxLength": {
+          "text": 170
+        }
+      },
+      "assets": [],
+      "localVariant": "Print Master 05/11/2026 — pedido do usuário: seção nova, sem par na biblioteca. Cabeçalho fixo à esquerda com CTA, acordeão de perguntas à direita e JSON-LD FAQPage (docs/BRIEFING.md)"
     },
     {
       "slug": "diferenciais",

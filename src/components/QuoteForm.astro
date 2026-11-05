@@ -7,7 +7,7 @@
  * textura, H2 escuro com o fim em verde, convite e 3 selos em duas linhas com divisórias.
  * Pedido do usuário (27/10/2026): o formulário e o botão de WhatsApp vêm do plugin — a coluna
  * do formulário é só o shortcode, num espaço vazio com altura reservada. Fora do WordPress o
- * texto cru do shortcode é apagado. Pedido de 05/11/2026: no lugar do espaço vazio do botão de
+ * texto cru do shortcode é apagado (em `npm run dev` ele fica visível, numa moldura, para conferir). Pedido de 05/11/2026: no lugar do espaço vazio do botão de
  * WhatsApp entra o CTA padrão da página ("Chamar no WhatsApp", `cotacao-whatsapp`).
  */
 import Icon from './Icon.astro'
@@ -37,24 +37,25 @@ const twoLines = (label: string) => {
 }
 ---
 
-<section
-  id="cotacao"
-  class="quote-section tex tex-grid tex-graph overflow-hidden pt-16 pb-20 lg:pt-20 lg:pb-24"
->
+<section id="cotacao" class="quote-section tex tex-grid tex-graph overflow-hidden pt-16 pb-20">
   <span
     aria-hidden="true"
     class="pointer-events-none absolute top-16 -left-32 -z-10 size-[520px] rounded-full bg-brand-mint/30 blur-3xl"
   ></span>
 
   <div class="relative mx-auto max-w-page px-6 lg:px-10">
-    <div class="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-stretch lg:gap-16">
       {/* Coluna do formulário: espaço vazio para o formulário do plugin (shortcode) */}
       <div class="order-2 w-full lg:order-1">
-        <div class="min-h-[560px] w-full" data-shortcode-slot>
+        <div
+          class:list={['h-full min-h-[480px] w-full lg:min-h-0', isDev && 'shortcode-dev']}
+          data-shortcode-slot
+          data-dev={isDev ? '' : undefined}
+        >
           <slot name="shortcode">
             {isDev && (
               <div
-                class="flex min-h-[560px] w-full items-center justify-center rounded-2xl border border-dashed border-primary-dark/30 font-sans text-[11px] font-semibold tracking-[0.18em] text-accent-orange uppercase"
+                class="flex h-full min-h-[480px] w-full items-center justify-center rounded-2xl border border-dashed border-primary-dark/30 font-sans text-[11px] font-semibold tracking-[0.18em] text-accent-orange uppercase"
                 aria-label="Espaço do formulário (só em desenvolvimento)"
               >
                 Espaço · formulário do plugin
@@ -70,7 +71,12 @@ const twoLines = (label: string) => {
         <script is:inline>
           ;(() => {
             const slot = document.currentScript?.previousElementSibling
-            if (!slot || /wordpress|printmaster\.net\.br/i.test(location.hostname)) return
+            if (
+              !slot ||
+              slot.hasAttribute('data-dev') ||
+              /wordpress|printmaster\.net\.br/i.test(location.hostname)
+            )
+              return
             if (slot.children.length === 0 && /^\[[^\]]+\]$/.test(slot.textContent.trim()))
               slot.replaceChildren()
           })()
@@ -126,6 +132,17 @@ const twoLines = (label: string) => {
 <style>
   .quote-section {
     background: var(--color-brand-mint-soft);
+  }
+
+  /* Só em `npm run dev`: o shortcode cru fica visível, só o texto, para conferir (como na LP de
+     locação). No WordPress o plugin troca o texto pelo formulário. */
+  .shortcode-dev {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-accent-orange);
   }
 
   /* Divisórias entre os selos. */
