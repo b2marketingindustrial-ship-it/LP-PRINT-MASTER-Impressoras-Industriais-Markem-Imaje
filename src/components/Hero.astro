@@ -40,8 +40,9 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
           {hero.eyebrow}
         </span>
 
-        <h1 class="mt-4 font-display text-[2.75rem] leading-[0.98] font-extrabold tracking-[-0.04em] text-neutral-light sm:text-[3.6rem] lg:text-[3rem] xl:text-[4.15rem]">
-          {titleBefore}
+        <h1 class="mt-4 font-display text-[2.75rem] leading-[1] font-extrabold tracking-[-0.04em] text-neutral-light sm:text-[2.9rem] lg:text-[2.45rem] xl:text-[3.25rem]">
+          {/* Duas linhas a partir do tablet: a 1ª não quebra; no celular o título quebra sozinho. */}
+          <span class="sm:block sm:whitespace-nowrap">{titleBefore}</span>
           {at >= 0 && <span class="block text-brand-glow">{hero.highlight}</span>}
           {titleAfter}
         </h1>
@@ -179,6 +180,9 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
   /* Medidas que amarram as colunas e o banner ao mesmo eixo. */
   .hero {
     --text-col: 400px;
+    /* Largura de referência do banner: fica fixa quando a coluna de texto alarga para o H1 em
+         duas linhas (05/11/2026), para os equipamentos não encolherem — só andam para a direita. */
+    --photo-base: 400px;
     --chat-col: 300px;
     --col-gap: 2rem;
     --page-half: calc(var(--container-page) / 2);
@@ -192,7 +196,7 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
     /* Largura do banner: o par (36,8% da imagem) ocupa o espaço entre o texto e o chat. */
     /* Em vw (não %) para a mesma conta servir também ao `top` do selo. */
     --photo-w: calc(
-      (min(100vw, var(--container-page)) - 80px - var(--text-col) - var(--chat-col)) / 0.35
+      (min(100vw, var(--container-page)) - 80px - var(--photo-base) - var(--chat-col)) / 0.35
     );
   }
 
@@ -338,10 +342,17 @@ const titleAfter = at >= 0 ? hero.title.slice(at + hero.highlight.length) : ''
     }
   }
 
+  @media (min-width: 1024px) {
+    .hero {
+      /* H1 em duas linhas (pedido de 05/11/2026): "Codificadoras industriais" inteira na 1ª. */
+      --text-col: 480px;
+    }
+  }
+
   @media (min-width: 1280px) {
     .hero {
-      /* Cabe "Markem-Imaje" numa linha do H1 em 4,15rem, como no mockup. */
-      --text-col: 440px;
+      --text-col: 600px;
+      --photo-base: 440px;
       min-height: 700px;
     }
   }
