@@ -14,11 +14,12 @@ export interface FaqItem {
 export const faq = {
   eyebrow: 'Perguntas frequentes',
   title: 'Dúvidas sobre codificação industrial',
-  text: 'O que as indústrias mais perguntam antes de escolher o equipamento.',
+  /** Descrições em uma linha (pedido de 05/11/2026). */
+  text: 'O que as indústrias perguntam antes de escolher.',
   /** Cartão de contato que fecha a coluna do cabeçalho (05/11/2026). */
   contact: {
     title: 'Não encontrou a sua dúvida?',
-    text: 'Fale com um especialista da Print Master e receba a indicação certa para a sua linha.',
+    text: 'Fale com um especialista da Print Master.',
     points: [
       'Distribuidor autorizado Markem-Imaje',
       'Instalação e integração na sua linha',
