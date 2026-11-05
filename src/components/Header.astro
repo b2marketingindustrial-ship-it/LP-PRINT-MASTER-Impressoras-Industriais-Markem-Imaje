@@ -3,30 +3,44 @@
  * ESTRUTURA FIXA (PROMPT-PADRAO-LP 4.1.1), com o desvio visual aprovado para a Print Master
  * (mockup de abertura, 26/10/2026 — docs/BRIEFING.md): barra branca, logo sem placa e CTA em
  * pílula verde. A ordem continua a do padrão — logo · tagline · CTA —, sem menu nem âncoras.
+ * Pedido de 05/11/2026: ao lado do logo, um divisor e o logo Markem-Imaje.
  */
 import { Image } from 'astro:assets'
 import Button from './Button.astro'
 import logo from '../assets/LOGO.png'
 import { site } from '../data/site'
-import { header, cta } from '../data/content'
+import { header, cta, hero } from '../data/content'
 ---
 
 <header class="sticky top-0 z-50 border-b border-primary-dark/10 bg-neutral-light/90 backdrop-blur-md">
   <div class="mx-auto flex max-w-page items-center justify-between gap-3 px-4 py-3 sm:gap-6 sm:px-6 lg:px-10">
-    {/* 1. Logo */}
-    <a href="/" class="flex shrink-0 items-center">
+    {/* 1. Logo Print Master · divisor · logo Markem-Imaje (pedido de 05/11/2026) */}
+    <div class="flex shrink-0 items-center gap-3 sm:gap-5">
+      <a href="/" class="flex shrink-0 items-center">
+        <Image
+          src={logo}
+          alt={site.brand}
+          width={262}
+          height={60}
+          format="webp"
+          loading="eager"
+          fetchpriority="low"
+          decoding="async"
+          class="h-7 w-auto sm:h-10 lg:h-[48px]"
+        />
+      </a>
+      <span aria-hidden="true" class="h-7 w-px bg-primary-dark/20 sm:h-9 lg:h-10"></span>
       <Image
-        src={logo}
-        alt={site.brand}
-        width={262}
-        height={60}
+        src={hero.badge.src}
+        alt={hero.badge.alt}
+        width={180}
         format="webp"
         loading="eager"
         fetchpriority="low"
         decoding="async"
-        class="h-9 w-auto sm:h-11 lg:h-[52px]"
+        class="h-5 w-auto sm:h-7 lg:h-8"
       />
-    </a>
+    </div>
 
     {/* 2. Tagline central (some no mobile) */}
     <span class="hidden flex-1 items-center justify-center gap-2.5 font-display text-[13px] font-bold tracking-[0.18em] text-ink/75 uppercase md:flex lg:text-[14px]">
