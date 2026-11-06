@@ -8,8 +8,10 @@
 import type { IconName } from '@data/icons'
 import type { Photo } from '@data/types'
 
-// Fotos de produto da própria LP (05/11/2026); laser não tem modelo no material e fica com ícone.
+// Fotos de produto da própria LP (05/11/2026). O laser veio do usuário em 06/11/2026, recortado
+// num quadro 4:3 como as fotos da vitrine; segue fora da vitrine.
 import fotoJato from '@assets/vitrine/produto-4.png'
+import fotoLaser from '@assets/solucoes/marcacao-laser.png'
 import fotoEtiqueta from '@assets/vitrine/produto-10.png'
 import fotoTermica from '@assets/vitrine/produto-8.png'
 
@@ -42,7 +44,10 @@ export const solutions = {
       icon: 'crosshair',
       title: 'Marcação a laser',
       description: 'Solução de marcação permanente e de alta resolução para garantir durabilidade.',
-      photo: null,
+      photo: {
+        src: fotoLaser,
+        alt: 'Marcador a laser Markem-Imaje SmartLase montado em coluna, com tela de controle',
+      },
     },
     {
       id: 'etiquetagem',
