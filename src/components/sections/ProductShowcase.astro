@@ -6,7 +6,8 @@
  * de locação — H2 à esquerda com o cartão de ajuda à direita, cards brancos com palco menta, selo
  * da tecnologia, marca, modelo e botão de cotação. Sem abas nem filtro, e sem os blocos de
  * tecnologia (repetiam a seção Soluções, 05/11/2026): o selo de cada card diz a tecnologia e os
- * 12 modelos ficam numa grade só (4 × 3 no desktop, sem sobras); fim do H2 em verde.
+ * 12 modelos ficam numa grade só (4 × 3 no desktop, sem sobras); fim do H2 em verde. O cartão de
+ * ajuda fica ao lado do H2 a partir de 1280px e abaixo dele antes disso (06/11/2026).
  * `npm run compose` sobrescreve este arquivo com o da biblioteca: ao recompor,
  * reaplique a variante.
  *
@@ -94,7 +95,8 @@ const modelSize = () => 'text-[1.05rem] sm:text-[1.35rem]'
 
 <Section id="vitrine" tone={tone} rhythm={rhythm} class="showcase" data-showcase>
   {/* Cabeçalho como o dos produtos da LP de locação: H2 à esquerda, ajuda à direita */}
-  <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
+  {/* Lado a lado só a partir de 1280px: entre 1024 e 1184px o H2 passava por baixo do cartão (06/11/2026) */}
+  <div class="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between xl:gap-10">
     <div class="min-w-0">
       <span class="inline-flex items-center gap-2 rounded-full bg-brand-mint-soft py-1.5 pr-4 pl-2 font-sans text-[11.5px] font-bold tracking-[0.12em] text-primary-dark uppercase ring-1 ring-brand-mint/50">
         <span class="flex size-5 items-center justify-center rounded-full bg-accent-orange text-neutral-light">
@@ -120,7 +122,7 @@ const modelSize = () => 'text-[1.05rem] sm:text-[1.35rem]'
         </p>
       </div>
       <Button cta="vitrine-ajuda" class="w-full sm:whitespace-nowrap">
-        {showcase.help.cta}
+        {cta.card}
       </Button>
     </div>
   </div>
@@ -143,7 +145,14 @@ const modelSize = () => 'text-[1.05rem] sm:text-[1.35rem]'
             <span class="showcase-stage relative flex aspect-[6/5] w-full items-center justify-center overflow-hidden rounded-2xl">
               {tech && (
                 <span class="absolute top-2.5 left-2.5 z-[2] rounded-full bg-brand-mint-soft px-2.5 py-1 font-sans text-[9.5px] font-bold tracking-[0.08em] text-primary-dark uppercase ring-1 ring-brand-mint/50 sm:top-3 sm:left-3 sm:px-3 sm:py-1.5 sm:text-[10.5px]">
-                  {tech.short}
+                  {tech.compact ? (
+                    <>
+                      <span class="sm:hidden">{tech.compact}</span>
+                      <span class="hidden sm:inline">{tech.short}</span>
+                    </>
+                  ) : (
+                    tech.short
+                  )}
                 </span>
               )}
               <Image

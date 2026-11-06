@@ -4,6 +4,9 @@
  * (mockup de abertura, 26/10/2026 — docs/BRIEFING.md): barra branca, logo sem placa e CTA em
  * pílula verde. A ordem continua a do padrão — logo · tagline · CTA —, sem menu nem âncoras.
  * Pedido de 05/11/2026: ao lado do logo, um divisor e o logo Markem-Imaje.
+ * Pedidos de 06/11/2026: o logo não é link (ninguém sai da LP sem querer); abaixo de 400px o
+ * botão fica só com a seta (o texto segue para leitores de tela), e a tagline só aparece a partir
+ * de 1024px — em 360px e em 768px o cabeçalho estourava a largura da tela.
  */
 import { Image } from 'astro:assets'
 import Button from './Button.astro'
@@ -16,19 +19,17 @@ import { header, cta, hero } from '../data/content'
   <div class="mx-auto flex max-w-page items-center justify-between gap-3 px-4 py-3 sm:gap-6 sm:px-6 lg:px-10">
     {/* 1. Logo Print Master · divisor · logo Markem-Imaje (pedido de 05/11/2026) */}
     <div class="flex shrink-0 items-center gap-3 sm:gap-5">
-      <a href="/" class="flex shrink-0 items-center">
-        <Image
-          src={logo}
-          alt={site.brand}
-          width={262}
-          height={60}
-          format="webp"
-          loading="eager"
-          fetchpriority="low"
-          decoding="async"
-          class="h-7 w-auto sm:h-10 lg:h-[48px]"
-        />
-      </a>
+      <Image
+        src={logo}
+        alt={site.brand}
+        width={262}
+        height={60}
+        format="webp"
+        loading="eager"
+        fetchpriority="low"
+        decoding="async"
+        class="h-7 w-auto shrink-0 sm:h-10 lg:h-[48px]"
+      />
       <span aria-hidden="true" class="h-7 w-px bg-primary-dark/20 sm:h-9 lg:h-10"></span>
       <Image
         src={hero.badge.src}
@@ -42,15 +43,15 @@ import { header, cta, hero } from '../data/content'
       />
     </div>
 
-    {/* 2. Tagline central (some no mobile) */}
-    <span class="hidden flex-1 items-center justify-center gap-2.5 font-display text-[13px] font-bold tracking-[0.18em] text-ink/75 uppercase md:flex lg:text-[14px]">
+    {/* 2. Tagline central (só a partir de 1024px) */}
+    <span class="hidden flex-1 items-center justify-center gap-2.5 font-display text-[14px] font-bold tracking-[0.18em] text-ink/75 uppercase lg:flex">
       <span aria-hidden="true" class="size-1.5 rounded-full bg-brand-mint"></span>
       {header.tagline}
     </span>
 
-    {/* 3. CTA em pílula verde, rótulo curto no mobile */}
-    <Button cta="header-cta" size="sm">
-      <span class="sm:hidden">{cta.primaryShort}</span>
+    {/* 3. CTA em pílula verde: só a seta abaixo de 400px, rótulo curto no mobile */}
+    <Button cta="header-cta" size="sm" class="max-[399px]:gap-0">
+      <span class="sr-only min-[400px]:not-sr-only sm:hidden">{cta.primaryShort}</span>
       <span class="hidden sm:inline">{cta.primary}</span>
     </Button>
   </div>

@@ -35,6 +35,8 @@ export interface ShowcaseGroup {
   description: string
   /** Rótulo curto do selo no card. */
   short: string
+  /** Versão do selo abaixo de 640px, quando `short` não cabe numa linha no card estreito. */
+  compact?: string
 }
 
 export interface ShowcaseItem {
@@ -48,21 +50,18 @@ export interface ShowcaseItem {
 }
 
 export const showcase = {
-  eyebrow: 'Equipamentos',
   /** Pílula acima do H2 (pedido de 05/11/2026). */
   pill: 'Distribuidor autorizado',
   /** Pedido de 05/11/2026: sem "impressora" no título; título e texto em uma linha cada. */
   title: 'Equipamentos Markem-Imaje',
   /** Fim do H2 em verde (05/11/2026). Precisa ser o final exato de `title`. */
   titleHighlight: 'Markem-Imaje',
-  text: 'Jato de tinta, transferência térmica e Print & Apply para a sua linha.',
-  /** Variante local (mockup de 26/10/2026): marca acima do modelo, rótulo do card e faixa de ajuda. */
+  text: 'Jato de tinta, transferência térmica, Print & Apply e laser para a sua linha.',
+  /** Variante local (mockup de 26/10/2026): marca acima do modelo. O botão de ajuda usa `cta.card`. */
   brand: 'Markem-Imaje',
-  itemCta: 'Ver equipamento',
   help: {
     /** Cartão de ajuda à direita do H2, como na LP de locação (05/11/2026). */
     text: 'Precisa de ajuda para escolher?',
-    cta: 'Fale com um especialista',
   },
   groups: [
     {
@@ -78,7 +77,8 @@ export const showcase = {
       label: 'Transferência térmica',
       logo: null,
       icon: 'flame',
-      short: 'Térmica',
+      short: 'Transferência térmica',
+      compact: 'Transf. térmica',
       description:
         'Codificadores TTO para filmes flexíveis e rótulos, com textos e códigos nítidos.',
     },
@@ -178,14 +178,12 @@ export const showcase = {
     },
   ],
 } as const satisfies {
-  eyebrow: string
   pill: string
   title: string
   titleHighlight: string
   text: string
   brand: string
-  itemCta: string
-  help: { text: string; cta: string }
+  help: { text: string }
   groups: readonly ShowcaseGroup[]
   items: readonly ShowcaseItem[]
 }

@@ -34,7 +34,7 @@ export const cta = {
   primary: 'Solicite sua cotação',
   primaryShort: 'Cotação',
   secondary: 'Identifique seu equipamento',
-  card: 'Falar com especialista',
+  card: 'Fale com um especialista',
   whatsapp: 'Chamar no WhatsApp',
 } as const
 
@@ -50,7 +50,7 @@ export const header = {
 
 export const hero = {
   /** Selo de distribuidor: decisão do usuário no mockup de abertura (26/10/2026). */
-  eyebrow: 'Print Master | Distribuidor autorizado',
+  eyebrow: 'Print Master · Distribuidor autorizado',
   /**
    * Pedido do usuário (27/10/2026): o H1 diz "Codificadoras", e não "Impressoras" como em
    * `site.product` (que segue no title, na description e no JSON-LD).
@@ -59,7 +59,7 @@ export const hero = {
   /** Trecho do H1 que vai para a última linha, em menta (mockup de 26/10/2026). */
   highlight: 'Markem-Imaje',
   /** Texto enviado pelo usuário em 27/10/2026, no lugar do de codificação e rastreabilidade. */
-  text: 'Grava data de validade, lote, fabricação e outros códigos, em diversas posições e materiais com marcações nítidas e de alta definição.',
+  text: 'Grava data de validade, lote, fabricação e outros códigos, em diversas posições e materiais, com marcações nítidas e de alta definição.',
   banner: {
     src: heroBg,
     alt: 'Codificadores jato de tinta Markem-Imaje 9410 e 9750 lado a lado sobre fundo verde-escuro',
@@ -101,8 +101,6 @@ export const quote = {
     { icon: 'shield', label: 'Conformidade regulatória' },
     { icon: 'wrench', label: 'Suporte da escolha ao pós-venda' },
   ],
-  /** Nota de LGPD exibida abaixo do formulário. */
-  lgpd: 'Seus dados serão usados apenas para responder à sua solicitação.',
 } as const satisfies {
   eyebrow: string
   title: string
@@ -110,7 +108,6 @@ export const quote = {
   text: string
   whatsappPrompt: string
   trust: readonly [TrustItem, TrustItem, TrustItem]
-  lgpd: string
 }
 
 /* ------------------------------------------------------------------ footer */

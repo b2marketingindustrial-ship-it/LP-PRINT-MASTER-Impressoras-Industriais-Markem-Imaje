@@ -8,6 +8,11 @@ import { site } from '../data/site'
 import { footer } from '../data/content'
 
 const year = new Date().getFullYear()
+
+// Quando o endereço quebra de linha (1024–1279px), o CEP não se separa do número.
+const cepAt = site.address.lastIndexOf('CEP ')
+const street = cepAt > 0 ? site.address.slice(0, cepAt) : site.address
+const cep = cepAt > 0 ? site.address.slice(cepAt) : ''
 ---
 
 <footer class="navy-premium border-t border-white/15">
@@ -16,9 +21,13 @@ const year = new Date().getFullYear()
       © {year} {site.brand}. Todos os direitos reservados.
     </p>
 
-    <address class="flex items-center gap-2 font-sans text-xs text-neutral-light/70 not-italic lg:whitespace-nowrap">
+    {/* Endereço numa linha só a partir de 1280px; em 1024px ele empurrava o crédito para fora (06/11/2026) */}
+    <address class="flex items-center gap-2 font-sans text-xs text-neutral-light/70 not-italic xl:whitespace-nowrap">
       <Icon name="map-pin" class="size-3.5 shrink-0 text-accent-orange" />
-      <span>{site.address}</span>
+      <span>
+        {street}
+        {cep && <span class="whitespace-nowrap">{cep}</span>}
+      </span>
     </address>
 
     <p class="shrink-0 font-sans text-xs text-neutral-light/55">

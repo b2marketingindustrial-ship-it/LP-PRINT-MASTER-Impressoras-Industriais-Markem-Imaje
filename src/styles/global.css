@@ -31,7 +31,7 @@
   --color-neutral-gray-100: #f2f8f6;
   --color-neutral-gray-200: #a0a0a0;
   --color-ink: #10201b;
-  /* Um tom abaixo do da LP de locação: a nota de LGPD (ink-soft/80 sobre o cinza) ficava em 4,1:1. */
+  /* Um tom abaixo do da LP de locação, para texto pequeno sobre o cinza passar de 4,5:1. */
   --color-ink-soft: #3f504a;
 
   --container-page: 1450px;
@@ -49,6 +49,13 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Quem pediu movimento reduzido salta direto para a âncora (06/11/2026). */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   /* O Tailwind 4 deixa o cursor padrão nos botões: sem a mãozinha, o banner e os cards
@@ -116,52 +123,6 @@
   -webkit-mask-image: radial-gradient(ellipse at 20% 0%, black 0%, transparent 78%);
 }
 
-/* Cantos técnicos laranja (18px) em painéis navy. */
-@utility tech-corners {
-  position: relative;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    border-color: var(--color-accent-orange);
-    border-style: solid;
-    border-width: 0;
-    opacity: 0.9;
-    pointer-events: none;
-  }
-
-  &::before {
-    top: 14px;
-    left: 14px;
-    border-top-width: 2px;
-    border-left-width: 2px;
-  }
-
-  &::after {
-    right: 14px;
-    bottom: 14px;
-    border-bottom-width: 2px;
-    border-right-width: 2px;
-  }
-}
-
-/* Badge de vidro com brilho interno laranja. */
-@utility glass-badge {
-  background-image: linear-gradient(
-    160deg,
-    rgb(255 255 255 / 0.16) 0%,
-    rgb(255 255 255 / 0.04) 100%
-  );
-  border: 1px solid rgb(255 255 255 / 0.16);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.22),
-    inset 0 -10px 14px -10px rgb(97 229 169 / 0.45),
-    0 12px 22px -14px rgb(0 0 0 / 0.85);
-}
-
 /* Trilho horizontal sem barra de rolagem aparente (listas no mobile). */
 @utility scroll-track {
   scrollbar-width: none;
@@ -215,13 +176,10 @@
   );
 }
 
-/* Bloco escuro de "Por que a Print Master": faixa reta em largura total, sem cantos
-   arredondados (referência SEIVE, pedido de 05/11/2026). */
-
 /*
- * Texturas das seções claras (padrão Print Master): pontos, malha técnica, grafo de nós e
- * anéis, em verde da marca com opacidade baixa. A seção ganha `tex` mais uma ou duas das
- * variantes; as camadas ficam atrás do conteúdo (z-index -1 dentro de `isolate`).
+ * Texturas das seções claras (padrão Print Master): malha técnica e grafo de nós, em verde da
+ * marca com opacidade baixa, usadas na cotação. A seção ganha `tex` e as variantes; as camadas
+ * ficam atrás do conteúdo (z-index -1 dentro de `isolate`).
  */
 .tex {
   position: relative;
@@ -235,20 +193,6 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-}
-
-/* Pontos, esmaecidos para o canto oposto. */
-.tex-dots::before {
-  background-image: radial-gradient(circle, rgb(2 118 83 / 0.22) 1.3px, transparent 1.7px);
-  background-size: 26px 26px;
-  mask-image:
-    radial-gradient(ellipse 70% 90% at 100% 0%, black 0%, transparent 75%),
-    linear-gradient(to bottom, transparent 0, #000 16%, #000 78%, transparent 100%);
-  -webkit-mask-image:
-    radial-gradient(ellipse 70% 90% at 100% 0%, black 0%, transparent 75%),
-    linear-gradient(to bottom, transparent 0, #000 16%, #000 78%, transparent 100%);
-  mask-composite: intersect;
-  -webkit-mask-composite: source-in;
 }
 
 /* Malha técnica, esmaecida para a direita. */
@@ -267,9 +211,8 @@
   -webkit-mask-composite: source-in;
 }
 
-/* Grafo e anéis também se dissolvem no topo e na base, para não terminarem num corte reto. */
-.tex-graph::after,
-.tex-rings::after {
+/* O grafo também se dissolve no topo e na base, para não terminar num corte reto. */
+.tex-graph::after {
   mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 78%, transparent 100%);
   -webkit-mask-image: linear-gradient(
     to bottom,
@@ -285,12 +228,6 @@
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 420' fill='none'%3E%3Cg stroke='%23027653' stroke-opacity='.28' stroke-width='1.2'%3E%3Cpath d='M40 60 L170 120 L300 50 L430 140 L560 70'/%3E%3Cpath d='M170 120 L210 250 L360 230 L430 140'/%3E%3Cpath d='M210 250 L120 340 M360 230 L470 330 L580 250 L560 70'/%3E%3Cpath d='M300 50 L360 230'/%3E%3C/g%3E%3Cg fill='%2361e5a9' stroke='%23027653' stroke-opacity='.45' stroke-width='1.4'%3E%3Ccircle cx='40' cy='60' r='5'/%3E%3Ccircle cx='170' cy='120' r='8'/%3E%3Ccircle cx='300' cy='50' r='5'/%3E%3Ccircle cx='430' cy='140' r='9'/%3E%3Ccircle cx='560' cy='70' r='5'/%3E%3Ccircle cx='210' cy='250' r='6'/%3E%3Ccircle cx='360' cy='230' r='8'/%3E%3Ccircle cx='120' cy='340' r='4'/%3E%3Ccircle cx='470' cy='330' r='6'/%3E%3Ccircle cx='580' cy='250' r='5'/%3E%3C/g%3E%3C/svg%3E")
     no-repeat right -40px top 0 / min(640px, 70%) auto;
   opacity: 0.9;
-}
-
-/* Anéis concêntricos (eco das curvas do hero), no canto inferior esquerdo. */
-.tex-rings::after {
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 560 560' fill='none' stroke='%23027653' stroke-opacity='.16'%3E%3Ccircle cx='280' cy='280' r='120' stroke-width='1.5'/%3E%3Ccircle cx='280' cy='280' r='180' stroke-width='1.2'/%3E%3Ccircle cx='280' cy='280' r='240' stroke-width='1'/%3E%3Ccircle cx='280' cy='280' r='276' stroke-width='.8'/%3E%3C/svg%3E")
-    no-repeat left -200px bottom -240px / 560px 560px;
 }
 
 @media (max-width: 1023px) {

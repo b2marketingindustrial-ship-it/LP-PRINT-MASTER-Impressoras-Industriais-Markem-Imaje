@@ -19,7 +19,7 @@ site:
     form: '[atendimento_form id="default-form"]'
 
 campanha:
-  mainKeyword: impressora industrial
+  mainKeyword: codificadora industrial
   negatives: []
   forbidden: []
   areaAtendida: não confirmada — o endereço em Goiânia/GO não define a área comercial atendida
@@ -75,7 +75,7 @@ tokens:
     menta: '#61e5a9'
 
 conteudo:
-  title: Impressoras industriais Markem-Imaje para codificação | Print Master
+  title: Impressoras e codificadoras industriais Markem-Imaje | Print Master
   description: 'Impressoras industriais Markem-Imaje para codificação e rastreabilidade: jato de tinta, transferência térmica e Print & Apply, com suporte especializado.'
   hero:
     eyebrow: 'Print Master | Distribuidor autorizado'

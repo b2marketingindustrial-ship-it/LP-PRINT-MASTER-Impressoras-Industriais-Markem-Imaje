@@ -5,8 +5,10 @@
  * VARIANTE LOCAL — Print Master, mockup de 27/10/2026 (docs/BRIEFING.md): cabeçalho centrado
  * com o H2 numa linha só (05/11/2026), cards com foto 6:5 em cima e corpo verde-escuro (título, frase e
  * seta), sem faixa de ajuda no fim (removida em 05/11/2026). O card inteiro é o CTA.
- * Pedido do usuário (05/11/2026): as 11 aplicações rodam numa esteira infinita, que para no
- * hover e no foco (sem botão de pausa), com setas de navegação nas laterais (05/11/2026); com movimento reduzido vira um trilho com rolagem.
+ * Pedido do usuário (05/11/2026): as 11 aplicações rodam numa esteira infinita com setas nas
+ * laterais; com movimento reduzido vira um trilho com rolagem. Desde 06/11/2026 (WCAG 2.2.2): botão
+ * de pausar/continuar abaixo da esteira, pausa ao tocar no celular (volta 4 s depois), e o card
+ * focado pelo teclado é trazido para dentro da tela, sem a máscara das bordas por cima.
  * Item sem foto mostra o ícone num palco verde.
  * `npm run compose` sobrescreve este arquivo com o da biblioteca: ao recompor, reaplique a variante.
  */
@@ -124,11 +126,22 @@ const { tone, rhythm } = Astro.props
         <Icon name="chevron-right" class:list={['size-5', b.rot]} />
       </button>
     ))}
+
+    {/* Pausar/continuar (06/11/2026): `aria-pressed` diz se a esteira está pausada pelo visitante */}
+    <button
+      type="button"
+      data-marquee-toggle
+      aria-pressed="false"
+      aria-label="Pausar a esteira de aplicações"
+      class="app-nav app-toggle absolute bottom-2 left-1/2 z-10 hidden size-10 -translate-x-1/2 items-center justify-center rounded-full bg-neutral-light text-primary-dark shadow-[0_10px_24px_-12px_rgba(1,36,34,0.5)] ring-1 ring-primary-dark/10 transition-colors duration-200 hover:bg-accent-orange hover:text-neutral-light"
+    >
+      <Icon name="pause" class="app-toggle__pause size-4" />
+      <Icon name="play" class="app-toggle__play size-4" />
+    </button>
   </div>
 </Section>
 
 <style>
-  /* Corpo verde-escuro do card, com um brilho sutil no topo. */
   /* Corpo verde do card, como os segmentos da LP de locação. */
   .app-card__body {
     background-image: linear-gradient(
@@ -166,6 +179,17 @@ const { tone, rhythm } = Astro.props
   .app-marquee:hover .app-track,
   .app-marquee:focus-within .app-track {
     animation-play-state: paused;
+  }
+
+  /* Card em foco pelo teclado: sem o esmaecido das bordas por cima dele. */
+  .app-marquee:focus-within {
+    mask-image: none;
+  }
+
+  /* Ícone do botão de pausa conforme o estado. */
+  .app-toggle[aria-pressed='true'] :global(.app-toggle__pause),
+  .app-toggle[aria-pressed='false'] :global(.app-toggle__play) {
+    display: none;
   }
 
   /* Com JS a esteira é movida pelo script (para as setas poderem empurrar); sem JS, a animação
@@ -220,35 +244,48 @@ const { tone, rhythm } = Astro.props
 </style>
 
 <script>
-  // Esteira infinita movida por JS: anda sozinha, para no hover e no foco, e as setas empurram
-  // um card por vez com transição suave. A trilha tem a lista duas vezes; o deslocamento dá a
-  // volta na metade da largura, sem emenda.
+  // Esteira infinita movida por JS: anda sozinha e para no hover, no foco, ao tocar e no botão de
+  // pausa; as setas empurram um card por vez. A trilha tem a lista duas vezes e o deslocamento dá
+  // a volta na metade da largura, sem emenda. Só anima quando está na tela e andando, e as medidas
+  // ficam guardadas (ler scrollWidth a cada quadro forçava o recálculo do layout no celular).
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   document.querySelectorAll<HTMLElement>('[data-marquee]').forEach((root) => {
     const belt = root.querySelector<HTMLElement>('.app-marquee')
     const track = root.querySelector<HTMLElement>('.app-track')
+    const toggle = root.querySelector<HTMLButtonElement>('[data-marquee-toggle]')
     if (!belt || !track || reduce) return
     root.classList.add('is-js')
 
     const SPEED = 40 // px por segundo
+    const TOUCH_RESUME = 4000 // ms depois do toque
     let offset = 0
-    let paused = false
+    let hover = false
+    let focus = false
+    let touch = false
+    let userPaused = false
+    let visible = true
+    let touchTimer = 0
     let jump: { from: number; to: number; start: number } | null = null
     let last = performance.now()
+    let raf = 0
 
-    const half = () => track.scrollWidth / 2
-    const step = () => {
+    let half = 0
+    let step = 0
+    const measure = () => {
+      half = track.scrollWidth / 2
       const li = track.querySelector<HTMLElement>('li')
       const gap = parseFloat(getComputedStyle(li?.parentElement ?? track).columnGap) || 20
-      return (li?.offsetWidth ?? 300) + gap
+      step = (li?.offsetWidth ?? 300) + gap
     }
-    const wrap = (x: number) => {
-      const h = half()
-      return ((x % h) + h) % h
-    }
+    measure()
+    new ResizeObserver(measure).observe(track)
+
+    const wrap = (x: number) => (half ? ((x % half) + half) % half : 0)
+    const moving = () => !(hover || focus || touch || userPaused)
 
     const frame = (now: number) => {
+      raf = 0
       const dt = Math.min(now - last, 64) / 1000
       last = now
       if (jump) {
@@ -256,25 +293,86 @@ const { tone, rhythm } = Astro.props
         const ease = 1 - Math.pow(1 - t, 3)
         offset = jump.from + (jump.to - jump.from) * ease
         if (t === 1) jump = null
-      } else if (!paused) {
+      } else if (moving()) {
         offset += SPEED * dt
       }
       track.style.transform = `translate3d(${-wrap(offset)}px,0,0)`
-      requestAnimationFrame(frame)
+      if (visible && (jump || moving())) raf = requestAnimationFrame(frame)
     }
-    requestAnimationFrame(frame)
+    const run = () => {
+      if (raf || !visible) return
+      last = performance.now()
+      raf = requestAnimationFrame(frame)
+    }
+    run()
 
-    belt.addEventListener('mouseenter', () => (paused = true))
-    belt.addEventListener('mouseleave', () => (paused = false))
-    belt.addEventListener('focusin', () => (paused = true))
-    belt.addEventListener('focusout', () => (paused = false))
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting
+      if (visible) run()
+    }).observe(belt)
+
+    // Só mouse de verdade: no celular o toque também gera "mouseenter" e a esteira ficaria parada.
+    belt.addEventListener('pointerenter', (event) => {
+      if (event.pointerType === 'mouse') hover = true
+    })
+    belt.addEventListener('pointerleave', (event) => {
+      if (event.pointerType !== 'mouse') return
+      hover = false
+      run()
+    })
+
+    // Toque no celular: para enquanto o dedo está na esteira e volta alguns segundos depois.
+    belt.addEventListener(
+      'touchstart',
+      () => {
+        touch = true
+        clearTimeout(touchTimer)
+      },
+      { passive: true },
+    )
+    belt.addEventListener('touchend', () => {
+      clearTimeout(touchTimer)
+      touchTimer = window.setTimeout(() => {
+        touch = false
+        run()
+      }, TOUCH_RESUME)
+    })
+
+    // O navegador rola a esteira por dentro para mostrar o card focado; essa rolagem é desfeita e
+    // o card é trazido para a tela pelo próprio deslocamento da esteira.
+    belt.addEventListener('scroll', () => {
+      if (belt.scrollLeft) belt.scrollLeft = 0
+    })
+    belt.addEventListener('focusin', (event) => {
+      focus = true
+      belt.scrollLeft = 0
+      const li = (event.target as HTMLElement).closest('li')
+      if (!li) return
+      const at = li.getBoundingClientRect().left - belt.getBoundingClientRect().left + wrap(offset)
+      const target = Math.min(Math.max(0, at - (belt.clientWidth - li.offsetWidth) / 2), half - 1)
+      offset = wrap(offset)
+      jump = { from: offset, to: target, start: performance.now() }
+      run()
+    })
+    belt.addEventListener('focusout', (event) => {
+      if (belt.contains(event.relatedTarget as Node | null)) return
+      focus = false
+      run()
+    })
 
     root.querySelectorAll<HTMLButtonElement>('[data-marquee-step]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const dir = Number(btn.dataset.marqueeStep)
         const from = jump ? jump.to : offset
-        jump = { from: offset, to: from + dir * step(), start: performance.now() }
+        jump = { from: offset, to: from + dir * step, start: performance.now() }
+        run()
       })
+    })
+
+    toggle?.addEventListener('click', () => {
+      userPaused = !userPaused
+      toggle.setAttribute('aria-pressed', String(userPaused))
+      run()
     })
   })
 </script>

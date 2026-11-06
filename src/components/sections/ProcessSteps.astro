@@ -8,6 +8,7 @@
  * cards): texto à esquerda com CTA e selo Markem-Imaje, foto do técnico sangrando até a borda
  * direita e fundida ao verde, e as 4 etapas numa linha do tempo — ícone em círculo ligado por um
  * fio, título e frase, sem números. Continua sendo o bloco escuro da primeira metade da página.
+ * H2 em três linhas no desktop e sem quebra forçada no tablet (06/11/2026).
  * `npm run compose` sobrescreve este arquivo com o da biblioteca: ao recompor, reaplique.
  */
 import { Image, Picture } from 'astro:assets'
@@ -22,6 +23,12 @@ import { process } from '@data/sections/processo'
 type Props = SectionProps
 
 const { tone, rhythm } = Astro.props
+
+// H2 em três linhas no desktop (06/11/2026): "Codificação e" · "rastreabilidade" · destaque. Em
+// duas linhas, "Codificação e rastreabilidade" passava da coluna e cobria o rosto do técnico.
+const leadCut = process.titleLead.lastIndexOf(' ')
+const leadA = process.titleLead.slice(0, leadCut)
+const leadB = process.titleLead.slice(leadCut + 1)
 ---
 
 <Section id="processo" tone={tone} rhythm={rhythm} container={false}>
@@ -52,12 +59,9 @@ const { tone, rhythm } = Astro.props
     <div class="relative mx-auto max-w-page px-6 pt-14 pb-14 lg:px-10 lg:pt-20 lg:pb-20">
       <div class="lg:max-w-[46%]">
         <Eyebrow tone="light">{process.eyebrow}</Eyebrow>
-        <h2 class="mt-4 font-display text-[2.3rem] leading-[1.04] font-extrabold tracking-[-0.03em] text-neutral-light sm:text-5xl lg:text-[3.3rem] xl:text-[3.6rem]">
-          {/* Duas linhas a partir do tablet (pedido de 05/11/2026) */}
-          <span class="sm:block sm:whitespace-nowrap">{process.titleLead}</span>{' '}
-          <span class="text-brand-mint sm:block sm:whitespace-nowrap">
-            {process.titleHighlight}
-          </span>
+        <h2 class="mt-4 font-display text-[2.3rem] leading-[1.04] font-extrabold tracking-[-0.03em] text-neutral-light sm:text-5xl lg:text-[2.95rem] xl:text-[3.6rem]">
+          <span class="lg:block">{leadA}</span> <span class="lg:block">{leadB}</span>{' '}
+          <span class="text-brand-mint lg:block">{process.titleHighlight}</span>
         </h2>
         <span aria-hidden="true" class="mt-6 block h-[3px] w-20 rounded-full bg-brand-mint"></span>
         <p class="mt-6 max-w-[34rem] font-sans text-[17px] leading-relaxed text-neutral-light/85">
@@ -199,7 +203,8 @@ const { tone, rhythm } = Astro.props
     inset: 0;
     border-radius: 9999px;
     box-shadow: 0 0 0 0 rgb(97 229 169 / 0.55);
-    animation: process-ping 2.8s ease-out infinite;
+    /* Três pulsos e para: animação infinita pesava no celular (06/11/2026). */
+    animation: process-ping 2.8s ease-out 3;
     animation-delay: calc(var(--i) * 0.7s + 1.2s);
   }
 

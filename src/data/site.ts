@@ -15,8 +15,6 @@ export const site = {
   url: 'https://printmaster.net.br/lp-impressoras-industriais-markem-imaje/',
   /** Endereço completo com CEP (entrada 9). Footer e JSON-LD. */
   address: 'Rua C56 nº 65, Qd. 103, Lt. 05, Setor Sudoeste, Goiânia/GO, CEP 74.305-350',
-  /** Link da política de privacidade do cliente (entrada 10). Vazio esconde o link, mas a nota de LGPD continua. */
-  privacyUrl: '',
   /** Versão do padrão B2 que esta LP segue. Não editar manualmente; vem do template. */
   standardVersion: '2.8.0',
 } as const
@@ -34,12 +32,15 @@ export const shortcodes = {
   form: '[atendimento_form id="default-form"]',
 } as const
 
-/** Título da aba (ficha, `conteudo.title`): o padrão "{Produto} para {contexto} | {Marca}" passava de 70 caracteres. */
-export const title = `${site.product} para codificação | ${site.brand}`
+/**
+ * Título da aba. Pedido de 06/11/2026: a palavra-chave principal passou a "codificadora
+ * industrial" (a do H1); "impressoras" fica no title para a busca orgânica. 67 caracteres.
+ */
+export const title = `Impressoras e codificadoras industriais Markem-Imaje | ${site.brand}`
 
 /** Meta description (≤ 160 caracteres). Ajuste o texto, mantendo marcas e o apoio técnico. */
 export const description =
-  'Impressoras industriais Markem-Imaje para codificação e rastreabilidade: jato de tinta, transferência térmica e Print & Apply, com suporte especializado.'
+  'Impressoras industriais Markem-Imaje para codificação e rastreabilidade: jato de tinta, transferência térmica, Print & Apply e laser, com suporte técnico.'
 
 /**
  * Campanha que leva tráfego para esta LP (entrada 15). Quem clica digitou a
@@ -51,7 +52,7 @@ export const campaign = {
    * estiver no H1 e no title — aceita maiúscula, acento, plural e outra ordem.
    * `null` quando a LP não tem campanha definida; vazio é entrada não preenchida.
    */
-  mainKeyword: 'impressora industrial',
+  mainKeyword: 'codificadora industrial',
   /**
    * Negativas **de oferta** da campanha — o que a empresa não vende. O `check:lp`
    * avisa quando o texto da página usa uma delas. As de intenção (emprego, curso)

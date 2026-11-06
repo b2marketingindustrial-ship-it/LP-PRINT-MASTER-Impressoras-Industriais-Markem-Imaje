@@ -59,7 +59,7 @@
         }
       },
       "assets": [],
-      "localVariant": "Print Master 05/11/2026 — pedido do usuário: seção nova, sem par na biblioteca. Texto do cliente, CTA padrão de contato (solucoes-cta) e 4 soluções em cards 2×2 (docs/BRIEFING.md)"
+      "localVariant": "Print Master 05/11/2026 — pedido do usuário: seção nova, sem par na biblioteca. Cabeçalho largo (H2 à esquerda, texto do cliente e CTA solucoes-cta à direita) e 4 cards com foto (jato de tinta contínuo, laser, Print & Apply, transferência térmica); foto do laser em 06/11/2026 (docs/BRIEFING.md)"
     },
     {
       "slug": "vitrine",
@@ -130,7 +130,7 @@
           "alpha": null
         }
       ],
-      "localVariant": "Print Master 26/10/2026 — mockup: cards com painel verde-escuro (marca, modelo e Ver equipamento) e faixa de ajuda; 05/11/2026: sem abas nem filtro, uma faixa por tecnologia com bloco de abertura (ícone, nome, frase, contagem) em grade de 6 colunas, fim do H2 em verde, ajuda no ContactStrip padrão (docs/BRIEFING.md)"
+      "localVariant": "Print Master 26/10/2026 — mockup; 05/11/2026: sem abas nem filtro, 12 modelos numa grade 4 × 3 com selo da tecnologia, pílula de distribuidor, fim do H2 em verde e cartão de ajuda (vitrine-ajuda); 06/11/2026: cartão ao lado do H2 só a partir de 1280px (docs/BRIEFING.md)"
     },
     {
       "slug": "processo",
@@ -175,7 +175,7 @@
           "alpha": false
         }
       ],
-      "localVariant": "Print Master 05/11/2026 — pedido do usuário: referência SEIVE. Painel verde com texto em HTML, cena do banner à direita, 3 destaques, CTA (processo-cta) com selo Markem-Imaje e as 4 etapas em cards sobrepostos (docs/BRIEFING.md)"
+      "localVariant": "Print Master 05/11/2026 — faixa verde em largura total com cantos de cima arredondados, foto do técnico à direita, CTA (processo-cta) com selo Markem-Imaje e as 4 etapas numa linha do tempo animada; 06/11/2026: H2 em três linhas no desktop (docs/BRIEFING.md)"
     },
     {
       "slug": "aplicacoes",
@@ -226,7 +226,7 @@
           "alpha": false
         }
       ],
-      "localVariant": "Print Master 27/10/2026 — mockup: H2 em duas linhas, cards com foto 8:5 e corpo verde-escuro, faixa \"Encontre a solução ideal\" com CTA; 05/11/2026: 11 aplicações com os textos do usuário numa esteira infinita com pausa (docs/BRIEFING.md)"
+      "localVariant": "Print Master 27/10/2026 — mockup; 05/11/2026: 11 aplicações com os textos do usuário numa esteira infinita (fotos 6:5, corpo verde-escuro, setas laterais); 06/11/2026: botão de pausa, pausa ao toque e foco visível pelo teclado (docs/BRIEFING.md)"
     },
     {
       "slug": "faq",
@@ -265,7 +265,7 @@
         }
       },
       "assets": [],
-      "localVariant": "Print Master 05/11/2026 — pedido do usuário: seção nova, sem par na biblioteca. Cabeçalho fixo à esquerda com CTA, acordeão de perguntas à direita e JSON-LD FAQPage (docs/BRIEFING.md)"
+      "localVariant": "Print Master 05/11/2026 — pedido do usuário: seção nova, sem par na biblioteca. Cabeçalho fixo à esquerda com cartão verde de contato (faq-cta), acordeão de 7 perguntas à direita e JSON-LD FAQPage (docs/BRIEFING.md)"
     },
     {
       "slug": "diferenciais",
@@ -314,7 +314,7 @@
           "alpha": false
         }
       ],
-      "localVariant": "Print Master 27/10/2026 — mockup: cena única no bloco inteiro (sem pessoa recortada), H2 maior com barra verde, botão arredondado e cards com ícone em caixa menta, sem corte de texto (docs/BRIEFING.md)"
+      "localVariant": "Print Master 27/10/2026 — mockup: cena única no bloco inteiro; 05/11/2026: foco institucional da LP de locação (cantos de cima arredondados, H2 em duas linhas, traço menta, 5 cards compactos); 06/11/2026: trilho de cards acessível pelo teclado no celular (docs/BRIEFING.md)"
     }
   ]
 }

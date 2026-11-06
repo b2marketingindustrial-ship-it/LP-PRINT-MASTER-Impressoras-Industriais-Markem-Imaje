@@ -3,7 +3,9 @@
  *
  * VARIANTE LOCAL — Print Master, pedido de 05/11/2026 (docs/BRIEFING.md): textos enviados pelo
  * usuário, da página atual do cliente. Seção nova, sem par na biblioteca do starter.
- * "Impressoras a laser" aparece só aqui: a vitrine ainda não tem modelo laser.
+ * O laser não tem modelo na vitrine; desde 06/11/2026 ele é citado também no subtítulo da
+ * vitrine, no FAQ e na etapa "Escolha da tecnologia". Nomes das tecnologias iguais aos da vitrine
+ * (pedido de 06/11/2026): jato de tinta contínuo, transferência térmica, Print & Apply e laser.
  */
 import type { IconName } from '@data/icons'
 import type { Photo } from '@data/types'
@@ -29,13 +31,13 @@ export const solutions = {
   /** Trecho do H2 em verde. Precisa estar dentro de `title`. */
   highlight: 'reduza erros',
   /** Três linhas no desktop (pedido de 05/11/2026): versão enxuta do texto do cliente. */
-  text: 'Na Print Master, você encontra as soluções de marcação e rastreabilidade Markem-Imaje, líderes globais em qualidade e desempenho, com codificação precisa e legível para alimentos, bebidas, farmacêuticos e eletrônicos.',
+  text: 'Na Print Master, você encontra as soluções de marcação e rastreabilidade da Markem-Imaje, líder global em qualidade e desempenho, com codificação precisa e legível para alimentos, bebidas, farmacêuticos e eletrônicos.',
   listTitle: 'Nossas soluções em destaque',
   items: [
     {
       id: 'jato-de-tinta',
       icon: 'droplet',
-      title: 'Jato de tinta',
+      title: 'Jato de tinta contínuo',
       description: 'Precisão inigualável em altas velocidades para uma ampla gama de materiais.',
       photo: { src: fotoJato, alt: 'Codificador jato de tinta Markem-Imaje 9410' },
     },
@@ -52,7 +54,7 @@ export const solutions = {
     {
       id: 'etiquetagem',
       icon: 'tag',
-      title: 'Etiquetagem automática',
+      title: 'Print & Apply',
       description:
         'Perfeição no posicionamento e aplicação de etiquetas em caixas e produtos de todos os tamanhos.',
       photo: { src: fotoEtiqueta, alt: 'Aplicador de etiquetas Markem-Imaje 2200' },
@@ -60,9 +62,9 @@ export const solutions = {
     {
       id: 'termica',
       icon: 'flame',
-      title: 'Codificação térmica',
+      title: 'Transferência térmica',
       description: 'Ideal para filmes flexíveis, garantindo qualidade superior em codificação.',
-      photo: { src: fotoTermica, alt: 'Codificador térmico SmartDate X45' },
+      photo: { src: fotoTermica, alt: 'Codificador por transferência térmica SmartDate X45' },
     },
   ],
 } as const satisfies {

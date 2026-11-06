@@ -51,7 +51,7 @@ export const process = {
       icon: 'sliders',
       title: 'Escolha da tecnologia',
       description:
-        'Indicamos jato de tinta, transferência térmica ou Print & Apply para o seu caso.',
+        'Indicamos jato de tinta, transferência térmica, Print & Apply ou laser para o seu caso.',
     },
     {
       id: 'instalacao',

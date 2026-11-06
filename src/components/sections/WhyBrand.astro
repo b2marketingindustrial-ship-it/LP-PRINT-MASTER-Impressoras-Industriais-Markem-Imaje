@@ -71,6 +71,7 @@ const { tone, rhythm } = Astro.props
     <ul
       class="why-track scroll-track -mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-3 lg:mx-0 lg:grid lg:grid-cols-5 lg:gap-5 lg:overflow-visible lg:px-0 lg:pb-0"
       aria-label={why.eyebrow}
+      tabindex="0"
     >
       {why.reasons.map((reason) => (
         <li class="why-card group relative flex w-[78%] shrink-0 snap-start flex-col gap-2.5 overflow-hidden rounded-2xl border border-neutral-gray-200/70 bg-neutral-light p-4 shadow-[0_24px_48px_-24px_rgba(1,36,34,0.45)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1.5 hover:border-accent-orange/50 hover:shadow-[0_32px_60px_-28px_rgba(1,36,34,0.5)] sm:w-[44%] lg:w-auto">

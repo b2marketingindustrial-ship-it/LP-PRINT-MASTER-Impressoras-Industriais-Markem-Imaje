@@ -2,7 +2,7 @@
  * Dados da seção "Perguntas frequentes" (fase: prova), entre aplicações e diferenciais.
  *
  * VARIANTE LOCAL — Print Master, pedido de 05/11/2026 (docs/BRIEFING.md): seção nova, sem par na
- * biblioteca. As respostas só repetem fatos que a página já afirma (tecnologias, materiais das
+ * biblioteca. As respostas só repetem fatos que a página já afirma (as quatro tecnologias, com o laser desde 06/11/2026, materiais das
  * aplicações, etapas do atendimento, distribuidor autorizado): sem preço, prazo ou área atendida.
  */
 export interface FaqItem {
@@ -31,7 +31,7 @@ export const faq = {
       id: 'tecnologia',
       question: 'Qual tecnologia de codificação é a ideal para a minha linha?',
       answer:
-        'Depende do produto, do material e da velocidade da linha. O jato de tinta contínuo atende linhas rápidas e superfícies variadas, a transferência térmica é indicada para filmes flexíveis e rótulos, e o Print & Apply imprime e aplica etiquetas em caixas e paletes. Nossa equipe avalia a sua linha e indica a melhor opção.',
+        'Depende do produto, do material e da velocidade da linha. O jato de tinta contínuo atende linhas rápidas e superfícies variadas, a transferência térmica é indicada para filmes flexíveis e rótulos, o Print & Apply imprime e aplica etiquetas em caixas e paletes, e a marcação a laser faz códigos permanentes e de alta resolução. Nossa equipe avalia a sua linha e indica a melhor opção.',
     },
     {
       id: 'informacoes',

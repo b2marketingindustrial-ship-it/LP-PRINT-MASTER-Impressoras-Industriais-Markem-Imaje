@@ -89,7 +89,7 @@ export const applications = {
       id: 'alimentos',
       label: 'Alimentos',
       description:
-        'Tintas 100% seguras e comestíveis, em conformidade com normas locais e nacionais.',
+        'Tintas próprias para a indústria de alimentos, em conformidade com normas nacionais e internacionais.',
       icon: 'utensils',
       photo: { src: app4, alt: 'Queijos embalados com lote e datas impressos' },
     },
